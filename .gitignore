@@ -1,0 +1,32 @@
+# Ignore node_modules in both client and server
+client/node_modules/
+server/node_modules/
+
+# Ignore environment files
+client/.env
+server/.env
+
+# Ignore build files (React and Node.js)
+client/build/
+server/dist/
+server/.next/ # If using Next.js
+
+# Ignore logs
+client/npm-debug.log
+server/npm-debug.log
+client/yarn-debug.log
+server/yarn-debug.log
+client/yarn-error.log
+server/yarn-error.log
+server/logs/
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
