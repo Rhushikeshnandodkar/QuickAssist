@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ManualMate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #333333;
+            --accent: #666666;
+            --background: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: var(--primary);
+            padding: 20px 0;
+            color: white;
+        }
+
+        .logo {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-links li:hover {
+            background-color: var(--secondary);
+        }
+
+        .nav-links li.active {
+            background-color: var(--secondary);
+            border-left: 4px solid white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .product-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">ManualMate</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="products.html">Products</a></li>
+            <li><a href="chatbots.html">Chatbots</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="products-header">
+            <h1>Products</h1>
+            <a href="add-product.html" class="btn">Add New Product</a>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search products..." class="search-input">
+            <button class="btn btn-outline">Filter</button>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Smart Watch" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">Smart Watch Pro</div>
+                    <div class="product-meta">
+                        <p>Manual Version: 2.1</p>
+                        <p>Last Updated: 2024-03-15</p>
+                    </div>
+                    <div class="product-status">
+                        <span class="status-badge">Active Chatbot</span>
+                        <a href="edit-product.html" class="btn">Manage</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12" alt="Smart Speaker" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">Smart Home Speaker</div>
+                    <div class="product-meta">
+                        <p>Manual Version: 1.0</p>
+                        <p>Last Updated: 2024-03-10</p>
+                    </div>
+                    <div class="product-status">
+                        <span class="status-badge">Active Chatbot</span>
+                        <a href="edit-product.html" class="btn">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

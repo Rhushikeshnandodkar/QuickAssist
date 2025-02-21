@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ManualMate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #333333;
+            --accent: #666666;
+            --background: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: var(--primary);
+            padding: 20px 0;
+            color: white;
+        }
+
+        .logo {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-links li:hover {
+            background-color: var(--secondary);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .settings-header {
+            margin-bottom: 30px;
+        }
+
+        .settings-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .settings-section h2 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch input[type="checkbox"] {
+            width: 50px;
+            height: 25px;
+            appearance: none;
+            background: #ccc;
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked {
+            background: var(--primary);
+        }
+
+        .toggle-switch input[type="checkbox"]::before {
+            content: '';
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked::before {
+            left: 27px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+        }
+
+        .api-key {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">ManualMate</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="chatbots.html">Chatbots</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li class="active"><a href="settings.html">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="settings-header">
+            <h1>Settings</h1>
+            <p>Configure your ManualMate account and chatbot preferences</p>
+        </div>
+
+        <div class="settings-section">
+            <h2>Company Profile</h2>
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" value="TechCorp Inc.">
+            </div>
+            <div class="form-group">
+                <label>Contact Email</label>
+                <input type="email" value="support@techcorp.com">
+            </div>
+            <div class="form-group">
+                <label>Support Website</label>
+                <input type="url" value="https://support.techcorp.com">
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Chatbot Configuration</h2>
+            <div class="form-group">
+                <label>Default Language</label>
+                <select>
+                    <option>English</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>German</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Response Style</label>
+                <select>
+                    <option>Conversational</option>
+                    <option>Technical</option>
+                    <option>Concise</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="autoLearn" checked>
+                    <label for="autoLearn">Enable Auto-Learning from User Interactions</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>API Integration</h2>
+            <div class="form-group">
+                <label>API Key</label>
+                <div class="api-key">sk_live_123456789abcdefghijklmnop</div>
+            </div>
+            <div class="form-group">
+                <label>Webhook URL</label>
+                <input type="url" placeholder="https://your-server.com/webhook">
+            </div>
+            <div class="form-group">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="enableWebhook">
+                    <label for="enableWebhook">Enable Webhook Notifications</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Notification Preferences</h2>
+            <div class="form-group">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="emailNotif" checked>
+                    <label for="emailNotif">Email Notifications</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="slackNotif">
+                    <label for="slackNotif">Slack Notifications</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn">Save Changes</button>
+    </main>
+</body>
+</html>
+
+{% comment %} I am creating website where companies can upload their products and their respected user manual we will create chatbot which will be there on the basis of user manual after purchasing product retailer will give chatbot name and userid password to customer so that whenever they will stuck in any process they can ask that bot and that bot will answer give me only html css pages for company side page for analytics of chatbot data about queries and all add customer page settings page there add importent setting which will be added in future also create page for users where they can access chatbot and also other pages which will be required according to you  in just html and css use html and style tag for css that's it i don't wanna see anything like tsx or any other file only html pages {% endcomment %}

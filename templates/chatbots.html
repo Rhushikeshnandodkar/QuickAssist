@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbots - ManualMate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #333333;
+            --accent: #666666;
+            --background: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--background);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: var(--primary);
+            padding: 20px 0;
+            color: white;
+        }
+
+        .logo {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-links li:hover {
+            background-color: var(--secondary);
+        }
+
+        .nav-links li.active {
+            background-color: var(--secondary);
+            border-left: 4px solid white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .chatbots-header {
+            margin-bottom: 30px;
+        }
+
+        .chatbot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .chatbot-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .chatbot-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chatbot-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--accent);
+        }
+
+        .status-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .chatbot-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">ManualMate</div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li class="active"><a href="chatbots.html">Chatbots</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="chatbots-header">
+            <h1>Chatbots</h1>
+            <p>Manage your product chatbots and monitor their performance</p>
+        </div>
+
+        <div class="chatbot-grid">
+            <div class="chatbot-card">
+                <div class="chatbot-header">
+                    <div class="chatbot-title">Smart Watch Pro Assistant</div>
+                    <span class="status-badge">Active</span>
+                </div>
+                <p>Product: Smart Watch Pro</p>
+                <p>Manual Version: 2.1</p>
+                
+                <div class="chatbot-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">1,234</div>
+                        <div class="stat-label">Total Queries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="chatbot-actions">
+                    <button class="btn">View Analytics</button>
+                    <button class="btn btn-outline">Settings</button>
+                </div>
+            </div>
+
+            <div class="chatbot-card">
+                <div class="chatbot-header">
+                    <div class="chatbot-title">Smart Home Helper</div>
+                    <span class="status-badge">Active</span>
+                </div>
+                <p>Product: Smart Home Speaker</p>
+                <p>Manual Version: 1.0</p>
+                
+                <div class="chatbot-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">856</div>
+                        <div class="stat-label">Total Queries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="chatbot-actions">
+                    <button class="btn">View Analytics</button>
+                    <button class="btn btn-outline">Settings</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

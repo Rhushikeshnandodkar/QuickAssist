@@ -9,7 +9,20 @@ const axios = require("axios");
 const faiss = require("faiss");
 const {OpenAI} = require("openai")
 
+const FASTAPI_URL = "http://127.0.0.1:8000";
 
+async function createManualEmbedding(productId, manualText, product_name) {
+    try {
+      await axios.post(`${FASTAPI_URL}/store/`, {
+        name : product_name,
+        unique_id: productId,
+        text: manualText,
+      });
+    } catch (error) {
+      console.error("Error creating embeddings:", error);
+      throw new Error("Failed to create embeddings");
+    }
+  }
 
 exports.uploadManual = async (req, res) => {
   try {
@@ -46,8 +59,8 @@ exports.uploadManual = async (req, res) => {
     const data = await pdfParse(dataBuffer);
 
     const manualText = data.text
-
-    // await createManualEmbedding(productId, manualText);
+    product_name = product_info.product_name
+    await createManualEmbedding(productId, manualText, product_name);
 
     // Save manual to the database
     const manual = await Manual.create({
