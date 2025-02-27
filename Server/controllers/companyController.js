@@ -2,6 +2,8 @@ const CompanyProfile = require("../models/Company");
 const ProductModel = require("../models/Product")
 const User = require("../models/User");
 
+
+
 exports.createCompanyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -70,3 +72,4 @@ exports.createProduct = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+

@@ -15,7 +15,7 @@ from langchain.prompts import PromptTemplate
 
 app = FastAPI()
 os.environ['GROQ_API_KEY'] = "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"
-
+SECERATE_KEY = "greenbagboogie"
 # Set up embeddings
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 

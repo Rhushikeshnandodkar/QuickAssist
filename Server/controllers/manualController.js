@@ -5,7 +5,7 @@ const Manual = require("../models/Manual");
 const Product = require("../models/Product");
 const CompanyProfile = require("../models/Company");
 const User = require("../models/User");
-const axios = require("axios");
+const axios = require("axios"); 
 const faiss = require("faiss");
 const {OpenAI} = require("openai")
 
