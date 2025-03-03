@@ -15,6 +15,10 @@ const  productSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  manual_link: {
+    type: String,
+    default: null,
+  },
 
 });
 

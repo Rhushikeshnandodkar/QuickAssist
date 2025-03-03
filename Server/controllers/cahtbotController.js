@@ -28,7 +28,7 @@ exports.createChatBot = async(req, res) =>{
         } 
         const link = new Link({
             company : company._id,
-            product : product._id,
+            product : product._id,  
             useremail : email
         })
         await link.save()
