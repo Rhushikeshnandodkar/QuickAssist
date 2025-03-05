@@ -16,7 +16,5 @@ app.use("/api/manual", require("./routes/manualRoutes"));
 app.use("/api/chatbot", require("./routes/chatbotRoutes"));
 
 
-
-
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

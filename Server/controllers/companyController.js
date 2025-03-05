@@ -2,8 +2,6 @@ const CompanyProfile = require("../models/Company");
 const ProductModel = require("../models/Product")
 const User = require("../models/User");
 
-
-
 exports.createCompanyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -73,3 +71,20 @@ exports.createProduct = async (req, res) => {
     }
 };
 
+exports.allProducts = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id)
+    const company = await CompanyProfile.findOne({user : user})
+    if(!company){
+      return res.status(400).json({
+        success : false,
+        message : "company not found"
+      })
+    }
+    const products = await ProductModel.find({company : company})
+    res.status(200).json({ success: true, data: products });
+
+  }catch(err){
+    res.status(500).json({ success: false, message: err.message });
+  }
+}

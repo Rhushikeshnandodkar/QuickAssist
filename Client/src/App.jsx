@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/Loginpage";
+import RegisterUser from "./components/pages/registerUser";
 import "./index.css"; // Ensure this points to your global CSS file
+import LoginUser from "./components/pages/LoginUser";
+import Dashboard from "./components/pages/Dashboard";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<RegisterUser />} />
+        <Route path="/login" element={<LoginUser />} />
       </Routes>
     </Router>
   );
