@@ -1,49 +1,48 @@
 import React from 'react'
 import Sidebar from '../molecules/Sidebar'
+import { DashboardStyle } from './Dashboard.style';
 function Dashboard() {
   return (
     <>
     <Sidebar />
-    <main className="main-content">
-      <div className="form-container">
-        <div className="form-header">
-          <h1>Add New Product</h1>
-          <p>Fill in the product details and upload the user manual to create a new chatbot.</p>
+    <DashboardStyle>
+   <main className="main-content">
+  <div className="dashboard-header">
+    <h1>Dashboard</h1>
+    <a href="add-product.html" className="btn">Add New Product</a>
+  </div>
+  <div className="stats-container">
+    <div className="stat-card">
+      <h3>Total Products</h3>
+      <div className="number">24</div>
+    </div>
+    <div className="stat-card">
+      <h3>Active Chatbots</h3>
+      <div className="number">18</div>
+    </div>
+    <div className="stat-card">
+      <h3>Total Customers</h3>
+      <div className="number">156</div>
+    </div>
+  </div>
+  <h2>Recent Products</h2>
+  <div className="products-grid">
+    <div className="product-card">
+      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Smart Watch" className="product-image" />
+      <div className="product-info">
+        <div className="product-title">Smart Watch Pro</div>
+        <p>Manual Version: 2.1</p>
+        <div className="product-status">
+          <span className="status-badge">Active Chatbot</span>
+          <a href="edit-product.html" className="btn">Edit</a>
         </div>
-        <form>
-          <div className="form-group">
-            <label htmlFor="productName">Product Name</label>
-            <input type="text" id="productName" required placeholder="Enter product name" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="productDescription">Product Description</label>
-            <textarea id="productDescription" placeholder="Enter product description" defaultValue={""} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="manualVersion">Manual Version</label>
-            <input type="text" id="manualVersion" required placeholder="e.g., 1.0" />
-          </div>
-          <div className="form-group">
-            <label>Product Manual</label>
-            <div className="upload-area">
-              <div className="upload-icon">📄</div>
-              <h3>Drop your manual file here</h3>
-              <p>or click to browse</p>
-              <p className="text-sm">Supported formats: PDF, DOCX (max 10MB)</p>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="chatbotName">Chatbot Name</label>
-            <input type="text" id="chatbotName" required placeholder="Enter chatbot name" />
-          </div>
-          <div className="btn-group">
-            <button type="button" className="btn btn-outline" onclick="window.location.href='products.html'">Cancel</button>
-            <button type="submit" className="btn">Create Product &amp; Generate Chatbot</button>
-          </div>
-        </form>
       </div>
-    </main>
+    </div>
+  </div>
+</main>
 
+
+    </DashboardStyle>
     </>
   )
 }

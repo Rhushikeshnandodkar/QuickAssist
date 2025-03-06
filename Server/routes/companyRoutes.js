@@ -7,4 +7,5 @@ router.post("/create-profile",middleware.protect, middleware.authorize('admin', 
 router.post("/create-product",middleware.protect, middleware.authorize('admin', 'company'), createProduct);
 router.get("/all-products",middleware.protect, middleware.authorize('company'), allProducts);
 
+
 module.exports = router;

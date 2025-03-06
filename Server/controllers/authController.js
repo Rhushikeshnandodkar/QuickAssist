@@ -64,3 +64,18 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+exports.userInfo = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id)
+    console.log(user)
+    res.status(201).json({
+      success : true,
+      message : "this is your user info",
+      data : user
+    })
+
+  }catch(err){
+    res.status(500).json({ message: "Server Error" });
+  }
+}

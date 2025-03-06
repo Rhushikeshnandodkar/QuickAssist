@@ -27,7 +27,7 @@ const LoginUser = () => {
 
   useEffect(() => {
     if (status === 200) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [status, navigate]);
 

@@ -32,11 +32,34 @@ export const userLogin = createAsyncThunk("user/login", async(data, thunkAPI) =>
     }
     const response = await axios(config)
     localStorage.setItem("userToken", response.data.token)
-    localStorage.setItem("user", JSON.stringify({...data}))
+    const {dispatch} = thunkAPI
+    dispatch(getUserInfo())
     return response.data
   }catch(err){
     return thunkAPI.rejectWithValue(err.response.status)
   }
+})
+
+export const getUserInfo = createAsyncThunk("user/userInfo", async(__dirname, thunkAPI) =>{
+  try{
+    const res = await fetch(`${url}/api/auth/user-info`, {
+      method: "GET",
+      headers : {
+          "Content-Type" : "application/json",
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Accept: "application/json",
+      }
+  })
+  const data = await res.json()
+  localStorage.setItem('user', JSON.stringify({...data}))
+  if(res.status==200){
+      return {...data}
+  }else{
+      return thunkAPI.rejectWithValue(data)
+  }
+  }catch(err){
+        return thunkAPI.rejectWithValue(err.response.status)
+    }
 })
 const initialState = {
   isLoading : true,
@@ -59,6 +82,7 @@ const userSlice = createSlice({
     const handleFulfilled = (state, {payload}) =>{
       state.isLoading = false;
       state.userToken = payload.token;
+      // state.user = payload.user.data;
       state.isAuthenticated = true;
       state.status = 200;
     }
@@ -77,6 +101,10 @@ const userSlice = createSlice({
     .addCase(userLogin.pending, handlePending)
     .addCase(userLogin.fulfilled, handleFulfilled)
     .addCase(userLogin.rejected, handleRejected) 
+
+    .addCase(getUserInfo.pending, handlePending)
+    .addCase(getUserInfo.fulfilled, handleFulfilled)
+    .addCase(getUserInfo.rejected, handleRejected)
 
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true
