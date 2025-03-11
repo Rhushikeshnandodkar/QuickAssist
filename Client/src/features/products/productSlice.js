@@ -2,20 +2,21 @@ import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios"
 import {url} from "../../components/common/api"
 
-export const createCompany = createAsyncThunk("company/create", async(data, thunkAPI) =>{
+export const uploadProduct = createAsyncThunk("product/upload", async(data, thunkAPI) =>{
+    console.log(data)
     try{
-        const res = await fetch(`${url}/api/company/create-profile`, {
+        const res = await fetch(`${url}/api/manual/upload`, {
             method: "POST",
             headers : {
-                "Content-Type" : "application/json",
+                // "Content-Type" : "application/json",
                 Authorization: `Bearer ${localStorage.getItem("userToken")}`,
                 Accept: "application/json",
             }  ,
-            body: JSON.stringify(data)
+            body: data
         })
+        const response = await res.json()
         if(res.status == 201){
-            const response = await res.json()
-            return response.data
+            return response
         }else{
             return thunkAPI.rejectWithValue(res.json())
         }
@@ -26,13 +27,13 @@ export const createCompany = createAsyncThunk("company/create", async(data, thun
 
 const initialState = {
   isLoading : true,
-  company : null,
+  products : null,
   error : false,
   status : null,
 }
 
-const companySlice = createSlice({
-  name : "company",
+const productSlice = createSlice({
+  name : "product",
   initialState,
   extraReducers : (builder) =>{
     const handlePending = (state) =>{
@@ -43,7 +44,7 @@ const companySlice = createSlice({
     const handleFulfilled = (state, {payload}) =>{
         console.log(payload)
       state.isLoading = false;
-      state.company = payload;
+      state.products = payload;
       state.status = 200;
     }   
     const handleRejected = (state, { payload }) => {
@@ -52,9 +53,9 @@ const companySlice = createSlice({
     };
 
     builder
-    .addCase(createCompany.pending, handlePending)
-    .addCase(createCompany.fulfilled, handleFulfilled)
-    .addCase(createCompany.rejected, handleRejected)
+    .addCase(uploadProduct.pending, handlePending)
+    .addCase(uploadProduct.fulfilled, handleFulfilled)
+    .addCase(uploadProduct.rejected, handleRejected)
 
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true
@@ -74,4 +75,4 @@ const companySlice = createSlice({
   }
 })
 
-export default companySlice.reducer
+export default productSlice.reducer

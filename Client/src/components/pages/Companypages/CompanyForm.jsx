@@ -14,14 +14,7 @@ const CompanyForm = () => {
     description: "",
     address: "",
   });
-  useEffect(() =>{
-    dispatch(getUserInfo())
-    console.log(user.data.role)
-    if(user.data.role != "company"){
-      console.log('not company')
-      navigate('/login')
-    }
-  }, [user])
+
   // Handle form field changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -33,7 +26,7 @@ const CompanyForm = () => {
     e.preventDefault();
     const {company_name, description, address} = formData
     dispatch(createCompany({company_name, description, address}))
-    navigate('/dashboard')
+    navigate('/upload-product')
     console.log("Form Data:", formData);
   };
 

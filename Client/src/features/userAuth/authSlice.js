@@ -52,7 +52,9 @@ export const getUserInfo = createAsyncThunk("user/userInfo", async(__dirname, th
   })
   const data = await res.json()
   localStorage.setItem('user', JSON.stringify({...data}))
-  if(res.status==200){
+  console.log(res)
+
+  if(res.status==201){
       return {...data}
   }else{
       return thunkAPI.rejectWithValue(data)

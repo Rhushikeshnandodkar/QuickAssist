@@ -62,3 +62,46 @@ export const SidebarStyle = styled.div`
 
 `;
 
+export const NavbarStyle = styled.div`
+    .nav{
+        display: grid;
+        grid-template-columns: 20% 20%;
+        gap: 60%;
+        width: 100%;
+        float: right;
+        padding: 20px;
+        border-bottom: 1px solid #e9e4e4;
+    }
+
+    .buttons ul{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    .buttons ul li{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    svg{
+        width: 20px;
+        height: 20px;
+    }
+    b{
+        margin-left: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    img{
+        width: 35px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    .heading h1{
+        font-size: 1.3rem;
+        font-weight: 900;
+    }
+
+`;
+

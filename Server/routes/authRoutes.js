@@ -7,5 +7,4 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/user-info", middleware.protect, userInfo);
 
-
 module.exports = router;

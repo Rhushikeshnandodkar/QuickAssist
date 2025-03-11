@@ -1,16 +1,21 @@
 import React from 'react'
 import Sidebar from '../molecules/Sidebar'
 import { DashboardStyle } from './Dashboard.style';
+import { NavbarStyle } from '../molecules/molecule.style';
+import Navbar from '../molecules/Navbar';
+import { useDispatch, useSelector } from 'react-redux'
+
 function Dashboard() {
+  const { user } = useSelector((state) => (
+    state.user))
   return (
     <>
     <Sidebar />
     <DashboardStyle>
    <main className="main-content">
-  <div className="dashboard-header">
-    <h1>Dashboard</h1>
-    <a href="add-product.html" className="btn">Add New Product</a>
-  </div>
+    <Navbar />
+    <div className="content">
+
   <div className="stats-container">
     <div className="stat-card">
       <h3>Total Products</h3>
@@ -38,6 +43,7 @@ function Dashboard() {
         </div>
       </div>
     </div>
+  </div>
   </div>
 </main>
 

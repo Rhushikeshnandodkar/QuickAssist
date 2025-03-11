@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RegisterStyle } from "./Users.style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userSignup } from "../../features/userAuth/authSlice";
+import { useNavigate } from "react-router-dom";
+
 const RegisterUser = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const {user, userToken, status} = useSelector((state) =>(
+    state.user))
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,6 +19,12 @@ const RegisterUser = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    if (status === 200) {
+      navigate("/create-company");
+    }
+  }, [status, navigate]);
 
   // Handle form submission
   const handleSubmit = (e) => {

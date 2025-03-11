@@ -34,16 +34,7 @@ exports.uploadManual = async (req, res) => {
     }
 
     // Check if product exists and belongs to the current user's company
-    const { productId } = req.body;
-    const product_info = await Product.findById(productId);
-    if (!product_info) {
-      return res.status(400).json({ message: "Product not found!" });
-    }
-
-    // Check if the product belongs to the current user's company
-    if (product_info.company.toString() !== companyProfile._id.toString()) {
-      return res.status(400).json({ message: "You cannot perform this action" });
-    }
+    const { product_name, description } = req.body;
 
     // Check if the uploaded file is a PDF
     if (!req.file) {
@@ -59,12 +50,15 @@ exports.uploadManual = async (req, res) => {
     const data = await pdfParse(dataBuffer);
 
     const manualText = data.text
-    product_name = product_info.product_name
-    await createManualEmbedding(productId, manualText, product_name);
 
+    const productId = companyProfile._id
+    await createManualEmbedding(productId, manualText, product_name);
+    // console.log(company)
     // Save manual to the database
     const manual = await Manual.create({
-      product: productId,
+      company : companyProfile._id,
+      product_name : product_name,
+      description : description,
       filename: req.file.filename,
       text: data.text, // Store extracted text
     });
