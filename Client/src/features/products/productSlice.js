@@ -3,7 +3,6 @@ import axios from "axios"
 import {url} from "../../components/common/api"
 
 export const uploadProduct = createAsyncThunk("product/upload", async(data, thunkAPI) =>{
-    console.log(data)
     try{
         const res = await fetch(`${url}/api/manual/upload`, {
             method: "POST",
@@ -25,6 +24,23 @@ export const uploadProduct = createAsyncThunk("product/upload", async(data, thun
     }
 })
 
+export const fetchProducts = createAsyncThunk("product/fetchall", async(data, thunkAPI) =>{
+  try{
+    const res = await fetch(`${url}/api/company/all-products`, {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        Accept: "application/json",
+      }
+    })
+    const data = await res.json()
+    console.log(data)
+    return data
+  }catch(err){
+    return thunkAPI.rejectWithValue(err)
+  }
+})
 const initialState = {
   isLoading : true,
   products : null,
@@ -56,6 +72,10 @@ const productSlice = createSlice({
     .addCase(uploadProduct.pending, handlePending)
     .addCase(uploadProduct.fulfilled, handleFulfilled)
     .addCase(uploadProduct.rejected, handleRejected)
+
+    .addCase(fetchProducts.pending, handlePending)
+    .addCase(fetchProducts.fulfilled, handleFulfilled)
+    .addCase(fetchProducts.rejected, handleRejected)
 
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true

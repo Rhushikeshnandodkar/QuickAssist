@@ -163,4 +163,88 @@ export const DashboardStyle = styled.div`
         .btn:hover {
             background: var(--secondary);
         }
+        .chatbot-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .chatbot-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chatbot-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--accent);
+        }
+
+        .status-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: black;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: black;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid gray;
+            color: black;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: black;
+        }
+
+        .chatbot-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
 `;

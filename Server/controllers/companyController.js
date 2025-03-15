@@ -1,6 +1,8 @@
 const CompanyProfile = require("../models/Company");
 const ProductModel = require("../models/Product")
 const User = require("../models/User");
+const Manual = require("../models/Manual")
+const LinkSchema = require("../models/Link")
 
 exports.createCompanyProfile = async (req, res) => {
   try {
@@ -34,6 +36,31 @@ exports.createCompanyProfile = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+exports.companyProfile = async(req, res) =>{
+  try{
+     const user = await User.findById(req.user.id)
+     const profile = await CompanyProfile.findOne({user : user.id})
+     if(profile){
+      no_of_products = await Manual.find({company : profile})
+      chatbots = await LinkSchema.find({company : profile})
+      return res.status(200).json({
+        success : true,
+        message : "your profile data",
+        data : profile,
+        products : no_of_products.length,
+        chatbots : chatbots.length
+      })
+     }else{
+      return res.status(400).json({
+        success : false,
+        message : "company not found"
+      })
+     }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
 
 exports.createProduct = async (req, res) => {
     try {
@@ -81,7 +108,7 @@ exports.allProducts = async(req, res) =>{
         message : "company not found"
       })
     }
-    const products = await ProductModel.find({company : company})
+    const products = await Manual.find({company : company})
     res.status(200).json({ success: true, data: products });
 
   }catch(err){

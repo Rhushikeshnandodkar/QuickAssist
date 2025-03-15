@@ -168,7 +168,7 @@ export const ProductsFormStyle = styled.div`
         }
 
         .upload-area:hover {
-            border-color: var(--primary);
+            border-color: black;
         }
 
         .upload-icon {

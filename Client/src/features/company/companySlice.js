@@ -15,13 +15,38 @@ export const createCompany = createAsyncThunk("company/create", async(data, thun
         })
         if(res.status == 201){
             const response = await res.json()
+            const {dispatch} = thunkAPI
+            dispatch(companyInfo())
             return response.data
+
         }else{
             return thunkAPI.rejectWithValue(res.json())
         }
     }catch(err){
         return thunkAPI.rejectWithValue(err)
     }
+})
+
+export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAPI) =>{
+  try{
+    const res = await fetch(`${url}/api/company/get-profile`, {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        Accept: "application/json",
+      }
+    })
+    const data = await res.json()
+    console.log(res)
+    if(res.status == 200){
+      return {...data}
+    }else{
+      return thunkAPI.rejectWithValue(data)
+    }
+  }catch(err){
+    return thunkAPI.rejectWithValue(err)
+  }
 })
 
 const initialState = {
@@ -46,6 +71,7 @@ const companySlice = createSlice({
       state.company = payload;
       state.status = 200;
     }   
+
     const handleRejected = (state, { payload }) => {
       state.isLoading = false;
       state.status = 401
@@ -55,6 +81,10 @@ const companySlice = createSlice({
     .addCase(createCompany.pending, handlePending)
     .addCase(createCompany.fulfilled, handleFulfilled)
     .addCase(createCompany.rejected, handleRejected)
+
+    .addCase(companyInfo.pending, handlePending)
+    .addCase(companyInfo.fulfilled, handleFulfilled)
+    .addCase(companyInfo.rejected, handleRejected) 
 
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true
