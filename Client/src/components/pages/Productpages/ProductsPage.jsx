@@ -3,6 +3,7 @@ import { ProductStyle } from './Products.style';
 import Sidebar from '../../molecules/Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../../features/products/productSlice';
+import { Link } from 'react-router-dom';
 
 function ProductsPage() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function ProductsPage() {
                     </div>
                     <div className="product-status">
                       <span className="status-badge">Active Chatbot</span>
-                      <a href="edit-product.html" className="btn">Manage</a>
+                      <div href="edit-product.html" className="btn"><Link to={`/product-details/${data._id}`}>Manage</Link></div>
                     </div>
                   </div>
                 </div>

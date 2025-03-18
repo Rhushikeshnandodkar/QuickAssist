@@ -4,7 +4,6 @@ const User = require("../models/User");
 const Link = require("../models/Link")
 const axios = require("axios");
 const Manual = require("../models/Manual");
-
 const SECERATE_KEY = "greenbagboogie"
 
 exports.createChatBot = async(req, res) =>{
@@ -62,7 +61,7 @@ exports.askChatbot = async(req, res) => {
       const requestData = {
         name: product.product_name,
         question: question,
-        unique_id: productId,
+        unique_id: companyId,
         secerate_key : SECERATE_KEY, // Send the secret key in the request
     };
     const response = await axios.post(apiUrl, requestData, {
@@ -76,5 +75,23 @@ exports.askChatbot = async(req, res) => {
     return res.status(200).json({success : true, data : response.data})
     }catch(err){
       res.status(500).json({ success: false, message: err.message });
+    }
+}
+
+exports.yourBots = async(req, res) =>{
+    try{
+        const user = await User.findById(req.user.id)
+        const company = await CompanyProfile.findOne({user : user})
+        if (!company) {
+            return res.status(404).json({ success: false, message: "Company not found" });
+        }
+        // Corrected ID comparison
+        if (!company.user._id.equals(user._id)) {
+            return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
+        } 
+        const links = await Link.find({company : company}).populate("product", 'product_name description uploadedAt').populate({path : 'company', populate: {path : "user"}}).exec()
+        return res.status(200).json({success : true, data : links})
+    }catch(err){
+        res.status(500).json({ success: false, message: err.message }); 
     }
 }

@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
 const {v4 : uuidv4} = require("uuid")
 
-// Define the StudentProfile schema
 const LinkSchema = new mongoose.Schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company", // Reference to the CustomUser model
+    ref: "CompanyProfile",
     required: true,
   },
   product: {
     type : mongoose.Schema.Types.ObjectId,
-    ref : "Product",
+    ref : "Manual",
     required : true
   },
   useremail : {type : String, required: true},

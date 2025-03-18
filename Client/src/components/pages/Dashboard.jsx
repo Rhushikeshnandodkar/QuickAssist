@@ -13,7 +13,7 @@ function Dashboard() {
   const { user } = useSelector((state) => (
     state.user))
   const {company} = useSelector((state) =>(state.company))
-  const {products, isLoading} = useSelector((state) =>(state.products))
+  const {products, isLoading: productsLoading} = useSelector((state) =>(state.products))
 
   const fetchData = useCallback(() => {
     if(!products || !company){
@@ -26,6 +26,7 @@ function Dashboard() {
     fetchData();
   }, [fetchData])
   // console.log(company)
+  if(productsLoading) return <h3>Loading...</h3>
   return (
     <>
     <Sidebar />
@@ -52,31 +53,33 @@ function Dashboard() {
        <h1>Products</h1>
 
        <div className="products-grid">
-       {isLoading ? <h3>Loading....</h3> : (products.data && products.data.map((data) =>(
-            <div class="chatbot-card">
-            <div class="chatbot-header">
-                <div class="chatbot-title">{data.product_name}</div>
-                <span class="status-badge">Active</span>
+        {products?.data?.length ? (
+          products.data.map((product, index) =>(
+          <div className="chatbot-card" key={index}>
+            <div className="chatbot-header">
+              <div className="chatbot-title">{product.product_name}</div>
+              <span className="status-badge">Active</span>
             </div>
-            
-            <div class="chatbot-stats">
-                <div class="stat-item">
-                    <div class="stat-number">856</div>
-                    <div class="stat-label">Total Queries</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">95%</div>
-                    <div class="stat-label">Accuracy</div>
-                </div>
+            <div className="chatbot-stats">
+              <div className="stat-item">
+                <div className="stat-number">856</div>
+                <div className="stat-label">Total Queries</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">95%</div>
+                <div className="stat-label">Accuracy</div>
+              </div>
             </div>
+            <div className="chatbot-actions">
+              <button className="btn">View Analytics</button>
+              <button className="btn btn-outline">Settings</button>
+            </div>
+          </div>
 
-            <div class="chatbot-actions">
-                <button class="btn">View Analytics</button>
-                <button class="btn btn-outline">Settings</button>
-            </div>
-        </div>
-
-       )))}
+          ))
+        ) : (
+          <h3>Loading ...</h3>
+        )}
        </div>
        </div>
      </main>: 

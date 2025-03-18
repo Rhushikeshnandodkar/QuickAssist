@@ -1,9 +1,11 @@
 const express = require("express");
-const { createChatBot, askChatbot } = require("../controllers/cahtbotController");
+const { createChatBot, askChatbot, yourBots } = require("../controllers/cahtbotController");
 const middleware = require("../middleware/authMiddleware")
 const router = express.Router();
 
 router.post("/create-bot",middleware.protect, middleware.authorize('admin', 'company'), createChatBot);
 router.post("/ask-bot", askChatbot);
+router.get("/your-bots", middleware.protect, yourBots);
+
 
 module.exports = router;

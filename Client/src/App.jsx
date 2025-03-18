@@ -7,6 +7,8 @@ import Dashboard from "./components/pages/Dashboard";
 import CompanyForm from "./components/pages/Companypages/CompanyForm";
 import UploadProducts from "./components/pages/Companypages/UpoadProducts";
 import ProductsPage from "./components/pages/Productpages/ProductsPage";
+import CreateLink from "./components/pages/Productpages/CreateLink";
+import ProductDetails from "./components/pages/Productpages/ProductDetails";
 const App = () => {
   return (
     <Router>
@@ -17,6 +19,10 @@ const App = () => {
         <Route path="/create-company" element={<CompanyForm />} />
         <Route path="/upload-product" element={<UploadProducts />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/create-link/:companyId/:productId" element={<CreateLink />} />
+        <Route path="/product-details/:productId" element={<ProductDetails />} />
+
+
         
       </Routes>
     </Router>

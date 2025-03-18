@@ -41,9 +41,28 @@ export const fetchProducts = createAsyncThunk("product/fetchall", async(data, th
     return thunkAPI.rejectWithValue(err)
   }
 })
+
+export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, thunkAPI) =>{
+  console.log(id)
+  try{
+    const res = await fetch(`${url}/api/company/single-product/${id}`, {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        Accept: "application/json",
+      }
+    })
+    const data = await res.json()
+    return data
+  }catch(err){
+    return thunkAPI.rejectWithValue(err)
+  }
+})
 const initialState = {
   isLoading : true,
   products : null,
+  singleProduct : null,
   error : false,
   status : null,
 }
@@ -77,6 +96,18 @@ const productSlice = createSlice({
     .addCase(fetchProducts.fulfilled, handleFulfilled)
     .addCase(fetchProducts.rejected, handleRejected)
 
+    builder.addCase(fetchSingleProduct.pending, (state, action) =>{
+      state.isLoading = true
+    })
+    builder.addCase(fetchSingleProduct.fulfilled, (state, action) =>{
+      state.isLoading = false,
+      state.singleProduct = action.payload
+    })
+    builder.addCase(fetchSingleProduct.rejected, (state, action) =>{
+      state.isLoading = false,
+      state.error = action.payload
+    })
+
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true
   //   })
@@ -94,5 +125,6 @@ const productSlice = createSlice({
   // })
   }
 })
+
 
 export default productSlice.reducer
