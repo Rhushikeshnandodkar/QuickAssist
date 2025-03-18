@@ -103,7 +103,7 @@ exports.allProducts = async(req, res) =>{
     const user = await User.findById(req.user.id)
     const company = await CompanyProfile.findOne({user : user})
     if(!company){
-      return res.status(400).json({
+      return res.status(404).json({
         success : false,
         message : "company not found"
       })
@@ -115,3 +115,40 @@ exports.allProducts = async(req, res) =>{
     res.status(500).json({ success: false, message: err.message });
   }
 }
+
+const mongoose = require("mongoose");
+
+exports.getSingleProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Fetch product, user, and company
+    const product = await Manual.findById(id);
+    const user = await User.findById(req.user.id);
+    const company = await CompanyProfile.findOne({ user: user });
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    // Ensure IDs are properly compared as ObjectIds
+    if (!company || !product.company.equals(company._id)) {
+      console.log(product.company, company._id);
+      return res.status(403).json({
+        success: false,
+        message: "You don't have permission to perform this action",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

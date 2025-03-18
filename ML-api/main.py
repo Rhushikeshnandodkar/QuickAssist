@@ -76,6 +76,7 @@ async def ask_question(request: Request):
     Retrieve FAISS index based on name and unique_id and answer questions.
     """
     data = await request.json()
+    print(data)
     
     name = data.get("name")
     unique_id = data.get("unique_id")

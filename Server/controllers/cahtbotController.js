@@ -2,7 +2,8 @@ const CompanyProfile = require("../models/Company");
 const ProductModel = require("../models/Product")
 const User = require("../models/User");
 const Link = require("../models/Link")
-const axios = require("axios")
+const axios = require("axios");
+const Manual = require("../models/Manual");
 
 const SECERATE_KEY = "greenbagboogie"
 
@@ -22,7 +23,7 @@ exports.createChatBot = async(req, res) =>{
         if (!company.user._id.equals(user._id)) {
             return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
         }    
-        const product = await ProductModel.findById(productId)
+        const product = await Manual.findById(productId)
         if(!product){
             return res.status(404).json({ success: false, message: "Product not found" });
         } 
@@ -49,7 +50,7 @@ exports.askChatbot = async(req, res) => {
       const { companyId, productId, uniqueId, question } = req.body;
       const link = await Link.findOne({ uniqueId })
       const company = await CompanyProfile.findById(companyId)
-      const product = await ProductModel.findById(productId)
+      const product = await Manual.findById(productId)
       if(!link){
         return res.status(404).json({success : false, message : "Chatbot not found"})
       }
@@ -57,7 +58,7 @@ exports.askChatbot = async(req, res) => {
         return res.status(404).json({success : false, message : "this bot has expired"})
       }
       const apiUrl = "http://127.0.0.1:8000/ask/";
-
+      console.log(product.product_name)
       const requestData = {
         name: product.product_name,
         question: question,
