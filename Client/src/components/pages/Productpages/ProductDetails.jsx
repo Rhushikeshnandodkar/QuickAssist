@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { ProductDetailStyle } from './Products.style'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,12 +13,30 @@ function ProductDetails() {
     const { company, isLoading : companyLoading } = useSelector((state) => state.company)
     const { productId } = useParams()
 
+    const [currentBots, setcurrentBots] = useState([])
+
     // Fetch product and bots data on component mount
     useEffect(() => {
         dispatch(fetchSingleProduct(productId))
         dispatch(fetchAllbots())
         dispatch(companyInfo())
     }, [dispatch, productId])
+
+    const filteredBots = useMemo(() =>{
+        if (yourbots?.data && company?.data.company_name) { 
+            console.log(company.data.company_name)
+            return yourbots.data.filter(
+                (product) => product.product._id  === productId
+            )
+        } else {
+            console.log("Bots data or company info not available yet")
+            return []
+        }
+    }, [yourbots, company, productId])
+    console.log(filteredBots)
+
+    
+
 
     // Ensure data safety with loading and error handling
     if (productLoading || botLoading || companyLoading) return <h3>Loading...</h3>
@@ -65,8 +83,8 @@ function ProductDetails() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {yourbots?.data?.length ? (
-                                        yourbots.data.map((bot, index) => (
+                                    {filteredBots?.length ? (
+                                        filteredBots.map((bot, index) => (
                                             <tr key={index}>
                                                 <td>{bot.product.product_name || 'N/A'}</td>
                                                 <td>{bot.useremail || 'N/A'}</td>

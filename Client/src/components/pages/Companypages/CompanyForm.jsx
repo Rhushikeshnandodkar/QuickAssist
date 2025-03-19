@@ -22,12 +22,24 @@ const CompanyForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const {company_name, description, address} = formData
     dispatch(createCompany({company_name, description, address}))
-    navigate('/upload-product')
-    console.log("Form Data:", formData);
+    try {
+            const response = await dispatch(createLink({ companyId, productId, email }));
+            console.log(response)
+            if (response.meta.requestStatus === 'fulfilled') {
+                // ✅ Redirect on success
+                navigate(`/dashboard`);
+            } else {
+                console.error('Failed to create link:', response.error.message);
+                alert('Failed to submit. Please try again.');
+            }
+    } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred.');
+        }
   };
 
   return (
@@ -47,7 +59,7 @@ const CompanyForm = () => {
               type="text"
               id="company_name"
               required
-              placeholder="Enter product name"
+              placeholder="Enter company name"
               value={formData.company_name}
               onChange={handleChange}
             />
@@ -57,7 +69,7 @@ const CompanyForm = () => {
             <label htmlFor="productDescription">Company Description</label>
             <textarea
               id="description"
-              placeholder="Enter product description"
+              placeholder="Enter company description"
               value={formData.description}
               onChange={handleChange}
             />
@@ -67,7 +79,7 @@ const CompanyForm = () => {
             <label htmlFor="productDescription">Company Address</label>
             <textarea
               id="address"
-              placeholder="Enter product description"
+              placeholder="Enter address"
               value={formData.address}
               onChange={handleChange}
             />
@@ -79,7 +91,7 @@ const CompanyForm = () => {
           <button type="submit" className="auth-button">
               Create company
             </button>
-            <button type="submit" className="btn">Create Product & Generate Chatbot</button>
+            {/* <button type="submit" className="btn">Create Product & Generate Chatbot</button> */}
           </div>
         </form>
       </div>

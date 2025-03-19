@@ -33,7 +33,7 @@ function ProductsPage() {
         <main className="main-content">
           <div className="products-header">
             <h1>Products</h1>
-            <a href="add-product.html" className="btn">Add New Product</a>
+            <div className="btn"><Link to={"/upload-product"}>Add product</Link></div>
           </div>
 
           <div className="search-bar">

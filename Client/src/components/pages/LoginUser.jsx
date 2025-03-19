@@ -3,6 +3,9 @@ import { LoginStyle } from "./Users.style";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../features/userAuth/authSlice";
 import { useNavigate } from "react-router-dom";
+import chatimage from "../../images/chat3.png"
+import { Link } from "react-router-dom";
+
 const LoginUser = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -37,13 +40,13 @@ const LoginUser = () => {
       <div className="auth-container">
         <div className="image-section">
           <img
-            src="https://images.unsplash.com/photo-1635002962487-2c1d4d2f63c1?q=80&w=1080&auto=format&fit=crop"
+            src={chatimage}
             alt="Robot illustration"
           />
         </div>
         <div className="form-section">
           <h1>Login</h1>
-          <p className="subtitle">Turn Your manuals into conversation!</p>
+          <p className="subtitle">Turn Your user manuals into conversation!</p>
           {status==401 ? <><div className="alert"><h6>Please Enter Valid Details</h6></div></> : <></>}
           <form className="auth-form" onSubmit={handleSubmit}>
             <input
@@ -68,7 +71,7 @@ const LoginUser = () => {
           </form>
 
           <p className="switch-auth">
-            Already have an account? <a href="register.html">Signup!</a>
+            Don't have account? <Link to={'/register'}>Signup</Link>
           </p>
         </div>
       </div>

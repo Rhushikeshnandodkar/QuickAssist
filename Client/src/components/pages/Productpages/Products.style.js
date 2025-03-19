@@ -26,20 +26,20 @@ export const ProductStyle = styled.div`
             padding: 10px;
             border: 1px solid #e0e0e0;
             border-radius: 5px;
-            width: 300px;
+            width: 500px;
         }
 
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 15px;
         }
 
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 2px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #8080803b;
         }
 
         .product-image {
@@ -204,7 +204,7 @@ export const ProductDetailStyle = styled.div`
             background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #8080803b;
             margin-bottom: 20px;
         }
 

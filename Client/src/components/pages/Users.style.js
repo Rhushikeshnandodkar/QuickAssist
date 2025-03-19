@@ -18,9 +18,8 @@ export const RegisterStyle = styled.div`
 
         .container {
             width: 80%;
-            margin: 5% auto;
-            height: 100%;
-            // max-width: 1200px;
+            margin: 3% auto;
+            /* max-width: 1200px; */
             padding: 20px;
         }
 
@@ -29,9 +28,9 @@ export const RegisterStyle = styled.div`
             border-radius: 12px;
             overflow: hidden;
             display: flex;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+            border: 1px solid #8080803b;
         }
-
         .image-section {
             flex: 1;
             background: #f8f9fa;
@@ -147,8 +146,9 @@ export const LoginStyle = styled.div`
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
+            width: 80%;
+            margin: 3% auto;
+            /* max-width: 1200px; */
             padding: 20px;
         }
 
@@ -157,7 +157,8 @@ export const LoginStyle = styled.div`
             border-radius: 12px;
             overflow: hidden;
             display: flex;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+            border: 1px solid #8080803b;
         }
 
         .image-section {
@@ -173,7 +174,9 @@ export const LoginStyle = styled.div`
             max-width: 100%;
             height: auto;
         }
-
+        .subtitle{
+            font-size: 1.3rem;
+        }
         .form-section {
             flex: 1;
             padding: 60px;

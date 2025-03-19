@@ -13,20 +13,30 @@ export const CompanyFormStyle = styled.div`
         }
 
         .form-container {
-            max-width: 800px;
+            /* max-width: 800px; */
+            width: 90%;
             margin: 0 auto;
             background: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            /* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */
+            border: 1px solid #8080803b;
         }
 
         .form-header {
             margin-bottom: 30px;
         }
 
+        .form-header h1{
+            font-size: 1.4rem;
+            padding: 8px 0px;
+        }
+        .form-header p{
+            color: gray;
+
+        }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .form-group label {
@@ -40,9 +50,9 @@ export const CompanyFormStyle = styled.div`
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #d2cece;
-            border-radius: 5px;
+            border-radius: 3px;
             font-size: 16px;
         }
 
@@ -70,12 +80,15 @@ export const CompanyFormStyle = styled.div`
             color: var(--accent);
             margin-bottom: 10px;
         }
-
+        .auth-button{
+            padding: 15px;
+            border-radius: 3px;
+        }
         .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px 40px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
@@ -131,8 +144,16 @@ export const ProductsFormStyle = styled.div`
             margin-bottom: 30px;
         }
 
+        .form-header h1{
+            font-size: 1.4rem;
+            padding: 8px 0px;
+        }
+        .form-header p{
+            color: gray;
+
+        }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .form-group label {
@@ -158,7 +179,7 @@ export const ProductsFormStyle = styled.div`
         }
 
         .upload-area {
-            border: 2px dashed var(--border);
+            border: 2px dashed #8080803b;
             padding: 40px;
             text-align: center;
             margin: 20px 0;
@@ -176,11 +197,14 @@ export const ProductsFormStyle = styled.div`
             color: var(--accent);
             margin-bottom: 10px;
         }
-
+        .file-input{
+            width: 100%;
+        }
         .btn {
             background: black;
             color: white;
             border: none;
+            width: 100%;
             padding: 12px 24px;
             border-radius: 5px;
             cursor: pointer;
@@ -193,7 +217,7 @@ export const ProductsFormStyle = styled.div`
         }
 
         .btn-group {
-            display: flex;
+            /* display: flex; */
             gap: 10px;
             justify-content: flex-end;
             margin-top: 30px;

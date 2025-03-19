@@ -68,7 +68,6 @@ const chatbotSlicec = createSlice({
             state.isLoading = true
         })
         builder.addCase(fetchAllbots.fulfilled, (state, action) =>{
-            console.log(action)
             state.isLoading = false,
             state.yourbots = action.payload
         })

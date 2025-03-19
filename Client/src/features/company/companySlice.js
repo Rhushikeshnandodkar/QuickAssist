@@ -38,7 +38,7 @@ export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAP
       }
     })
     const data = await res.json()
-    console.log(res)
+
     if(res.status == 200){
       return {...data}
     }else{
@@ -66,7 +66,6 @@ const companySlice = createSlice({
     }
 
     const handleFulfilled = (state, {payload}) =>{
-        console.log(payload)
       state.isLoading = false;
       state.company = payload;
       state.status = 200;

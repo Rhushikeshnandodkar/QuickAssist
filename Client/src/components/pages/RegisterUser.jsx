@@ -3,6 +3,8 @@ import { RegisterStyle } from "./Users.style";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignup } from "../../features/userAuth/authSlice";
 import { useNavigate } from "react-router-dom";
+import chatimage from "../../images/chat2.png"
+import { Link } from "react-router-dom";
 
 const RegisterUser = () => {
   const navigate = useNavigate()
@@ -41,7 +43,7 @@ const RegisterUser = () => {
       <div className="auth-container">
         <div className="image-section">
           <img
-            src="https://images.unsplash.com/photo-1635002962487-2c1d4d2f63c1?q=80&w=1080&auto=format&fit=crop"
+            src={chatimage}
             alt="Robot illustration"
           />
         </div>
@@ -80,7 +82,7 @@ const RegisterUser = () => {
           </form>
 
           <p className="switch-auth">
-            Already have an account? <a href="login.html">Login!</a>
+            Allready have account? <Link to={'/login'}>Login</Link>
           </p>
         </div>
       </div>

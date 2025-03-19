@@ -3,14 +3,17 @@ import { CreateLinkStyle } from './Products.style';
 import { useDispatch } from 'react-redux';
 import { createLink } from '../../../features/chatbots/chatbotSlice';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CreateLink() {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {productId, companyId} = useParams()
     console.log(productId, companyId)
     const [formData, setFormData] = useState({
-        companyId : "67cbcd73f4a88d5c5f5fc41a",
-        productId : "67d5ada24ff892747beec92e",
+        companyId : companyId,
+        productId : productId,
         email: ''
     });
 
@@ -19,10 +22,24 @@ function CreateLink() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const {companyId, productId, email} = formData
-        dispatch(createLink({companyId, productId, email}))
+        // dispatch(createLink({companyId, productId, email}))
+        try {
+            const response = await dispatch(createLink({ companyId, productId, email }));
+            console.log(response)
+            if (response.meta.requestStatus === 'fulfilled') {
+                // ✅ Redirect on success
+                navigate(`/dashboard`);
+            } else {
+                console.error('Failed to create link:', response.error.message);
+                alert('Failed to submit. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred.');
+        }
     };
 
     return (
@@ -45,7 +62,7 @@ function CreateLink() {
                             </div>
                             <button type="submit" className="submit-button">Submit Order</button>
                         </form>
-                        <a href="product-detail.html" className="back-link">← Back to Product Details</a>
+                        <div className="back-link"> <Link to={`/product-details/${productId}`}>← Back to Product Details</Link></div>
                     </div>
                 </div>
             </CreateLinkStyle>

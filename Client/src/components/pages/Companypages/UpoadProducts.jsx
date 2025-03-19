@@ -74,7 +74,7 @@ const UploadProducts = () => {
                     <div className="form-group">
                         <label>Product Manual</label>
                         <div className="upload-area">
-                            <input type="file" accept=".pdf,.docx" onChange={handleFileChange} />
+                            <input type="file" className="file-input" accept=".pdf,.docx" onChange={handleFileChange} />
                             <p className="text-sm">Supported formats: PDF, DOCX (max 10MB)</p>
                         </div>
                     </div>

@@ -18,7 +18,11 @@ export const DashboardStyle = styled.div`
         body {
             background-color: var(--background);
         }
-
+        h1{
+            font-size: 2rem;
+            margin-bottom: 13px;
+            font-weight: 600;
+        }
         .navbar {
             position: fixed;
             top: 0;
@@ -90,7 +94,7 @@ export const DashboardStyle = styled.div`
             background: white;
             padding: 20px;
             /* border-radius: 10px; */
-            border: 1px solid #e9e4e4;
+            border: 1px solid #8080803b;
             /* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */
         }
 
@@ -115,7 +119,7 @@ export const DashboardStyle = styled.div`
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #8080803b;
         }
 
         .product-image {
@@ -165,9 +169,9 @@ export const DashboardStyle = styled.div`
         }
         .chatbot-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 3px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #8080803b;
         }
 
         .chatbot-header {

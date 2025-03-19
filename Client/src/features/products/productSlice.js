@@ -59,6 +59,8 @@ export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, t
     return thunkAPI.rejectWithValue(err)
   }
 })
+
+
 const initialState = {
   isLoading : true,
   products : null,
