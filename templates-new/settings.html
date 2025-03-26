@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A2F4F;
+            --secondary: #2E8BC0;
+            --accent: #FF6F61;
+            --background: #F5F5F5;
+            --text: #333333;
+            --white: #FFFFFF;
+            --light-gray: #E5E7EB;
+            --mid-gray: #9CA3AF;
+            --dark-gray: #4B5563;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --transition: all 0.25s ease;
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --danger: #DC2626;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .sidebar-logo {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .sidebar-logo span {
+            color: var(--secondary);
+        }
+        
+        .sidebar-menu {
+            padding: 25px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(42, 47, 79, 0.05);
+            color: var(--primary);
+        }
+        
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .settings-container {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 30px;
+        }
+        
+        .settings-nav {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .settings-nav-item {
+            padding: 15px 20px;
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .settings-nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-nav-item.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .settings-nav-item:hover:not(.active) {
+            background-color: rgba(42, 47, 79, 0.05);
+        }
+        
+        .settings-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .settings-section:not(:last-child) {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .settings-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .sublabel {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--mid-gray);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: var(--text);
+            background-color: var(--white);
+            transition: var(--transition);
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(46, 139, 192, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background-color: #232746;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2579a9;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--text);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-gray);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--light-gray);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--secondary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .settings-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .settings-row-left {
+            flex: 1;
+        }
+        
+        .settings-row-right {
+            margin-left: 20px;
+        }
+        
+        .settings-row-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .settings-row-description {
+            font-size: 13px;
+            color: var(--mid-gray);
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .color-option.active {
+            border-color: var(--secondary);
+        }
+        
+        .color-option.active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--white);
+        }
+        
+        .color-option:nth-child(1) {
+            background-color: #2A2F4F;
+        }
+        
+        .color-option:nth-child(2) {
+            background-color: #2E8BC0;
+        }
+        
+        .color-option:nth-child(3) {
+            background-color: #FF6F61;
+        }
+        
+        .color-option:nth-child(4) {
+            background-color: #4CAF50;
+        }
+        
+        .color-option:nth-child(5) {
+            background-color: #9C27B0;
+        }
+        
+        .danger-zone {
+            background-color: rgba(220, 38, 38, 0.05);
+            border: 1px solid rgba(220, 38, 38, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .danger-zone-title {
+            color: var(--danger);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 1024px) {
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-nav {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 10px;
+            }
+            
+            .settings-nav-item {
+                border-bottom: none;
+                border-radius: 6px;
+                margin-right: 10px;
+                padding: 10px 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Chatbot<span>Manuals</span></div>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <i>📊</i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <i>📈</i>
+                    <span>Analytics</span>
+                </a>
+                <a href="customers.html" class="menu-item">
+                    <i>👥</i>
+                    <span>Customers</span>
+                </a>
+                <a href="products.html" class="menu-item">
+                    <i>📦</i>
+                    <span>Products</span>
+                </a>
+                <a href="upload-manual.html" class="menu-item">
+                    <i>📤</i>
+                    <span>Upload Manual</span>
+                </a>
+                <a href="chatbot.html" class="menu-item">
+                    <i>🤖</i>
+                    <span>Chatbot</span>
+                </a>
+                <a href="settings.html" class="menu-item active">
+                    <i>⚙️</i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="menu-item">
+                    <i>🚪</i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+            </div>
+            
+            <div class="settings-container">
+                <nav class="settings-nav">
+                    <a href="#" class="settings-nav-item active">Profile</a>
+                    <a href="#" class="settings-nav-item">Account</a>
+                    <a href="#" class="settings-nav-item">Notifications</a>
+                    <a href="#" class="settings-nav-item">Appearance</a>
+                    <a href="#" class="settings-nav-item">API & Integrations</a>
+                    <a href="#" class="settings-nav-item">Billing & Plans</a>
+                </nav>
+                
+                <div class="settings-content">
+                    <div class="settings-section">
+                        <h2 class="settings-section-title">Profile Information</h2>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" value="Sarah Johnson" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" value="sarah.johnson@example.com" />
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" value="TechSolutions Inc." />
+                        </div>
+                        <div class="form-group">
+                            <label for="job-title">Job Title</label>
+                            <input type="text" id="job-title" value="Product Manager" />
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio">Product manager with 6 years of experience in SaaS solutions. Passionate about creating user-friendly documentation and intuitive products.</textarea>
+                        </div>
+                        <button class="btn btn-secondary">Save Changes</button>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h2 class="settings-section-title">Notification Preferences</h2>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Email Notifications</div>
+                                <div class="settings-row-description">Receive updates about your account via email</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Chatbot Performance Alerts</div>
+                                <div class="settings-row-description">Get notified when a chatbot's performance changes significantly</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Weekly Report</div>
+                                <div class="settings-row-description">Receive a weekly summary of your chatbots' performance</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Product Updates</div>
+                                <div class="settings-row-description">Stay informed about new features and improvements</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h2 class="settings-section-title">Appearance</h2>
+                        
+                        <div class="form-group">
+                            <label>Theme</label>
+                            <div class="color-options">
+                                <div class="color-option active"></div>
+                                <div class="color-option"></div>
+                                <div class="color-option"></div>
+                                <div class="color-option"></div>
+                                <div class="color-option"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Dark Mode</div>
+                                <div class="settings-row-description">Switch between light and dark themes</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-row">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Compact View</div>
+                                <div class="settings-row-description">Reduce spacing to show more content</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h2 class="settings-section-title">Security</h2>
+                        
+                        <div class="form-group">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" placeholder="Enter your current password" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" placeholder="Enter new password" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" placeholder="Confirm new password" />
+                        </div>
+                        
+                        <button class="btn">Update Password</button>
+                        
+                        <div class="settings-row" style="margin-top: 25px;">
+                            <div class="settings-row-left">
+                                <div class="settings-row-title">Two-Factor Authentication</div>
+                                <div class="settings-row-description">Add an extra layer of security to your account</div>
+                            </div>
+                            <div class="settings-row-right">
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <h2 class="settings-section-title">Danger Zone</h2>
+                        
+                        <div class="danger-zone">
+                            <div class="danger-zone-title">Delete Account</div>
+                            <p class="settings-row-description">Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn btn-danger" style="margin-top: 15px;">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

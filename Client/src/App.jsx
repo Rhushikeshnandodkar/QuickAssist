@@ -21,9 +21,6 @@ const App = () => {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/create-link/:companyId/:productId" element={<CreateLink />} />
         <Route path="/product-details/:productId" element={<ProductDetails />} />
-
-
-        
       </Routes>
     </Router>
   );

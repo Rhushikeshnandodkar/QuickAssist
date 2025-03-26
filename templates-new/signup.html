@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A2F4F;
+            --secondary: #2E8BC0;
+            --accent: #FF6F61;
+            --background: #F5F5F5;
+            --text: #333333;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 111, 97, 0.85), rgba(42, 47, 79, 0.9));
+            z-index: 1;
+        }
+        
+        .signup-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .signup-showcase {
+            flex: 1;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .showcase-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.1) 0.5px, transparent 1px),
+                              radial-gradient(circle at 90% 90%, rgba(255,255,255,0.08) 0.5px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+        
+        .showcase-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .showcase-logo {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+        
+        .showcase-heading {
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+        
+        .showcase-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .showcase-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 25px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .testimonial {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .author-info {
+            line-height: 1.4;
+        }
+        
+        .author-name {
+            font-weight: 500;
+        }
+        
+        .author-title {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .signup-form-container {
+            flex: 1;
+            background-color: var(--white);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .signup-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .signup-logo h1 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .signup-logo p {
+            color: var(--secondary);
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .signup-heading {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .signup-subheading {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group.focused label {
+            transform: translateY(-20px);
+            font-size: 12px;
+            color: var(--secondary);
+        }
+        
+        label {
+            position: absolute;
+            left: 15px;
+            top: 13px;
+            font-size: 14px;
+            color: #888;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #DDD;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            background-color: #F9FAFC;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.1);
+            background-color: var(--white);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 13px;
+            color: #888;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+        
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .terms input {
+            width: auto;
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+        
+        .terms a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .terms a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            background-color: #f05a4c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 111, 97, 0.2);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+            transition: 0.7s;
+        }
+        
+        .social-signup {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--white);
+            border: 1px solid #EEE;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .social-btn:hover {
+            background-color: #F9FAFC;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #AAA;
+            font-size: 13px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #EEE;
+        }
+        
+        .divider::before {
+            margin-right: 10px;
+        }
+        
+        .divider::after {
+            margin-left: 10px;
+        }
+        
+        .signup-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+        
+        .signup-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .signup-footer a:hover {
+            color: var(--primary);
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .feature {
+            text-align: center;
+            flex: 1;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .signup-container {
+                flex-direction: column;
+                max-width: 480px;
+            }
+            
+            .signup-showcase {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 0;
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .signup-form-container {
+                padding: 30px 20px;
+            }
+            
+            .social-signup {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-showcase">
+            <div class="showcase-pattern"></div>
+            <div class="showcase-content">
+                <div class="showcase-logo">ChatbotManuals</div>
+                <h1 class="showcase-heading">Transform your manuals into interactive experiences</h1>
+                <p class="showcase-text">Join thousands of companies that use ChatbotManuals to create intelligent, interactive support experiences for their customers.</p>
+                
+                <div class="showcase-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✨</div>
+                        <span>AI-Powered Solutions</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <span>Quick Setup</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <span>Multi-platform Support</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <span>Advanced Analytics</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">"ChatbotManuals transformed our customer support experience. Our manual-based chatbot now handles 78% of support queries without human intervention."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <div class="author-name">John Doe</div>
+                            <div class="author-title">CTO at TechCorp</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="signup-form-container">
+            <div class="signup-logo">
+                <h1>ChatbotManuals</h1>
+                <p>Start your journey today</p>
+            </div>
+            
+            <h2 class="signup-heading">Create your account</h2>
+            <p class="signup-subheading">Fill out the form to get started with ChatbotManuals</p>
+            
+            <form>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                    <div class="password-toggle">👁️</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                
+                <div class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                
+                <button type="submit" class="btn">Sign Up</button>
+                
+                <div class="divider">or sign up with</div>
+                
+                <div class="social-signup">
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
+                    </div>
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/microsoft.png" alt="Microsoft">
+                    </div>
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/apple-logo.png" alt="Apple">
+                    </div>
+                </div>
+            </form>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-text">AI-Powered</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">Fast Setup</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-text">Secure</div>
+                </div>
+            </div>
+            
+            <div class="signup-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add focus animation for input fields
+        const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentNode.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', () => {
+                if (!input.value) {
+                    input.parentNode.classList.remove('focused');
+                }
+            });
+            
+            // Check if the input already has a value (e.g. on page refresh)
+            if (input.value) {
+                input.parentNode.classList.add('focused');
+            }
+        });
+        
+        // Toggle password visibility
+        const togglePassword = document.querySelector('.password-toggle');
+        const passwordInput = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePassword.textContent = '👁️‍🗨️';
+            } else {
+                passwordInput.type = 'password';
+                togglePassword.textContent = '👁️';
+            }
+        });
+    </script>
+</body>
+</html>

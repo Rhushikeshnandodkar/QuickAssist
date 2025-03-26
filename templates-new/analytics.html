@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A2F4F;
+            --secondary: #2E8BC0;
+            --accent: #FF6F61;
+            --background: #F5F5F5;
+            --text: #333333;
+            --white: #FFFFFF;
+            --light-gray: #E5E7EB;
+            --mid-gray: #9CA3AF;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --transition: all 0.25s ease;
+            --sidebar-width: 260px;
+            --header-height: 70px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+            transition: var(--transition);
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .sidebar-logo {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .sidebar-logo span {
+            color: var(--secondary);
+        }
+        
+        .sidebar-menu {
+            padding: 25px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(42, 47, 79, 0.05);
+            color: var(--primary);
+        }
+        
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary);
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .date-filter {
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .date-filter select {
+            font-family: 'Poppins', sans-serif;
+            border: none;
+            background: transparent;
+            padding: 5px 10px;
+            font-size: 14px;
+            color: var(--text);
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .metric-title {
+            font-size: 16px;
+            color: var(--mid-gray);
+        }
+        
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+        
+        .icon-users {
+            background-color: var(--primary);
+        }
+        
+        .icon-chatbots {
+            background-color: var(--secondary);
+        }
+        
+        .icon-questions {
+            background-color: var(--accent);
+        }
+        
+        .icon-satisfaction {
+            background-color: #4CAF50;
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .metric-change {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .change-positive {
+            color: #4CAF50;
+        }
+        
+        .change-negative {
+            color: #F44336;
+        }
+        
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .chart-tabs {
+            display: flex;
+            background-color: var(--background);
+            border-radius: 8px;
+            padding: 5px;
+        }
+        
+        .chart-tab {
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .chart-tab.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .chart {
+            height: 300px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .chart-placeholder {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mid-gray);
+            background: linear-gradient(to right, var(--light-gray), var(--white), var(--light-gray));
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 0% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .performance-table {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .table-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead th {
+            text-align: left;
+            padding: 15px;
+            background-color: rgba(42, 47, 79, 0.05);
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        
+        tbody td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 14px;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(42, 47, 79, 0.02);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+        
+        .badge-warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+        }
+        
+        .badge-danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+        }
+        
+        @media (max-width: 1024px) {
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date-filter {
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-tabs {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Chatbot<span>Manuals</span></div>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <i>📊</i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="analytics.html" class="menu-item active">
+                    <i>📈</i>
+                    <span>Analytics</span>
+                </a>
+                <a href="customers.html" class="menu-item">
+                    <i>👥</i>
+                    <span>Customers</span>
+                </a>
+                <a href="products.html" class="menu-item">
+                    <i>📦</i>
+                    <span>Products</span>
+                </a>
+                <a href="upload-manual.html" class="menu-item">
+                    <i>📤</i>
+                    <span>Upload Manual</span>
+                </a>
+                <a href="chatbot.html" class="menu-item">
+                    <i>🤖</i>
+                    <span>Chatbot</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i>⚙️</i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="menu-item">
+                    <i>🚪</i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Analytics</h1>
+                <div class="date-filter">
+                    <select>
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                        <option>Last year</option>
+                        <option>Custom range</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">Total Users</div>
+                        <div class="metric-icon icon-users">👥</div>
+                    </div>
+                    <div class="metric-value">5,487</div>
+                    <div class="metric-change change-positive">
+                        ↑ 12.5% from last month
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">Active Chatbots</div>
+                        <div class="metric-icon icon-chatbots">🤖</div>
+                    </div>
+                    <div class="metric-value">183</div>
+                    <div class="metric-change change-positive">
+                        ↑ 8.2% from last month
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">Questions Answered</div>
+                        <div class="metric-icon icon-questions">❓</div>
+                    </div>
+                    <div class="metric-value">24,156</div>
+                    <div class="metric-change change-positive">
+                        ↑ 15.7% from last month
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-title">Satisfaction Rate</div>
+                        <div class="metric-icon icon-satisfaction">😊</div>
+                    </div>
+                    <div class="metric-value">94.2%</div>
+                    <div class="metric-change change-negative">
+                        ↓ 1.3% from last month
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="chart-title">User Engagement</div>
+                    <div class="chart-tabs">
+                        <div class="chart-tab active">Daily</div>
+                        <div class="chart-tab">Weekly</div>
+                        <div class="chart-tab">Monthly</div>
+                    </div>
+                </div>
+                <div class="chart">
+                    <div class="chart-placeholder">Interactive Chart Visualization</div>
+                </div>
+            </div>
+            
+            <div class="performance-table">
+                <div class="table-header">Chatbot Performance</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chatbot Name</th>
+                            <th>Customer</th>
+                            <th>Questions</th>
+                            <th>Satisfaction</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CameraBot 3000</td>
+                            <td>Canon Inc.</td>
+                            <td>5,241</td>
+                            <td>98.7%</td>
+                            <td><span class="badge badge-success">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>SmartHomeAssistant</td>
+                            <td>Phillips</td>
+                            <td>3,871</td>
+                            <td>92.4%</td>
+                            <td><span class="badge badge-success">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>PrinterPro</td>
+                            <td>HP Enterprise</td>
+                            <td>2,943</td>
+                            <td>86.2%</td>
+                            <td><span class="badge badge-warning">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>BrakeAssist</td>
+                            <td>Toyota Motors</td>
+                            <td>1,856</td>
+                            <td>91.8%</td>
+                            <td><span class="badge badge-success">Excellent</span></td>
+                        </tr>
+                        <tr>
+                            <td>KitchenMate</td>
+                            <td>Cuisinart</td>
+                            <td>1,473</td>
+                            <td>78.5%</td>
+                            <td><span class="badge badge-warning">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td>MachineCare</td>
+                            <td>DeWalt</td>
+                            <td>982</td>
+                            <td>65.3%</td>
+                            <td><span class="badge badge-danger">Needs Improvement</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

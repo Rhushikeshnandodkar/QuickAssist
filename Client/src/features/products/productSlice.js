@@ -77,7 +77,7 @@ const productSlice = createSlice({
       state.isLoading = true,
       state.error = null
     }
-
+    
     const handleFulfilled = (state, {payload}) =>{
         console.log(payload)
       state.isLoading = false;

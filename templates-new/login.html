@@ -1,137 +1,14 @@
-import styled from "styled-components"
-
-export const RegisterStyle = styled.div`
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-
-        body {
-            background-color: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            width: 80%;
-            margin: 3% auto;
-            /* max-width: 1200px; */
-            padding: 20px;
-        }
-
-        .auth-container {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
-            border: 1px solid #8080803b;
-        }
-        .image-section {
-            flex: 1;
-            background: #f8f9fa;
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .image-section img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .form-section {
-            flex: 1;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            color: #000;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 32px;
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        input {
-            padding: 12px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #000;
-        }
-
-        .auth-button {
-            background: #000;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .auth-button:hover {
-            background: #333;
-        }
-
-        .switch-auth {
-            margin-top: 24px;
-            text-align: center;
-            color: #666;
-        }
-
-        .switch-auth a {
-            color: #000;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .switch-auth a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .auth-container {
-                flex-direction: column;
-            }
-
-            .image-section {
-                padding: 20px;
-            }
-
-            .form-section {
-                padding: 30px;
-            }
-        }
-`;
-
-export const LoginStyle = styled.div`
-       
-       :root {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
             --primary: #2A2F4F;
             --secondary: #2E8BC0;
             --accent: #FF6F61;
@@ -141,38 +18,42 @@ export const LoginStyle = styled.div`
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.25s ease;
         }
-       * {
+        
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        .container-main {
-            /* font-family: 'Poppins', sans-serif; */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); */
+            background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
             background-size: cover;
             background-position: center;
             position: relative;
         }
         
-        .container-main::before {
+        body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* background: linear-gradient(135deg, rgba(42, 47, 79, 0.9), rgba(46, 139, 192, 0.8)); */
+            background: linear-gradient(135deg, rgba(42, 47, 79, 0.9), rgba(46, 139, 192, 0.8));
             z-index: 1;
         }
-           .login-container {
+        
+        .login-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             position: relative;
             z-index: 2;
             display: flex;
@@ -187,9 +68,7 @@ export const LoginStyle = styled.div`
             position: relative;
             overflow: hidden;
         }
-        .byvBev .btn{
-            background-color: #232746;
-        }
+        
         .login-card::before {
             content: '';
             position: absolute;
@@ -271,7 +150,6 @@ export const LoginStyle = styled.div`
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #DDD;
-            margin-bottom: 15px;
             border-radius: 10px;
             font-family: 'Poppins', sans-serif;
             font-size: 14px;
@@ -332,8 +210,8 @@ export const LoginStyle = styled.div`
             display: block;
             width: 100%;
             padding: 14px;
-            background-color: #232746;
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
             border: none;
             border-radius: 10px;
             font-family: 'Poppins', sans-serif;
@@ -497,4 +375,100 @@ export const LoginStyle = styled.div`
                 flex-direction: column;
             }
         }
-`;
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="floating-circle circle-1"></div>
+            <div class="floating-circle circle-2"></div>
+            <div class="floating-circle circle-3"></div>
+            
+            <div class="login-logo">
+                <h1>ChatbotManuals</h1>
+                <p>Transform manuals into interactive experiences</p>
+            </div>
+            
+            <h2 class="login-heading">Welcome back</h2>
+            <p class="login-subheading">Enter your credentials to access your account</p>
+            
+            <form>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                    <div class="password-toggle">👁️</div>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn">Login Now</button>
+                
+                <div class="divider">or continue with</div>
+                
+                <div class="social-login">
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google">
+                    </div>
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/microsoft.png" alt="Microsoft">
+                    </div>
+                    <div class="social-btn">
+                        <img src="https://img.icons8.com/color/48/000000/apple-logo.png" alt="Apple">
+                    </div>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add focus animation for input fields
+        const inputs = document.querySelectorAll('input');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentNode.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', () => {
+                if (!input.value) {
+                    input.parentNode.classList.remove('focused');
+                }
+            });
+            
+            // Check if the input already has a value (e.g. on page refresh)
+            if (input.value) {
+                input.parentNode.classList.add('focused');
+            }
+        });
+        
+        // Toggle password visibility
+        const togglePassword = document.querySelector('.password-toggle');
+        const passwordInput = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePassword.textContent = '👁️‍🗨️';
+            } else {
+                passwordInput.type = 'password';
+                togglePassword.textContent = '👁️';
+            }
+        });
+    </script>
+</body>
+</html>

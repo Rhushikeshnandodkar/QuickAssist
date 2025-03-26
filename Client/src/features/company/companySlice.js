@@ -58,7 +58,7 @@ const initialState = {
 
 const companySlice = createSlice({
   name : "company",
-  initialState,
+  initialState, 
   extraReducers : (builder) =>{
     const handlePending = (state) =>{
       state.isLoading = true,

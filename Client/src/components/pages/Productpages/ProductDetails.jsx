@@ -6,6 +6,9 @@ import { fetchSingleProduct } from '../../../features/products/productSlice'
 import { fetchAllbots } from '../../../features/chatbots/chatbotSlice'
 import { Link } from 'react-router-dom'
 import { companyInfo } from '../../../features/company/companySlice'
+import GlobalStyle from '../../molecules/gloable.style'
+import Sidebar from '../../molecules/Sidebar'
+import Navbar from '../../molecules/Navbar'
 function ProductDetails() {
     const dispatch = useDispatch()
     const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
@@ -39,89 +42,149 @@ function ProductDetails() {
 
 
     // Ensure data safety with loading and error handling
-    if (productLoading || botLoading || companyLoading) return <h3>Loading...</h3>
+    // if (productLoading || botLoading || companyLoading) return <h3>Loading...</h3>
     if (botError) return <h3>Error loading bots: {botError}</h3>
 
     return (
         <ProductDetailStyle>
-            <div className="container">
-                <div className="product-grid">
-                    <div className="main-content">
-                        {/* Product Info Section */}
-                        <div className="product-info">
-                            <h1 className="product-title">{singleProduct?.data?.product_name || 'Product Name'}</h1>
-                            <p>{singleProduct?.data?.description || 'No description available'}</p>
-                            <div className="product-meta">
-                                <div className="meta-item">
-                                    <span>Last Updated</span>
-                                    <strong>2024-03-15</strong>
+          <GlobalStyle/>
+           
+            <Sidebar/>
+            <Navbar/>
+            {productLoading || botLoading || companyLoading ? <>
+                     Loading ...   
+            
+            </> : <>
+            <div className="main-content">
+            <div className="content">
+                <Link to={'/products'} className="back-link">
+                <span className="material-symbols-rounded">arrow_back</span>
+                Back to Products
+                </Link>
+                <div className="product-detail-container">
+                <div className="product-info">
+                    <h1 className="product-title">{singleProduct?.data?.product_name || 'Product Name'}</h1>
+                    <div className="product-meta">
+                    <div className="meta-item">
+                        <span className="material-symbols-rounded">category</span>
+                        <span>Electronics</span>
+                    </div>
+                    <div className="meta-item">
+                        <span className="material-symbols-rounded">inventory_2</span>
+                        <span>SKU: SHH-2023-PRO</span>
+                    </div>
+                    <div className="product-badge">New</div>
+                    </div>
+                    <p className="product-description">
+                    {singleProduct?.data?.description || 'No description available'}
+                    </p>
+                    <div className="product-features">
+                    {/* <h3 className="feature-title">Key Features</h3> */}
+                    {/* <div className="feature-list">
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">mic</span>
+                        </div>
+                        <span>Voice Control</span>
+                        </div>
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">touch_app</span>
+                        </div>
+                        <span>Touch Screen</span>
+                        </div>
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">wifi</span>
+                        </div>
+                        <span>Wi-Fi &amp; Bluetooth</span>
+                        </div>
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">auto_mode</span>
+                        </div>
+                        <span>Automation</span>
+                        </div>
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">smartphone</span>
+                        </div>
+                        <span>Mobile App</span>
+                        </div>
+                        <div className="feature-item">
+                        <div className="feature-icon">
+                            <span className="material-symbols-rounded">security</span>
+                        </div>
+                        <span>Security Features</span>
+                        </div>
+                    </div> */}
+                    </div>
+                    <div className="product-actions">
+                    <Link to={`/create-link/${company.data._id}/${productId}`} className="btn btn-primary">
+                        <span className="material-symbols-rounded">smart_toy</span>
+                        Create Chatbot
+                    </Link>
+                    <button className="btn btn-secondary">
+                        <span className="material-symbols-rounded">edit</span>
+                        Edit Product
+                    </button>
+                    </div>
+                </div>
+                </div>
+                <div className="tab-container">
+                <div className="tab-nav">
+                    {/* <button className="tab-btn active">Manuals</button> */}
+                    <button className="tab-btn active">Customers</button>
+                </div>
+                <div className="tab-content">
+                    <div className="manual-list">
+
+                    {filteredBots?.length ? (
+                                        filteredBots.map((bot, index) => (
+                                            <div className="manual-item">
+                                <div className="manual-icon">
+                                <span className="material-symbols-rounded">description</span>
                                 </div>
-                                <div className="meta-item">
-                                    <span>Total Customers</span>
-                                    <strong>847</strong>
+                                <div className="manual-info">
+                                <div className="manual-title">{bot.useremail || 'N/A'}</div>
+                                <div className="manual-meta">
+                                    <span>PDF • 4.8 MB</span>
+                                    <span>crated:{bot.createdAt || 'N/A'}</span>
                                 </div>
-                                <div className="meta-item">
-                                    <span>Engagement Rate</span>
-                                    <strong>87%</strong>
+                                </div>
+                                <div className="manual-actions">
+                                {/* <button className="manual-btn">
+                                    <span className="material-symbols-rounded">visibility</span>
+                                </button> */}
+                                {/* <button className="manual-btn">
+                                    <span className="material-symbols-rounded">download</span>
+                                </button> */}
+                                <a href="chatbot.html" className="manual-btn">
+                                    <span className="material-symbols-rounded">smart_toy</span>
+                                </a>
+                                {/* <button className="manual-btn">
+                                    <span className="material-symbols-rounded">more_vert</span>
+                                </button> */}
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Customer List Section */}
-                        <div className="customer-list">
-                            <h2 className="section-title">
-                                Customer List
-                                <button className="btn"><Link to={`/create-link/${company.data._id}/${productId}`}>Add customer</Link></button>
-                            </h2>
-                            <table className="customer-table">
-                                <thead>
-                                    <tr>
-                                        <th>Customer Name</th>
-                                        <th>Email</th>
-                                        <th>Join Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredBots?.length ? (
-                                        filteredBots.map((bot, index) => (
-                                            <tr key={index}>
-                                                <td>{bot.product.product_name || 'N/A'}</td>
-                                                <td>{bot.useremail || 'N/A'}</td>
-                                                <td>{bot.createdAt || 'N/A'}</td>
-                                                <td>
-                                                    <span className="status-badge">{bot.status || 'Active'}</span>
-                                                </td>
-                                            </tr>
                                         ))
                                     ) : (
                                         <tr>
                                             <td colSpan="4">No bots found</td>
                                         </tr>
                                     )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  
 
-                    {/* Sidebar Section */}
-                    <div className="sidebar">
-                        <div className="customer-section">
-                            <h2 className="section-title">Customer Engagement</h2>
-                            <div className="engagement-stats">
-                                <div className="stat-card">
-                                    <h4>Today's Activity</h4>
-                                    <div className="stat-value">24</div>
-                                </div>
-                                <div className="stat-card">
-                                    <h4>This Week</h4>
-                                    <div className="stat-value">156</div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
+                </div>
             </div>
+            </div>
+            </>}
+
+
+
         </ProductDetailStyle>
     )
 }

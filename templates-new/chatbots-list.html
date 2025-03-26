@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chatbots | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2A2F4F;
+            --primary-light: #3d4270;
+            --secondary: #2E8BC0;
+            --accent: #FF6F61;
+            --background: #F5F5F5;
+            --text: #333333;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --muted: #6c757d;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: var(--white);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.02);
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .sidebar-logo img {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .sidebar-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .sidebar-content {
+            padding: 20px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+        }
+        
+        .sidebar-nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text);
+            text-decoration: none;
+            gap: 15px;
+            font-size: 15px;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-nav-link:hover, .sidebar-nav-link.active {
+            background-color: rgba(42, 47, 79, 0.05);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+        
+        .sidebar-nav-link i {
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        .sidebar-footer {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--background);
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        /* Main Content Area */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            box-shadow: 0 6px 15px rgba(42, 47, 79, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-icon {
+            padding: 10px;
+        }
+        
+        /* Search Box */
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(46, 139, 192, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 20px;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th, .table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .table th {
+            font-weight: 600;
+            color: var(--primary);
+            background-color: rgba(0,0,0,0.01);
+            position: sticky;
+            top: 0;
+        }
+        
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table tr:hover {
+            background-color: rgba(0,0,0,0.01);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .status-inactive {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-active::before {
+            background-color: var(--success);
+        }
+        
+        .status-inactive::before {
+            background-color: var(--danger);
+        }
+        
+        .status-pending::before {
+            background-color: var(--warning);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        
+        .action-btn-primary {
+            background-color: rgba(46, 139, 192, 0.1);
+            color: var(--secondary);
+        }
+        
+        .action-btn-primary:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .action-btn-danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+        
+        .action-btn-danger:hover {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .action-btn-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .action-btn-success:hover {
+            background-color: var(--success);
+            color: var(--white);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .pagination-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: var(--white);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(42, 47, 79, 0.3);
+            transition: var(--transition);
+            border: none;
+            font-size: 24px;
+            z-index: 99;
+        }
+        
+        .fab:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(42, 47, 79, 0.4);
+        }
+        
+        /* Utility Classes */
+        .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        
+        /* Help Widget */
+        .help-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            z-index: 98;
+        }
+        
+        .help-trigger {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(46, 139, 192, 0.3);
+            transition: var(--transition);
+            border: none;
+            font-size: 20px;
+        }
+        
+        .help-trigger:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar.expanded {
+                width: 280px;
+            }
+            
+            .sidebar-logo span, .user-details, .sidebar-nav-link span {
+                display: none;
+            }
+            
+            .sidebar.expanded .sidebar-logo span, 
+            .sidebar.expanded .user-details, 
+            .sidebar.expanded .sidebar-nav-link span {
+                display: inline-block;
+            }
+            
+            .main {
+                margin-left: 80px;
+            }
+            
+            .sidebar.expanded + .main {
+                margin-left: 280px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-visible {
+                width: 280px;
+                transform: translateX(0);
+            }
+            
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            .table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="https://via.placeholder.com/36" alt="Logo">
+                <span>ChatbotManuals</span>
+            </div>
+            <button class="sidebar-toggle">≡</button>
+        </div>
+        
+        <div class="sidebar-content">
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-item">
+                    <a href="dashboard.html" class="sidebar-nav-link">
+                        <i>📊</i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a href="chatbots-list.html" class="sidebar-nav-link active">
+                        <i>🤖</i>
+                        <span>My Chatbots</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a href="products.html" class="sidebar-nav-link">
+                        <i>📦</i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a href="analytics.html" class="sidebar-nav-link">
+                        <i>📈</i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a href="settings.html" class="sidebar-nav-link">
+                        <i>⚙️</i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="User" class="user-avatar">
+                <div class="user-details">
+                    <div class="user-name">Sarah Johnson</div>
+                    <div class="user-role">Product Manager</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="main">
+        <div class="page-header">
+            <h1 class="page-title">My Chatbots</h1>
+            <div class="page-actions">
+                <button class="btn btn-primary">
+                    <span>+ New Chatbot</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search chatbots...">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Chatbot Name</th>
+                        <th>Created Date</th>
+                        <th>Manual Source</th>
+                        <th>Status</th>
+                        <th>Conversations</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="truncate">CRM User Guide Bot</td>
+                        <td>May 10, 2023</td>
+                        <td class="truncate">CRM_Manual_v2.1.pdf</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>1,245</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn action-btn-primary" title="Edit">✏️</button>
+                                <button class="action-btn action-btn-primary" title="View">👁️</button>
+                                <button class="action-btn action-btn-danger" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="truncate">HR Policies Assistant</td>
+                        <td>June 15, 2023</td>
+                        <td class="truncate">HR_Policies_2023.pdf</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>892</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn action-btn-primary" title="Edit">✏️</button>
+                                <button class="action-btn action-btn-primary" title="View">👁️</button>
+                                <button class="action-btn action-btn-danger" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="truncate">Product Installation Guide</td>
+                        <td>July 22, 2023</td>
+                        <td class="truncate">Installation_Manual.pdf</td>
+                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                        <td>421</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn action-btn-primary" title="Edit">✏️</button>
+                                <button class="action-btn action-btn-primary" title="View">👁️</button>
+                                <button class="action-btn action-btn-danger" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="truncate">Onboarding Assistant</td>
+                        <td>August 5, 2023</td>
+                        <td class="truncate">New_Employee_Handbook.pdf</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>1,873</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn action-btn-primary" title="Edit">✏️</button>
+                                <button class="action-btn action-btn-primary" title="View">👁️</button>
+                                <button class="action-btn action-btn-danger" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="truncate">Software Troubleshooting Guide</td>
+                        <td>September 12, 2023</td>
+                        <td class="truncate">Troubleshooting_Manual.pdf</td>
+                        <td><span class="status-badge status-pending">Training</span></td>
+                        <td>0</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn action-btn-primary" title="Edit">✏️</button>
+                                <button class="action-btn action-btn-primary" title="View">👁️</button>
+                                <button class="action-btn action-btn-danger" title="Delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pagination">
+            <button class="pagination-btn">⟨</button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">⟩</button>
+        </div>
+        
+        <!-- Floating Action Button -->
+        <button class="fab">+</button>
+        
+        <!-- Help Widget -->
+        <div class="help-widget">
+            <button class="help-trigger">?</button>
+        </div>
+    </main>
+    
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('expanded');
+            document.querySelector('.sidebar').classList.toggle('mobile-visible');
+        });
+    </script>
+</body>
+</html>
