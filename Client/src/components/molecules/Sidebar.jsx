@@ -35,43 +35,43 @@ function Sidebar() {
             </Link>
             <Link 
   to={'/products'} 
-  className={`menu-item ${window.location.pathname === "/products" || window.location.pathname === "/product-details" ? "active" : ""}`}
+  className={`menu-item ${window.location.pathname === "/products" || window.location.pathname.startsWith("/product-details/") ? "active" : ""}`}
 >
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">apps</span>
                 </span>
                 <span class="menu-text">Products</span>
             </Link>
-            <a href="upload-manual.html" class="menu-item">
+            {/* <a href="upload-manual.html" class="menu-item">
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">upload_file</span>
                 </span>
                 <span class="menu-text">Upload Manuals</span>
-            </a>
-            <a href="create-customer.html" class="menu-item">
+            </a> */}
+            {/* <a href="create-customer.html" class="menu-item">
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">person_add</span>
                 </span>
                 <span class="menu-text">Customers</span>
-            </a>
-            <a href="chatbot.html" class="menu-item">
+            </a> */}
+            <Link to={'/chatbots'} class={`menu-item ${window.location.pathname === "/chatbots" ? "active" : ""}`}>
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">smart_toy</span>
                 </span>
                 <span class="menu-text">Chatbots</span>
-            </a>
+            </Link>
             <a href="#" class="menu-item">
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">analytics</span>
                 </span>
                 <span class="menu-text">Analytics</span>
             </a>
-            <a href="create-profile.html" class="menu-item">
+            <Link to={`/create-company`} class={`menu-item ${window.location.pathname === "/create-company" ? "active" : ""}`}>
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">settings</span>
                 </span>
                 <span class="menu-text">Settings</span>
-            </a>
+            </Link>
         </div>
         
         <div class="sidebar-footer">

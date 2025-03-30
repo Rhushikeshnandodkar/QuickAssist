@@ -84,10 +84,12 @@ function ProductsPage() {
                   <span className="material-symbols-rounded search-icon">search</span>
                   <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} type="text" className="search-input" placeholder="Search products..." />
                 </div>
+                <Link to={'/upload-product'}>
                 <button className="btn">
                   <span className="material-symbols-rounded">add</span>
                   Add Product
                 </button>
+                </Link>
               </div>
             </div>
             <div className="product-grid">

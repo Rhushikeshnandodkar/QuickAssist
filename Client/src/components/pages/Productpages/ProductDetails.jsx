@@ -18,12 +18,16 @@ function ProductDetails() {
 
     const [currentBots, setcurrentBots] = useState([])
 
-    // Fetch product and bots data on component mount
+    const [hasFetched, setHasFetched] = useState(false);
+
     useEffect(() => {
-        dispatch(fetchSingleProduct(productId))
-        dispatch(fetchAllbots())
-        dispatch(companyInfo())
-    }, [dispatch, productId])
+        if (!hasFetched) {
+            dispatch(fetchSingleProduct(productId));
+            dispatch(fetchAllbots());
+            dispatch(companyInfo());
+            setHasFetched(true);
+        }
+    }, [dispatch, productId, hasFetched]);
 
     const filteredBots = useMemo(() =>{
         if (yourbots?.data && company?.data.company_name) { 
@@ -38,11 +42,6 @@ function ProductDetails() {
     }, [yourbots, company, productId])
     console.log(filteredBots)
 
-    
-
-
-    // Ensure data safety with loading and error handling
-    // if (productLoading || botLoading || companyLoading) return <h3>Loading...</h3>
     if (botError) return <h3>Error loading bots: {botError}</h3>
 
     return (
@@ -52,7 +51,7 @@ function ProductDetails() {
             <Sidebar/>
             <Navbar/>
             {productLoading || botLoading || companyLoading ? <>
-                     Loading ...   
+                  return <div>Loading...</div>   
             
             </> : <>
             <div className="main-content">
@@ -79,45 +78,6 @@ function ProductDetails() {
                     {singleProduct?.data?.description || 'No description available'}
                     </p>
                     <div className="product-features">
-                    {/* <h3 className="feature-title">Key Features</h3> */}
-                    {/* <div className="feature-list">
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">mic</span>
-                        </div>
-                        <span>Voice Control</span>
-                        </div>
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">touch_app</span>
-                        </div>
-                        <span>Touch Screen</span>
-                        </div>
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">wifi</span>
-                        </div>
-                        <span>Wi-Fi &amp; Bluetooth</span>
-                        </div>
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">auto_mode</span>
-                        </div>
-                        <span>Automation</span>
-                        </div>
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">smartphone</span>
-                        </div>
-                        <span>Mobile App</span>
-                        </div>
-                        <div className="feature-item">
-                        <div className="feature-icon">
-                            <span className="material-symbols-rounded">security</span>
-                        </div>
-                        <span>Security Features</span>
-                        </div>
-                    </div> */}
                     </div>
                     <div className="product-actions">
                     <Link to={`/create-link/${company.data._id}/${productId}`} className="btn btn-primary">
@@ -153,18 +113,9 @@ function ProductDetails() {
                                 </div>
                                 </div>
                                 <div className="manual-actions">
-                                {/* <button className="manual-btn">
-                                    <span className="material-symbols-rounded">visibility</span>
-                                </button> */}
-                                {/* <button className="manual-btn">
-                                    <span className="material-symbols-rounded">download</span>
-                                </button> */}
                                 <a href="chatbot.html" className="manual-btn">
                                     <span className="material-symbols-rounded">smart_toy</span>
                                 </a>
-                                {/* <button className="manual-btn">
-                                    <span className="material-symbols-rounded">more_vert</span>
-                                </button> */}
                                 </div>
                             </div>
                                         ))
@@ -173,18 +124,12 @@ function ProductDetails() {
                                             <td colSpan="4">No bots found</td>
                                         </tr>
                                     )}
-                  
-
-
                     </div>
                 </div>
                 </div>
             </div>
             </div>
             </>}
-
-
-
         </ProductDetailStyle>
     )
 }

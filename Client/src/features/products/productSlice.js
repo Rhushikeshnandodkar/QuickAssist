@@ -61,6 +61,7 @@ export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, t
 })
 
 
+
 const initialState = {
   isLoading : true,
   products : null,
@@ -110,21 +111,6 @@ const productSlice = createSlice({
       state.error = action.payload
     })
 
-  //   builder.addCase(userSignup.pending, (state, {payload}) =>{
-  //     state.isLoading = true
-  //   })
-  //   .addCase(userSignup.fulfilled, (state, {payload}) =>{
-  //     state.isLoading = false
-  //     state.userToken = localStorage.getItem("userToken")
-  //     state.isAuthenticated = true;
-  //     state.status = 200
-  //   })
-  //   .addCase(userSignup.rejected, (state, {payload}) => {
-  //     state.isLoading = false
-  //     state.error = payload
-  //     state.isAuthenticated = false;
-  //     state.userToken = null;
-  // })
   }
 })
 

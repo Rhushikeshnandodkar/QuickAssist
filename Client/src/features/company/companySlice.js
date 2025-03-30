@@ -49,6 +49,7 @@ export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAP
   }
 })
 
+
 const initialState = {
   isLoading : true,
   company : null,

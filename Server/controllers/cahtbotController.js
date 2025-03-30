@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Link = require("../models/Link")
 const axios = require("axios");
 const Manual = require("../models/Manual");
+const Message = require("../models/Messages");
 const SECERATE_KEY = "greenbagboogie"
 
 exports.createChatBot = async(req, res) =>{
@@ -53,9 +54,14 @@ exports.askChatbot = async(req, res) => {
       if(!link){
         return res.status(404).json({success : false, message : "Chatbot not found"})
       }
-      if(link.queriesUsed >= 3){
+      if(link.queriesUsed >= 10){
+        // link.isExpired = true
         return res.status(404).json({success : false, message : "this bot has expired"})
       }
+
+      const user_message = new Message({sender : "user", content : question, uniqueId})
+      await user_message.save()
+
       const apiUrl = "http://127.0.0.1:8000/ask/";
       console.log(product.product_name)
       const requestData = {
@@ -72,6 +78,9 @@ exports.askChatbot = async(req, res) => {
         link.queriesUsed = link.queriesUsed + 1
         link.save()
     }
+    const bot_response = new Message({sender : "bot", content : response.data.answer.content, uniqueId})
+    await bot_response.save()
+    console.log(response.data.answer.content)
     return res.status(200).json({success : true, data : response.data})
     }catch(err){
       res.status(500).json({ success: false, message: err.message });
@@ -93,5 +102,19 @@ exports.yourBots = async(req, res) =>{
         return res.status(200).json({success : true, data : links})
     }catch(err){
         res.status(500).json({ success: false, message: err.message }); 
+    }
+}
+
+exports.currentBot = async(req, res) =>{
+    try{
+        const {uniqueId} = req.body
+        const bot = await Link.findOne({uniqueId : uniqueId}).populate("product", 'product_name description uploadedAt').populate("company", "company_name").exec()
+        const messages = await Message.find({uniqueId : uniqueId})
+        if(!bot){
+            return res.status(403).json({success : false, message : "bot not found"})
+        }
+        res.status(200).json({success: true, data : {botdata : bot, messages : messages}})
+    }catch(err){
+        res.status(500).json({success : false, message : err.message})
     }
 }

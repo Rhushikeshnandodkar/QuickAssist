@@ -5,6 +5,8 @@ import Sidebar from "../../molecules/Sidebar";
 import { getUserInfo } from "../../../features/userAuth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { createCompany } from "../../../features/company/companySlice";
+import GlobalStyle from "../../molecules/gloable.style";
+
 const CompanyForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -25,10 +27,13 @@ const CompanyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {company_name, description, address} = formData
-    dispatch(createCompany({company_name, description, address}))
+    // dispatch(createCompany({company_name, description, address}))
     try {
-            const response = await dispatch(createLink({ companyId, productId, email }));
+            const response = await dispatch(createCompany({company_name, description, address}));
             console.log(response)
+            if(response.meta.requestStatus === "pending"){
+              return <h2>Loading PDF please wait.....</h2>
+            }
             if (response.meta.requestStatus === 'fulfilled') {
                 // ✅ Redirect on success
                 navigate(`/dashboard`);
@@ -44,6 +49,7 @@ const CompanyForm = () => {
 
   return (
     <CompanyFormStyle>
+      <GlobalStyle/>
         <Sidebar/>
     <main className="main-content">
       <div className="form-container">

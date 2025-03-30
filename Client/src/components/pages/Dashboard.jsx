@@ -129,12 +129,12 @@ function Dashboard() {
             <div className="quick-actions">
               <div className="section-title">Quick Actions</div>
               <div className="actions-grid">
-                <a href="upload-manual.html" className="action-card">
+                <Link to={'/upload-product'} className="action-card">
                   <div className="action-icon">
                     <span className="material-symbols-rounded">upload_file</span>
                   </div>
                   <div className="action-label">Upload Manual</div>
-                </a>
+                </Link>
                 <a href="create-customer.html" className="action-card">
                   <div className="action-icon">
                     <span className="material-symbols-rounded">person_add</span>
@@ -147,15 +147,15 @@ function Dashboard() {
                   </div>
                   <div className="action-label">Test Chatbot</div>
                 </a>
-                <a href="products.html" className="action-card">
+                <Link to={'/products'} className="action-card">
                   <div className="action-icon">
                     <span className="material-symbols-rounded">apps</span>
                   </div>
                   <div className="action-label">View Products</div>
-                </a>
+                </Link>
               </div>
             </div>
-            <div className="recent-activity">
+            {/* <div className="recent-activity">
               <div className="section-title">Recent Activity</div>
               <div className="activity-list">
                 <div className="activity-item">
@@ -195,7 +195,7 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
     </DashboardStyle>

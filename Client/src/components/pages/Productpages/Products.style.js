@@ -829,3 +829,310 @@ export const ProductDetailStyle = styled.div`
             }
         }
 `
+
+export const ChatbotStyle = styled.div`
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .chat-header {
+            padding: 15px 25px;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .chat-title-addon {
+            font-size: 12px;
+            color: #777;
+            margin-left: 8px;
+        }
+        
+        .chat-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            color: #777;
+            transition: var(--transition);
+        }
+        
+        .chat-action-btn:hover {
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .message {
+            display: flex;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
+        
+        .user .message-avatar {
+            background-color: var(--accent);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .bot .message-avatar {
+            background-color: var(--secondary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .message-content {
+            background-color: var(--white);
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        .user .message-content {
+            background-color: var(--primary);
+            color: var(--white);
+            border-bottom-right-radius: 0;
+        }
+        
+        .bot .message-content {
+            background-color: var(--white);
+            border-bottom-left-radius: 0;
+        }
+        
+        .message-meta {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #999;
+            text-align: right;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 50%;
+            animation: typing-animation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing-animation {
+            0%, 100% {
+                transform: scale(0.75);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .chat-input-container {
+            padding: 15px 25px;
+            background-color: var(--white);
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: var(--background);
+            border-radius: 24px;
+            padding: 0 15px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            height: 46px;
+            border: none;
+            background: none;
+            padding: 0 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+        }
+        
+        .input-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .input-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: #777;
+            transition: var(--transition);
+        }
+        
+        .input-action-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--text);
+        }
+        
+        .send-btn {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        .send-btn:hover {
+            background-color: #247aa6;
+            color: var(--white);
+        }
+        
+        /* Floating Chatbot */
+        .floating-chatbot {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 999;
+        }
+        
+        .floating-chatbot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+        
+        .material-symbols-rounded {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+        }
+        
+        @media (max-width: 900px) {
+            .chatbot-sidebar {
+                width: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content, .header {
+                left: 0;
+                margin-left: 0;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .chatbot-sidebar {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                z-index: 90;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .chatbot-sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .chat-container {
+                width: 100%;
+            }
+            
+            .chat-toggle-btn {
+                display: block;
+            }
+        }
+`
