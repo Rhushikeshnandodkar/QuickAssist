@@ -84,7 +84,8 @@ const userSlice = createSlice({
     const handleFulfilled = (state, {payload}) =>{
       state.isLoading = false;
       state.userToken = payload.token;
-      // state.user = payload.user.data;
+      console.log(payload)
+      state.user = payload;
       state.isAuthenticated = true;
       state.status = 200;
     }

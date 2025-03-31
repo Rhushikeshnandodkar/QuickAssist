@@ -11,9 +11,9 @@ function ChatbotsList() {
     const dispatch = useDispatch()
     const {yourbots, isLoading} = useSelector((state) => state.chatbot) 
     useEffect(() =>{
-        if(!yourbots) dispatch(fetchAllbots())
+        dispatch(fetchAllbots())
         console.log(yourbots)
-    }, [dispatch, yourbots])
+    }, [dispatch])
   return (
     <>
     <ChatbotListStyle>

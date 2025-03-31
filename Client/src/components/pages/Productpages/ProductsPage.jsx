@@ -31,49 +31,6 @@ function ProductsPage() {
     <>
       <Sidebar />
       <ProductStyle>
-        {/* <main className="main-content">
-          <div className="products-header">
-            <h1>Products</h1>
-            <div className="btn"><Link to={"/upload-product"}>Add product</Link></div>
-          </div>
-
-          <div className="search-bar">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search products..."
-              className="search-input"
-            />
-            <button className="btn btn-outline">Filter</button>
-          </div>
-
-          <div className="products-grid">
-            {isLoading ? (
-              <h3>Loading...</h3>
-            ) : filteredProducts.length > 0 ? (
-              filteredProducts.map((data) => (
-                <div className="product-card" key={data._id}>
-                  <div className="product-info">
-                    <div className="product-title">{data.product_name}</div>
-                    <div className="product-meta">
-                      <p>Manual Version: 2.1</p>
-                      <p>Last Updated: 2024-03-15</p>
-                    </div>
-                    <div className="product-status">
-                      <span className="status-badge">Active Chatbot</span>
-                      <div href="edit-product.html" className="btn"><Link to={`/product-details/${data._id}`}>Manage</Link></div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <h3>No products found.</h3>
-            )}
-          </div>
-        </main> */}
-
-
         <div className="main-content">
           <Navbar/>
           <div className="content">
@@ -102,10 +59,6 @@ function ProductsPage() {
                 <div className="product-card" key={data._id}>
                 <div className="product-content">
                   <h3 className="product-title">{data.product_name}</h3>
-                  {/* <div className="product-category">
-                    <span className="material-symbols-rounded">category</span>
-                    <span>Electronics</span>
-                  </div> */}
                   <div className="product-stats">
                     <div className="stat">
                       <span className="material-symbols-rounded">description</span>
@@ -146,7 +99,6 @@ function ProductsPage() {
             </div>
           </div>
         </div>
-
       </ProductStyle>
     </>
   );

@@ -59,7 +59,7 @@ exports.askChatbot = async(req, res) => {
         return res.status(404).json({success : false, message : "this bot has expired"})
       }
 
-      const user_message = new Message({sender : "user", content : question, uniqueId})
+      const user_message = new Message({sender : "user", content : question, company, uniqueId})
       await user_message.save()
 
       const apiUrl = "http://127.0.0.1:8000/ask/";
@@ -78,7 +78,7 @@ exports.askChatbot = async(req, res) => {
         link.queriesUsed = link.queriesUsed + 1
         link.save()
     }
-    const bot_response = new Message({sender : "bot", content : response.data.answer.content, uniqueId})
+    const bot_response = new Message({sender : "bot", company,  content : response.data.answer.content, uniqueId})
     await bot_response.save()
     console.log(response.data.answer.content)
     return res.status(200).json({success : true, data : response.data})

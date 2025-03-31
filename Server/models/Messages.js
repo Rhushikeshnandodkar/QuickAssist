@@ -5,6 +5,11 @@ const MessageSchema = new mongoose.Schema({
         type : String,
         default : null
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CompanyProfile",
+        required: true,
+      },
     content : {
         type : String,
         default : null

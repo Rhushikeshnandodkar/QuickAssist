@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductsFormStyle } from "./company.styled";
 import { useDispatch } from "react-redux";
-import { uploadProduct } from "../../../features/products/productSlice";
+import { fetchProducts, uploadProduct } from "../../../features/products/productSlice";
 import Sidebar from "../../molecules/Sidebar";
 import { useNavigate } from "react-router-dom";
 import GlobalStyle from "../../molecules/gloable.style";
@@ -16,6 +16,8 @@ const UploadProducts = () => {
         productManual: null,
     });
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -27,6 +29,7 @@ const UploadProducts = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true)
         const formDataToSend = new FormData();
         formDataToSend.append("product_name", formData.productName);
         formDataToSend.append("description", formData.productDescription);
@@ -40,6 +43,7 @@ const UploadProducts = () => {
                 if (response.meta.requestStatus === 'fulfilled') {
                         // ✅ Redirect on success
                     navigate(`/products`);
+                    dispatch(fetchProducts())
                 } else {
                         console.error('Failed to create link:', response.error.message);
                         alert('Failed to submit. Please try again.');
@@ -93,10 +97,6 @@ const UploadProducts = () => {
                         />
                 </div>
                 <div className="upload-area" id="dropzone">
-                {/* <span className="material-symbols-rounded upload-icon">cloud_upload</span> */}
-                {/* <div className="upload-text">Drag &amp; Drop your files here</div>
-                <div className="upload-subtext">or click to browse your files</div> */}
-                {/* <input type="file" className="file-input" accept=".pdf,.docx" onchange="handleFileChange(event)" /> */}
                 <input type="file" className="file-input" accept=".pdf,.docx" onChange={handleFileChange} />
 
                 <p className="text-sm">Supported formats: PDF, DOCX (max 10MB)</p>
@@ -108,6 +108,7 @@ const UploadProducts = () => {
             </form>
             </div>
         </div>
+        {isLoading && <p className="loading-message">Processing PDF... Please wait.</p>}
         </div>
 
         </ProductsFormStyle>

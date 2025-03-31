@@ -11,6 +11,7 @@ import CreateLink from "./components/pages/Productpages/CreateLink";
 import ProductDetails from "./components/pages/Productpages/ProductDetails";
 import ChatbotsList from "./components/pages/Companypages/ChatbotsList";
 import Chatbot from "./components/pages/Productpages/Chatbot";
+import NotFoundPage from "./components/pages/NotFoundPage";
 const App = () => {
   return (
     <Router>
@@ -26,6 +27,8 @@ const App = () => {
         <Route path="/create-link/:companyId/:productId" element={<CreateLink />} />
         <Route path="/product-details/:productId" element={<ProductDetails />} />
         <Route path="/chatbot/:companyId/:productId/:uniqueId" element={<Chatbot/>} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

@@ -3,7 +3,7 @@ const ProductModel = require("../models/Product")
 const User = require("../models/User");
 const Manual = require("../models/Manual")
 const LinkSchema = require("../models/Link")
-
+const MessageModel = require("../models/Messages")
 exports.createCompanyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -44,12 +44,15 @@ exports.companyProfile = async(req, res) =>{
      if(profile){
       no_of_products = await Manual.find({company : profile})
       chatbots = await LinkSchema.find({company : profile})
+      interactions = await MessageModel.find({company : profile})
+      console.log(interactions)
       return res.status(200).json({
         success : true,
         message : "your profile data",
         data : profile,
         products : no_of_products.length,
-        chatbots : chatbots.length
+        chatbots : chatbots.length,
+        interactions : interactions.length
       })
      }else{
       return res.status(400).json({
@@ -117,6 +120,7 @@ exports.allProducts = async(req, res) =>{
 }
 
 const mongoose = require("mongoose");
+const Message = require("../models/Messages");
 
 exports.getSingleProduct = async (req, res) => {
   try {

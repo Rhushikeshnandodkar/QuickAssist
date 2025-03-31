@@ -332,3 +332,57 @@ export const DashboardStyle = styled.div`
             'opsz' 24;
         }
 `;
+
+export const NotFoundPageStyle = styled.div`
+    :root {
+  --primary: #2A2F4F;
+  --secondary: #2E8BC0;
+  --accent: #FF6F61;
+  --background: #F5F5F5;
+  --text: #333333;
+  --white: #FFFFFF;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background);
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 6rem;
+  color: var(--primary);
+  margin: 0;
+  text-shadow: var(--shadow);
+}
+
+p {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin: 10px 0;
+}
+
+.back-home {
+  text-decoration: none;
+  background-color: var(--accent);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease-in-out;
+}
+
+.back-home:hover {
+  background-color: var(--secondary);
+  transform: scale(1.05);
+}
+
+`;
