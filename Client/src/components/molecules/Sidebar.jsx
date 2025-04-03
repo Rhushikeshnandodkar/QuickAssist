@@ -60,17 +60,17 @@ function Sidebar() {
                 </span>
                 <span class="menu-text">Chatbots</span>
             </Link>
-            <a href="#" class="menu-item">
+            {/* <Link to={`/`} class={`menu-item ${window.location.pathname === "/create-company" ? "active" : ""}`}>
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">analytics</span>
                 </span>
                 <span class="menu-text">Analytics</span>
-            </a>
-            <Link to={`/create-company`} class={`menu-item ${window.location.pathname === "/create-company" ? "active" : ""}`}>
+            </Link> */}
+            <Link to={`/analytics`} class={`menu-item ${window.location.pathname === "/analytics" ? "active" : ""}`}>
                 <span class="menu-icon">
-                    <span class="material-symbols-rounded">settings</span>
+                    <span class="material-symbols-rounded">analytics</span>
                 </span>
-                <span class="menu-text">Settings</span>
+                <span class="menu-text">Analytics</span>
             </Link>
         </div>
         

@@ -853,3 +853,106 @@ export const ChatbotListStyle = styled.div`
             }
         }
 `;
+
+export const AnalyticsStyle = styled.div`
+    .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            margin-top: 70px;
+        }
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+            transition: var(--transition);
+            margin-top: 70px;
+        }
+
+        .analytics-header {
+            margin-bottom: 30px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .metric-title {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .queries-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .query-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .query-item:last-child {
+            border-bottom: none;
+        }
+
+        .query-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .accuracy-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+`;
