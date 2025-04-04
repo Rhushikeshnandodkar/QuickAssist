@@ -122,6 +122,7 @@ exports.currentBot = async(req, res) =>{
 exports.messageFeedback = async(req, res) =>{
     try{
         const {uniqueId, message_id, result} = req.body
+        console.log(result)
         const message = await Message.findById(message_id)
         if (!message) {
             console.log("Message not found");
@@ -131,7 +132,7 @@ exports.messageFeedback = async(req, res) =>{
             uniqueId,
             message_id : message_id,
             content : message.content,
-            result : result
+            answered : result
         })
         await feedback.save();
         res.status(200).json({success: true, data : feedback})

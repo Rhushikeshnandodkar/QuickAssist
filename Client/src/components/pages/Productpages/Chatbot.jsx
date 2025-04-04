@@ -131,11 +131,27 @@ function Chatbot() {
 
 
 
-    const handleConnectUs = (msg, index) =>{
+    const handleConnectUs = async (msg, index) =>{
         if (index > 0) {
             const userMessage = messages[index - 1]; // Get the previous message
             console.log("User message is: ", userMessage);
-        SetConnectUs(true)
+            const req_data = {
+                uniqueId : uniqueId,
+                message_id : userMessage._id,
+                result : false
+            }
+            try{
+                const response = await fetch("http://localhost:5000/api/chatbot/message-feedback", {
+                    method : 'POST',
+                    headers : { "Content-Type" : "application/json"},
+                    body : JSON.stringify(req_data)
+                })
+                const data = await response.json()
+                SetConnectUs(true)
+                console.log(data)
+            }catch (error) {
+                console.error('Error fetching chatbot response:', error);
+            }
         }
     }
 
