@@ -3,6 +3,7 @@ import { ChatbotStyle } from './Products.style';
 import { useParams } from 'react-router-dom';
 import GlobalStyle from '../../molecules/gloable.style';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 
 function Chatbot() {
     const { companyId, productId, uniqueId } = useParams();
@@ -10,7 +11,7 @@ function Chatbot() {
     const [reply, setReply] = useState(false);
     const [inputMessage, setInputMessage] = useState('');
     const [botData, setBotData] = useState(null)
-
+    const [connectUs, SetConnectUs] = useState(false)
     const formatMessageContent = (content) => {
         return content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")  // Makes text between ** bold **
@@ -20,7 +21,8 @@ function Chatbot() {
                 line.trim() ? <p key={index} dangerouslySetInnerHTML={{ __html: line.trim() }}></p> : <br key={index} /> 
             );
     };
-
+    const chatMessagesRef = useRef(null);
+    const connectUsRef = useRef(null)
     // Fetch previous messages on mount
     useEffect(() => {
         const fetchPreviousMessages = async () => {
@@ -54,12 +56,28 @@ function Chatbot() {
     }, [uniqueId]);
 
     useEffect(() => {
+        if (chatMessagesRef.current) {
+            chatMessagesRef.current.scrollTo({
+                top: chatMessagesRef.current.scrollHeight,
+                behavior: "smooth"
+            });
+        }
+        if(connectUsRef.current){
+            chatMessagesRef.current.scrollTo({
+                top: chatMessagesRef.current.scrollHeight,
+                behavior: "smooth"
+            });
+        }
+    }, [messages, connectUs]);
+
+    useEffect(() => {
         if (botData) {
             console.log("Updated botData:", botData);
         }
     }, [botData]);
 
     const handleSendMessage = async () => {
+        SetConnectUs(false)
         if (!inputMessage.trim()) return;
 
         // Add user message to chat
@@ -111,6 +129,16 @@ function Chatbot() {
         setInputMessage(''); // Clear input field
     };
 
+
+
+    const handleConnectUs = (msg, index) =>{
+        if (index > 0) {
+            const userMessage = messages[index - 1]; // Get the previous message
+            console.log("User message is: ", userMessage);
+        SetConnectUs(true)
+        }
+    }
+
     return (
         <>
             <GlobalStyle />
@@ -126,7 +154,7 @@ function Chatbot() {
                             Total queries used : {botData ? botData.queriesUsed : "loading"}/10
                         </div>
                     </div>
-                    <div className="chat-messages">
+                    <div className="chat-messages" ref={chatMessagesRef}>
                         {messages.map((msg, index) => (
                             <div key={index} className={`message ${msg.sender}`}>
                                 <div className="message-avatar">
@@ -135,10 +163,20 @@ function Chatbot() {
                                 <div>
                                     <div className="message-content">{msg.content}</div>
                                     <div className="message-meta">{msg.timestamp}</div>
+                                    {msg.sender === 'bot' ?   <div className="feedback-buttons">
+                                        <ul>
+                                            <li className='work'>Working</li>
+                                            <li className='not-work' onClick={() => handleConnectUs(msg, index)}>Not Working</li> 
+                                        </ul>
+                                    </div>: ""} 
                                 </div>
                             </div>
                         ))}
+                        <div className="contact-info" ref={connectUsRef}>
+                        <button className={`btn-connect ${connectUs ? "visible" : ""}`}> <span class="material-symbols-outlined">support_agent</span> <strong>Connect with us</strong></button>
+                        </div>
                     </div>
+                
                     <div className="chat-input-container">
                         <div className="chat-input-wrapper">
                             <input

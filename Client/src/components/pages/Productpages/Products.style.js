@@ -789,7 +789,13 @@ export const ProductDetailStyle = styled.div`
             'GRAD' 0,
             'opsz' 24;
         }
-        
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+        }
         @media (max-width: 900px) {
             .product-detail-container {
                 grid-template-columns: 1fr;
@@ -912,7 +918,32 @@ export const ChatbotStyle = styled.div`
             margin: 0 10px;
             flex-shrink: 0;
         }
-        
+        .feedback-buttons ul{
+            display: flex;
+            margin-top: -10px;
+        }
+        .feedback-buttons ul li{
+           margin-right: 1%;
+           font-size: 14px;
+           padding:8px 12px;
+           cursor: pointer;
+        }
+        .work {
+        background-color: #d8fad8;
+        color: green;
+        border:
+        1px solid #96c796;
+       
+        border-radius:10px;
+        }
+        .not-work {
+        background-color:rgb(242, 211, 211);
+        color: red;
+        border:
+        1px solid rgb(233, 52, 52);
+        padding:12px;
+        border-radius:10px;
+        }
         .user .message-avatar {
             background-color: var(--accent);
             color: var(--white);
@@ -921,6 +952,38 @@ export const ChatbotStyle = styled.div`
             justify-content: center;
             font-size: 14px;
             font-weight: 500;
+        }
+        .btn-connect.visible{
+            display: block;
+            margin: auto;
+            width: 40%;
+            background-color: white;
+            padding: 1%;
+            color: black;
+            font-weight: 400;
+            font-size: 1.4rem;
+            align-items: center;
+            display: flex;
+            /* justify-content: space-around; */
+            text-align: center;
+
+        }
+
+        .btn-connect{
+            display: none;
+        }
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 44
+        }
+        .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 32px;
         }
         
         .bot .message-avatar {

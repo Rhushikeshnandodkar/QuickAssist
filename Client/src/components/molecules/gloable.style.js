@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
             --sidebar-width: 250px;
             --sidebar-collapsed: 70px;
             --header-height: 70px;
+            --accent: #FF6F61;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
         }
        * {
             margin: 0;

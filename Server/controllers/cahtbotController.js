@@ -6,7 +6,7 @@ const axios = require("axios");
 const Manual = require("../models/Manual");
 const Message = require("../models/Messages");
 const SECERATE_KEY = "greenbagboogie"
-
+const MessageFeedback = require("../models/MessageFeedback")
 exports.createChatBot = async(req, res) =>{
     try{
         const user = await User.findById(req.user.id)
@@ -114,6 +114,27 @@ exports.currentBot = async(req, res) =>{
             return res.status(403).json({success : false, message : "bot not found"})
         }
         res.status(200).json({success: true, data : {botdata : bot, messages : messages}})
+    }catch(err){
+        res.status(500).json({success : false, message : err.message})
+    }
+}
+
+exports.messageFeedback = async(req, res) =>{
+    try{
+        const {uniqueId, message_id, result} = req.body
+        const message = await Message.findById(message_id)
+        if (!message) {
+            console.log("Message not found");
+            return;
+        }
+        const feedback = new MessageFeedback({
+            uniqueId,
+            message_id : message_id,
+            content : message.content,
+            result : result
+        })
+        await feedback.save();
+        res.status(200).json({success: true, data : feedback})
     }catch(err){
         res.status(500).json({success : false, message : err.message})
     }

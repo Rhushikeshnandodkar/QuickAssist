@@ -131,21 +131,7 @@ export const RegisterStyle = styled.div`
 
 export const LoginStyle = styled.div`
        
-       :root {
-            --primary: #2A2F4F;
-            --secondary: #2E8BC0;
-            --accent: #FF6F61;
-            --background: #F5F5F5;
-            --text: #333333;
-            --white: #FFFFFF;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.25s ease;
-        }
-       * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+
         
         .container-main {
             /* font-family: 'Poppins', sans-serif; */
