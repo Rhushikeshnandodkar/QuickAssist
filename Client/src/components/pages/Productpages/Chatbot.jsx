@@ -189,7 +189,7 @@ function Chatbot() {
                             </div>
                         ))}
                         <div className="contact-info" ref={connectUsRef}>
-                        <button className={`btn-connect ${connectUs ? "visible" : ""}`}> <span class="material-symbols-outlined">support_agent</span> <strong>Connect with us</strong></button>
+                        <button className={`btn-connect ${connectUs ? "visible" : ""}`}> <span class="material-symbols-outlined">support_agent</span> <strong>Connect with us </strong></button>
                         </div>
                     </div>
                 

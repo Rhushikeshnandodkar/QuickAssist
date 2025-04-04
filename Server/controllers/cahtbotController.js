@@ -7,6 +7,47 @@ const Manual = require("../models/Manual");
 const Message = require("../models/Messages");
 const SECERATE_KEY = "greenbagboogie"
 const MessageFeedback = require("../models/MessageFeedback")
+const nodemailer = require("nodemailer")
+
+const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
+    try {
+        // Configure Nodemailer transporter
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "quickassistofficial@gmail.com",  // Replace with your email
+                pass: "dkll yqiu vdhg rshi"  // Replace with your app password
+            }
+            //sfbs qscm dyee ezsf 
+        });
+
+        // Email content
+        let mailOptions = {
+            from: "quickassistofficial@gmail.com",
+            to: toEmail,
+            subject: "Your Chatbot is Ready!",
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                    <h2 style="color: #007bff;">Hello!</h2>
+                    <p>Your chatbot for <b>${companyName}</b> - <b>${productName}</b> has been created successfully.</p>
+                    <p>Click the link below to access your chatbot:</p>
+                    <a href="${chatbotLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                        Open Chatbot
+                    </a>
+                    <p>If you have any questions, feel free to contact us.</p>
+                    <p>Best Regards, <br> Your Company Team</p>
+                </div>
+            `
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent to ${toEmail}`);
+
+    } catch (error) {
+        console.error("Error sending email:", error);
+    }
+}
 exports.createChatBot = async(req, res) =>{
     try{
         const user = await User.findById(req.user.id)
@@ -33,7 +74,8 @@ exports.createChatBot = async(req, res) =>{
             useremail : email
         })
         await link.save()
-        
+        const chatbotLink = `http://localhost:5173/chatbot/${company._id}/${product._id}/${link.uniqueId}`
+        await sendEmail(email, company.name, product.name, chatbotLink);
         res.status(201).json({
             success : true, 
             message : "Link created successfully",
