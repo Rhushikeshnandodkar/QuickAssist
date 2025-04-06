@@ -28,7 +28,7 @@ const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
             subject: "Your Chatbot is Ready!",
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                    <h2 style="color: #007bff;">Hello!</h2>
+                    <h2 style="color: #2A2F4F;">Hello!</h2>
                     <p>Your chatbot for <b>${companyName}</b> - <b>${productName}</b> has been created successfully.</p>
                     <p>Click the link below to access your chatbot:</p>
                     <a href="${chatbotLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
@@ -75,7 +75,7 @@ exports.createChatBot = async(req, res) =>{
         })
         await link.save()
         const chatbotLink = `http://localhost:5173/chatbot/${company._id}/${product._id}/${link.uniqueId}`
-        await sendEmail(email, company.name, product.name, chatbotLink);
+        await sendEmail(email, company.company_name, product.product_name, chatbotLink);
         res.status(201).json({
             success : true, 
             message : "Link created successfully",

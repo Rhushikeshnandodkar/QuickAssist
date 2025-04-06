@@ -16,7 +16,7 @@ function AnalyticsPage() {
             <div className="content">
             <div className="filter-bar">
                 <select className="filter-select">
-                <option>Last 7 days</option>
+                <option>Last 7 day</option>
                 <option>Last 30 days</option>
                 <option>Last 90 days</option>
                 <option>Custom range</option>
