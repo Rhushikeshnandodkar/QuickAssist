@@ -5,6 +5,7 @@ import { createLink } from '../../../features/chatbots/chatbotSlice';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import GlobalStyle from '../../molecules/gloable.style';
 
 function CreateLink() {
     const navigate = useNavigate()
@@ -44,6 +45,7 @@ function CreateLink() {
 
     return (
         <>
+        <GlobalStyle/>
             <CreateLinkStyle>
                 <div className="container">
                     <div className="form-card">

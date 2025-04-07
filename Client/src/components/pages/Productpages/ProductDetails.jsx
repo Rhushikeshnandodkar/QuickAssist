@@ -113,9 +113,9 @@ function ProductDetails() {
                                 </div>
                                 </div>
                                 <div className="manual-actions">
-                                <a href="chatbot.html" className="manual-btn">
+                                <Link to={`/chatbot/${bot.company}/${bot.product}/${bot.uniqueId}`} className="manual-btn">
                                     <span className="material-symbols-rounded">smart_toy</span>
-                                </a>
+                                </Link>
                                 </div>
                             </div>
                                         ))

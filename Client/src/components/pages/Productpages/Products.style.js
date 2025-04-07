@@ -402,7 +402,7 @@ export const CreateLinkStyle = styled.div`
         .submit-button {
             width: 100%;
             padding: 1rem;
-            background: black;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 2px;
@@ -412,11 +412,11 @@ export const CreateLinkStyle = styled.div`
             transition: background 0.3s ease;
         }
 
-        .submit-button:hover {
+        /* .submit-button:hover {
             background: white;
             border: 1px solid black;
             color: black;
-        }
+        } */
 
         .back-link {
             display: block;

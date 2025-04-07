@@ -81,18 +81,18 @@ function Dashboard() {
                         </div>
                         <div className="action-label">Upload Manual</div>
                       </Link>
-                      <a href="create-customer.html" className="action-card">
+                      {/* <a href="create-customer.html" className="action-card">
                         <div className="action-icon">
                           <span className="material-symbols-rounded">person_add</span>
                         </div>
                         <div className="action-label">Add Customer</div>
-                      </a>
-                      <a href="chatbot.html" className="action-card">
+                      </a> */}
+                      <Link to={'/chatbots'} className="action-card">
                         <div className="action-icon">
                           <span className="material-symbols-rounded">smart_toy</span>
                         </div>
-                        <div className="action-label">Test Chatbot</div>
-                      </a>
+                        <div className="action-label">Chatbots</div>
+                      </Link>
                       <Link to={'/products'} className="action-card">
                         <div className="action-icon">
                           <span className="material-symbols-rounded">apps</span>

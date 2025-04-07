@@ -60,13 +60,13 @@ function ProductsPage() {
                 <div className="product-content">
                   <h3 className="product-title">{data.product_name}</h3>
                   <div className="product-stats">
-                    <div className="stat">
+                    {/* <div className="stat">
                       <span className="material-symbols-rounded">description</span>
                       <span>3 Manuals</span>
-                    </div>
+                    </div> */}
                     <div className="stat">
                       <span className="material-symbols-rounded">smart_toy</span>
-                      <span>2 Chatbots</span>
+                      <span>{data.chatbotCount} chatbots</span>
                     </div>
                   </div>
                   <div className="product-actions">

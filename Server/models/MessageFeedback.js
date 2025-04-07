@@ -9,6 +9,16 @@ const MessageFeedbackSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, // Store reference to Message model
         ref: "Messages"
     },
+    product: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Manual",
+        required : false
+    },
+      company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CompanyProfile",
+        required: true,
+      },
     content: {
         type: String, // Will store the content of the referenced message
         default: null

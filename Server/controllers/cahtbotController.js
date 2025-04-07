@@ -28,10 +28,10 @@ const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
             subject: "Your Chatbot is Ready!",
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                    <h2 style="color: #2A2F4F;">Hello!</h2>
-                    <p>Your chatbot for <b>${companyName}</b> - <b>${productName}</b> has been created successfully.</p>
+                    <h2 style="color: #2A2F4F;">Hello sir!</h2>
+                    <p>Your chatbot for <b>${companyName}</b> - <b>${productName}</b> is here.</p>
                     <p>Click the link below to access your chatbot:</p>
-                    <a href="${chatbotLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                    <a href="${chatbotLink}" style="display: inline-block; padding: 10px 20px; background-color: #2A2F4F; color: white; text-decoration: none; border-radius: 5px;">
                         Open Chatbot
                     </a>
                     <p>If you have any questions, feel free to contact us.</p>
@@ -163,7 +163,7 @@ exports.currentBot = async(req, res) =>{
 
 exports.messageFeedback = async(req, res) =>{
     try{
-        const {uniqueId, message_id, result} = req.body
+        const {uniqueId, message_id, result, product, company} = req.body
         console.log(result)
         const message = await Message.findById(message_id)
         if (!message) {
@@ -172,12 +172,32 @@ exports.messageFeedback = async(req, res) =>{
         }
         const feedback = new MessageFeedback({
             uniqueId,
+            product : product,
+            company,
             message_id : message_id,
             content : message.content,
             answered : result
         })
         await feedback.save();
         res.status(200).json({success: true, data : feedback})
+    }catch(err){
+        res.status(500).json({success : false, message : err.message})
+    }
+}
+
+exports.feedBackInformation = async(req, res) =>{
+    try{
+        const user = await User.findById(req.user.id)
+        const company = await CompanyProfile.findOne({user : user})
+        const chatbots = await Link.find({company: company})
+        const messages = await MessageFeedback.find({company : company})
+        const total_message = await Message.find({company : company})
+        const not_answered = messages.length
+        const answered = total_message.length - not_answered 
+        console.log(company)
+        console.log(messages)
+        return res.status(200).json({success : true, data : messages, not_answered : not_answered, answered : answered})
+
     }catch(err){
         res.status(500).json({success : false, message : err.message})
     }

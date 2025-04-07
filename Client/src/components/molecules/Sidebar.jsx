@@ -2,8 +2,20 @@ import React from 'react'
 import { SidebarStyle } from './molecule.style'
 import { Link } from 'react-router-dom'
 import GlobalStyle from './gloable.style'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Sidebar() {
+    const navigate = useNavigate()
+    const {user} = useSelector((state) => (state.user))
+    const {company} = useSelector((state) => (state.company))
+    useEffect(() =>{
+        if(!user){
+            navigate('/login')
+        }
+    }, [user])
+    // console.log(company)
   return (
     <>
 <SidebarStyle>
@@ -72,13 +84,23 @@ function Sidebar() {
                 </span>
                 <span class="menu-text">Analytics</span>
             </Link>
+            <Link to={`/settings`} class={`menu-item ${window.location.pathname === "/settings" ? "active" : ""}`}>
+                <span class="menu-icon">
+                    <span class="material-symbols-rounded">settings</span>
+                </span>
+                <span class="menu-text">Settings</span>
+            </Link>
         </div>
         
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-avatar">JD</div>
                 <div class="user-details">
-                    <div class="user-name">John Doe</div>
+                {user && user.data ? 
+                              
+                                  
+                    <div class="user-name">{user.data.name}</div>
+                            : <h4>loading...</h4>}
                     <div class="user-role">Administrator</div>
                 </div>
             </div>

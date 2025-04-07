@@ -138,8 +138,11 @@ function Chatbot() {
             const req_data = {
                 uniqueId : uniqueId,
                 message_id : userMessage._id,
+                product : productId,
+                company : companyId,
                 result : false
             }
+            console.log(req_data)
             try{
                 const response = await fetch("http://localhost:5000/api/chatbot/message-feedback", {
                     method : 'POST',
@@ -171,6 +174,18 @@ function Chatbot() {
                         </div>
                     </div>
                     <div className="chat-messages" ref={chatMessagesRef}>
+                    <div className="message bot">
+                    <div className="message-avatar">
+                        <span className="material-symbols-rounded">smart_toy</span>
+                    </div>
+                    <div>
+                        <div className="message-content">
+                        Hello! I'm your assistant for your  {botData ? botData.product.product_name : "Loading"} . How can I help you today?
+                        </div>
+                        <div className="message-meta">10:15 AM</div>
+                    </div>
+                    </div>
+
                         {messages.map((msg, index) => (
                             <div key={index} className={`message ${msg.sender}`}>
                                 <div className="message-avatar">

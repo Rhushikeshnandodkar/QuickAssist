@@ -112,8 +112,22 @@ exports.allProducts = async(req, res) =>{
       })
     }
     const products = await Manual.find({company : company})
-    res.status(200).json({ success: true, data: products });
+    const enrichedProducts = await Promise.all(
+      products.map(async (product) => {
+        const chatbotCount = await Link.countDocuments({ product: product._id });
 
+        const chatbotIds = await Link.find({ product: product._id }).distinct("_id");
+        const interactionCount = await MessageModel.countDocuments({ uniqueId: { $in: chatbotIds.uniqueId } });
+
+        return {
+          ...product.toObject(),
+          chatbotCount,
+          interactionCount,
+        };
+      })
+    );
+    console.log(enrichedProducts.interactionCount)
+    res.status(200).json({ success: true, data: enrichedProducts});
   }catch(err){
     res.status(500).json({ success: false, message: err.message });
   }
@@ -121,6 +135,7 @@ exports.allProducts = async(req, res) =>{
 
 const mongoose = require("mongoose");
 const Message = require("../models/Messages");
+const Link = require("../models/Link");
 
 exports.getSingleProduct = async (req, res) => {
   try {
