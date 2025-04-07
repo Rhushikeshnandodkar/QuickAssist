@@ -9,7 +9,7 @@ function AnalyticsPage() {
     <>
     <AnalyticsStyle>
         <GlobalStyle />
-        <Navbar />
+        <Navbar page="Analytics" />
         <Sidebar/>
         {/* <div className="main"> */}
         <div className="main-content">

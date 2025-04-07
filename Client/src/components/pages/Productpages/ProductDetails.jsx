@@ -49,7 +49,7 @@ function ProductDetails() {
           <GlobalStyle/>
            
             <Sidebar/>
-            <Navbar/>
+            <Navbar page={`Product Details - ${singleProduct?.data?.product_name}`} />
             {productLoading || botLoading || companyLoading ? <>
                   return <div>Loading...</div>   
             

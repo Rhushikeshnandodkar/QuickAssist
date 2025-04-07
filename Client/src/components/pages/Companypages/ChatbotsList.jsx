@@ -19,13 +19,13 @@ function ChatbotsList() {
     <ChatbotListStyle>
         <GlobalStyle />
         <Sidebar />
-        <Navbar/>
+        <Navbar page="Chatbots"/>
         <main className="main">
         <div className="page-header">
             <h1 className="page-title">My Chatbots</h1>
             <div className="page-actions">
             <button className="btn btn-primary">
-                <span>+ New Chatbot</span>
+                <Link to={'/products'}><span>+ New Chatbot</span></Link>
             </button>
             </div>
         </div>

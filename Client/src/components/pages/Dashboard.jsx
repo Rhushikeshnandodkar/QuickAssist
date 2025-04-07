@@ -34,7 +34,7 @@ function Dashboard() {
       <Sidebar />
 
                 <div classname="main-content">
-                <Navbar />
+                <Navbar page="Dashboard" />
                 <div className="content">
                     {company ? <>
       

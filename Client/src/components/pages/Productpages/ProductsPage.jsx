@@ -32,7 +32,7 @@ function ProductsPage() {
       <Sidebar />
       <ProductStyle>
         <div className="main-content">
-          <Navbar/>
+          <Navbar page="Products" />
           <div className="content">
             <div className="page-header">
               <div className="section-title">All Products</div>
