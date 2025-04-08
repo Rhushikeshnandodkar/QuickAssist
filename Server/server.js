@@ -8,7 +8,9 @@ connectDB();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// const cors = require("cors");
+app.use(cors({ origin: "*", credentials: true, methods: "GET,POST,PUT,PATCH,DELETE" })); 
+
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/company", require("./routes/companyRoutes"));

@@ -1,5 +1,5 @@
 const express = require("express");
-const { createCompanyProfile, createProduct, allProducts, companyProfile, getSingleProduct } = require("../controllers/companyController");
+const { createCompanyProfile, createProduct, allProducts, companyProfile, getSingleProduct, updateCompanyProfile, companyInfo } = require("../controllers/companyController");
 const middleware = require("../middleware/authMiddleware")
 const router = express.Router();
 
@@ -8,5 +8,6 @@ router.post("/create-product",middleware.protect, middleware.authorize('admin', 
 router.get("/all-products",middleware.protect, middleware.authorize('company'), allProducts);
 router.get("/get-profile", middleware.protect, middleware.authorize('company'), companyProfile);
 router.get("/single-product/:id", middleware.protect, middleware.authorize('company'), getSingleProduct);
-
+router.patch("/update-profile", middleware.protect, updateCompanyProfile)
+router.post("/company-info", companyInfo)
 module.exports = router;

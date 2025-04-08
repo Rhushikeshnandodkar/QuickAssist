@@ -12,6 +12,7 @@ function Chatbot() {
     const [inputMessage, setInputMessage] = useState('');
     const [botData, setBotData] = useState(null)
     const [connectUs, SetConnectUs] = useState(false)
+    const [company, setCompany] = useState([])
     const formatMessageContent = (content) => {
         return content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")  // Makes text between ** bold **
@@ -45,7 +46,6 @@ function Chatbot() {
                     console.log(botData)
                     setBotData(data.data.botdata)
                 }
-
                 
             } catch (error) {
                 console.error('Error fetching previous messages:', error);
@@ -56,6 +56,7 @@ function Chatbot() {
     }, [uniqueId]);
 
     useEffect(() => {
+        fetchCompanyInfo()
         if (chatMessagesRef.current) {
             chatMessagesRef.current.scrollTo({
                 top: chatMessagesRef.current.scrollHeight,
@@ -75,6 +76,18 @@ function Chatbot() {
             console.log("Updated botData:", botData);
         }
     }, [botData]);
+
+    const fetchCompanyInfo = async() =>{
+        const res = await fetch("http://localhost:5000/api/company/company-info", {
+            method : "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ companyId })
+        })
+        const company_data = await res.json();
+        console.log(company_data)
+        setCompany(company_data.data)
+        console.log(company)
+    }
 
     const handleSendMessage = async () => {
         SetConnectUs(false)
@@ -140,7 +153,8 @@ function Chatbot() {
                 message_id : userMessage._id,
                 product : productId,
                 company : companyId,
-                result : false
+                result : false,
+                content : userMessage.content
             }
             console.log(req_data)
             try{
@@ -152,9 +166,17 @@ function Chatbot() {
                 const data = await response.json()
                 SetConnectUs(true)
                 console.log(data)
+                // alert("Thanks for your response our team will try to connect you")
             }catch (error) {
                 console.error('Error fetching chatbot response:', error);
             }
+            if(connectUsRef.current){
+                chatMessagesRef.current.scrollTo({
+                    top: chatMessagesRef.current.scrollHeight,
+                    behavior: "smooth"
+                });
+            }
+
         }
     }
 
@@ -180,7 +202,7 @@ function Chatbot() {
                     </div>
                     <div>
                         <div className="message-content">
-                        Hello! I'm your assistant for your  {botData ? botData.product.product_name : "Loading"} . How can I help you today?
+                        Hello! I'm your assistant for your {botData ? botData.product.product_name : "Loading"} . How can I help you today?
                         </div>
                         <div className="message-meta">10:15 AM</div>
                     </div>
@@ -204,7 +226,20 @@ function Chatbot() {
                             </div>
                         ))}
                         <div className="contact-info" ref={connectUsRef}>
-                        <button className={`btn-connect ${connectUs ? "visible" : ""}`}> <span class="material-symbols-outlined">support_agent</span> <strong>Connect with us </strong></button>
+                        <div className={`btn-connect ${connectUs ? "visible" : ""}`}>
+                        <span className="material-symbols-outlined">support_agent</span>
+                        <strong>Connect with us</strong> <br />
+                        <ul>
+                            {company && Object.keys(company).length > 0 ? (
+                                <>
+                                    <li><b>Company Email</b> : {company.company_email}</li>
+                                    <li><b>Company Contact</b> : {company.company_contact}</li>
+                                </>
+                            ) : (
+                                "Loading..."
+                            )}
+                        </ul>
+                        </div>
                         </div>
                     </div>
                 

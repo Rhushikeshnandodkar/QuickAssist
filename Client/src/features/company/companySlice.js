@@ -49,6 +49,24 @@ export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAP
   }
 })
 
+export const updateCompanyProfile = createAsyncThunk("company/update", async(data, thunkAPI) =>{
+  console.log(data)
+  console.log(localStorage.getItem("token"))
+  try{
+    const res = await fetch(`${url}/api/company/update-profile`, {
+      method : "PATCH",
+      headers : {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+      body : JSON.stringify(data)
+    })
+    console.log(res)
+    // console.log(result)
+  }catch(err){
+    return thunkAPI.rejectWithValue(err)
+  }
+})
 
 const initialState = {
   isLoading : true,
@@ -85,6 +103,18 @@ const companySlice = createSlice({
     .addCase(companyInfo.pending, handlePending)
     .addCase(companyInfo.fulfilled, handleFulfilled)
     .addCase(companyInfo.rejected, handleRejected) 
+
+    builder.addCase(updateCompanyProfile.pending, (state, action) =>{
+      state.isLoading = true
+    })
+    builder.addCase(updateCompanyProfile.fulfilled, (state, action) =>{
+      state.isLoading = false,
+      state.company = action.payload
+    })
+    builder.addCase(updateCompanyProfile.rejected, (state, action) =>{
+      state.isLoading = false,
+      state.error = action.payload
+    })
 
   //   builder.addCase(userSignup.pending, (state, {payload}) =>{
   //     state.isLoading = true

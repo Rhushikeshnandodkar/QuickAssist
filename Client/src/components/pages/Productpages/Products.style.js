@@ -141,12 +141,12 @@ export const ProductStyle = styled.div`
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 10px;
         }
         
         .product-card {
             background-color: var(--white);
-            border-radius: 12px;
+            border-radius: 2px;
             /* box-shadow: var(--shadow); */
             border: 1px solid #80808040;
             overflow: hidden;
@@ -232,7 +232,7 @@ export const ProductStyle = styled.div`
             flex: 1;
             padding: 8px;
             border: none;
-            border-radius: 6px;
+            border-radius: 2px;
             font-family: 'Poppins', sans-serif;
             font-size: 13px;
             cursor: pointer;
@@ -961,14 +961,18 @@ export const ChatbotStyle = styled.div`
             padding: 1%;
             color: black;
             font-weight: 400;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             align-items: center;
-            display: flex;
+            /* display: flex; */
             /* justify-content: space-around; */
             text-align: center;
-
         }
-
+        .btn-connect ul li b{
+            font-weight: 400;
+        }
+        .btn-connect ul li{
+            font-weight: 300;
+        }
         .btn-connect{
             display: none;
         }

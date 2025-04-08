@@ -17,12 +17,15 @@ exports.createCompanyProfile = async (req, res) => {
           data: existingProfile,
         });
       }
-    const { company_name, description, address } = req.body;
+    const { company_name, description, address, company_email, company_website, company_contact } = req.body;
     const profile = new CompanyProfile({
       user: user.id, // Link the profile to the user
       company_name,
       description,
       address,
+      company_email,
+      company_website,
+      company_contact
     });
 
     await profile.save();
@@ -36,6 +39,53 @@ exports.createCompanyProfile = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+exports.updateCompanyProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const existingProfile = await CompanyProfile.findOne({ user: user.id });
+
+    if (!existingProfile) {
+      return res.status(404).json({
+        success: false,
+        message: "Company profile not found",
+      });
+    }
+
+    // Extract fields to update
+    const { company_name, description, address, company_email, company_website, company_contact} = req.body;
+
+    // Update only the provided fields
+    if (company_name) existingProfile.company_name = company_name;
+    if (description) existingProfile.description = description;
+    if (address) existingProfile.address = address;
+    if (company_email) existingProfile.company_email = company_email;
+    if (company_website) existingProfile.company_website = company_website;
+    if (company_contact) existingProfile.company_contact = company_contact;
+
+
+    await existingProfile.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Company profile updated successfully",
+      data: existingProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.companyInfo = async(req, res) =>{
+  try{
+    const {companyId} = req.body;
+    const company = await CompanyProfile.findOne({_id : companyId})
+    console.log(company)
+    return res.status(200).json({success : true, data : company})
+  }catch(err){
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
 
 exports.companyProfile = async(req, res) =>{
   try{

@@ -24,7 +24,20 @@ const companyProfileSchema = new mongoose.Schema({
   total_products:{
     type: String,
     default: null
+  },
+  company_email:{
+    type: String,
+    default: null
+  },
+  company_website:{
+    type: String,
+    default: null
+  },
+  company_contact:{
+    type: String,
+    default: null
   }
+
 
 });
 

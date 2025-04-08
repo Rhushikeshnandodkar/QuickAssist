@@ -62,6 +62,8 @@ export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, t
 
 
 
+
+
 const initialState = {
   isLoading : true,
   products : null,
@@ -110,6 +112,8 @@ const productSlice = createSlice({
       state.isLoading = false,
       state.error = action.payload
     })
+
+
 
   }
 })
