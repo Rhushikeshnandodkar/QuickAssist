@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AnalyticsStyle } from './company.styled'
 import GlobalStyle from '../../molecules/gloable.style'
 import Navbar from '../../molecules/Navbar'
 import Sidebar from '../../molecules/Sidebar'
+import { useDispatch, useSelector } from 'react-redux'
+import { feedbackInfo } from '../../../features/analysis/analysisSlice'
+import { fetchProducts } from '../../../features/products/productSlice'
+import { HiH3 } from 'react-icons/hi2'
 
 function AnalyticsPage() {
+    const dispatch = useDispatch()
+    const {isLoading, ana_data} = useSelector((state) => state.analysis)
+    const { products, isLoading: productLoading } = useSelector((state) => state.products);
+    if(!isLoading){
+        console.log(ana_data)
+    }
+    useEffect(() =>{
+        if(!products){
+            dispatch(fetchProducts())
+        }
+        dispatch(feedbackInfo())
+    }, [dispatch])
   return (
     <>
     <AnalyticsStyle>
@@ -36,7 +52,7 @@ function AnalyticsPage() {
                     <span className="material-symbols-rounded">forum</span>
                     </div>
                 </div>
-                <div className="card-value">1,248</div>
+                <div className="card-value">{ana_data ? ana_data.answered + ana_data.not_answered : "Loading"}</div>
                 <div className="card-description">+32% from last month</div>
                 </div>
                 <div className="analytics-card">
@@ -46,8 +62,8 @@ function AnalyticsPage() {
                     <span className="material-symbols-rounded">check_circle</span>
                     </div>
                 </div>
-                <div className="card-value">1,156</div>
-                <div className="card-description">92.6% success rate</div>
+                <div className="card-value">{ana_data ? ana_data.answered : "Loading"}</div>
+                <div className="card-description">{ana_data ? Math.floor((ana_data.answered / (ana_data.answered + ana_data.not_answered)) * 100) : "Loading"}% success rate</div>
                 </div>
                 <div className="analytics-card">
                 <div className="card-header">
@@ -56,52 +72,20 @@ function AnalyticsPage() {
                     <span className="material-symbols-rounded">error</span>
                     </div>
                 </div>
-                <div className="card-value">24</div>
+                <div className="card-value">{ana_data ? ana_data.not_answered : "Loading"}</div>
                 <div className="card-description">5 high priority issues</div>
                 </div>
             </div>
-            <div className="analytics-card">
-                <div className="card-header">
-                <div className="card-title">Query Response Performance</div>
-                <select className="filter-select">
-                    <option>Last 30 days</option>
-                    <option>Last 90 days</option>
-                    <option>Last 6 months</option>
-                </select>
-                </div>
-                <div className="chart-container">
-                <div className="chart-bar" style={{height: '20%'}}>
-                    <div className="chart-bar-value">70%</div>
-                </div>
-                <div className="chart-bar" style={{height: '85%'}}>
-                    <div className="chart-bar-value">85%</div>
-                </div>
-                <div className="chart-bar" style={{height: '92%'}}>
-                    <div className="chart-bar-value">92%</div>
-                </div>
-                <div className="chart-bar" style={{height: '78%'}}>
-                    <div className="chart-bar-value">78%</div>
-                </div>
-                <div className="chart-bar" style={{height: '94%'}}>
-                    <div className="chart-bar-value">94%</div>
-                </div>
-                <div className="chart-bar" style={{height: '88%'}}>
-                    <div className="chart-bar-value">88%</div>
-                </div>
-                <div className="chart-bar" style={{height: '91%'}}>
-                    <div className="chart-bar-value">91%</div>
-                </div>
-                </div>
-                <div className="chart-legend">
-                <div className="legend-item">
-                    <div className="legend-color" style={{backgroundColor: 'rgba(46, 139, 192, 0.2)'}} />
-                    <span>Success Rate</span>
-                </div>
-                </div>
-            </div>
+
+
+
             <div className="product-analysis-container">
                 <div className="section-title">Products Performance</div>
                 <div className="product-list">
+
+
+
+
                 <div className="product-item">
                     <div className="product-header">
                     <div className="product-name">Smart Watch Pro</div>
@@ -144,6 +128,10 @@ function AnalyticsPage() {
                     </button>
                     </div>
                 </div>
+
+
+
+
                 <div className="product-item">
                     <div className="product-header">
                     <div className="product-name">Coffee Maker XL</div>

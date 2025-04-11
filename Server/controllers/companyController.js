@@ -164,15 +164,26 @@ exports.allProducts = async(req, res) =>{
     const products = await Manual.find({company : company})
     const enrichedProducts = await Promise.all(
       products.map(async (product) => {
+        const product_info = await Manual.findById(product._id)
         const chatbotCount = await Link.countDocuments({ product: product._id });
+
+        const answered = await MessageFeedback.findOne({product  : product._id, answered : false})
 
         const chatbotIds = await Link.find({ product: product._id }).distinct("_id");
         const interactionCount = await MessageModel.countDocuments({ uniqueId: { $in: chatbotIds.uniqueId } });
 
+        // console.log(product_info, answeredCount, unansweredCount)
+                // Count answered and unanswered messages for this product
+        const answeredCount = await MessageFeedback.countDocuments({
+                  product: product._id,
+                  answered: false,
+        });
+        console.log(answeredCount)
         return {
           ...product.toObject(),
           chatbotCount,
           interactionCount,
+          answeredCount,
         };
       })
     );
@@ -186,6 +197,7 @@ exports.allProducts = async(req, res) =>{
 const mongoose = require("mongoose");
 const Message = require("../models/Messages");
 const Link = require("../models/Link");
+const MessageFeedback = require("../models/MessageFeedback");
 
 exports.getSingleProduct = async (req, res) => {
   try {
