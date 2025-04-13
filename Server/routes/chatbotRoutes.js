@@ -11,6 +11,6 @@ router.post("/message-feedback", messageFeedback)
 router.get('/feedback-info', middleware.protect, feedBackInformation)
 router.get('/product-messages-info', middleware.protect, productMessages)
 
-router.post('/single-product-messages', middleware.protect, singleProductMessages)
+router.get('/single-product-messages/:id', middleware.protect, singleProductMessages)
 
 module.exports = router;

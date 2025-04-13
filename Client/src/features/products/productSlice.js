@@ -43,7 +43,6 @@ export const fetchProducts = createAsyncThunk("product/fetchall", async(data, th
 })
 
 export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, thunkAPI) =>{
-  console.log(id)
   try{
     const res = await fetch(`${url}/api/company/single-product/${id}`, {
       method : "GET",

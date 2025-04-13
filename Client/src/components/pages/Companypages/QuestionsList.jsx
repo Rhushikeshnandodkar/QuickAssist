@@ -1,56 +1,30 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { ProductDetailStyle } from './Products.style'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchSingleProduct } from '../../../features/products/productSlice'
-import { fetchAllbots } from '../../../features/chatbots/chatbotSlice'
-import { Link } from 'react-router-dom'
-import { companyInfo } from '../../../features/company/companySlice'
+import React, { useEffect } from 'react'
+import { ProductQuestionsStyle } from './company.styled'
 import GlobalStyle from '../../molecules/gloable.style'
 import Sidebar from '../../molecules/Sidebar'
 import Navbar from '../../molecules/Navbar'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchSingleProduct } from '../../../features/products/productSlice'
+import { fetchSingleFeedback } from '../../../features/analysis/analysisSlice'
+import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 function QuestionsList() {
     const dispatch = useDispatch()
-    const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
-    const { yourbots, isLoading: botLoading, error: botError } = useSelector((state) => state.chatbot)
-    const { company, isLoading : companyLoading } = useSelector((state) => state.company)
     const { productId } = useParams()
-
-    const [currentBots, setcurrentBots] = useState([])
-
-    const [hasFetched, setHasFetched] = useState(false);
+    const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
+    const { single_feedback, isLoading: feedbackLoading } = useSelector((state) => state.analysis)
 
     useEffect(() => {
-        if (!hasFetched) {
             dispatch(fetchSingleProduct(productId));
-            dispatch(fetchAllbots());
-            dispatch(companyInfo());
-            setHasFetched(true);
-        }
-    }, [dispatch, productId, hasFetched]);
-
-    const filteredBots = useMemo(() =>{
-        if (yourbots?.data && company?.data.company_name) { 
-            console.log(company.data.company_name)
-            return yourbots.data.filter(
-                (product) => product.product._id  === productId
-            )
-        } else {
-            console.log("Bots data or company info not available yet")
-            return []
-        }
-    }, [yourbots, company, productId])
-    console.log(filteredBots)
-
-    if (botError) return <h3>Error loading bots: {botError}</h3>
-
-    return (
-        <ProductDetailStyle>
+            dispatch(fetchSingleFeedback(productId))
+    }, [dispatch, productId]);
+  return (
+        <ProductQuestionsStyle>
           <GlobalStyle/>
-           
             <Sidebar/>
             <Navbar page={`Product Details - ${singleProduct?.data?.product_name}`} />
-            {productLoading || botLoading || companyLoading ? <>
+            {productLoading || feedbackLoading ? <>
                   return <div>Loading...</div>   
             
             </> : <>
@@ -80,10 +54,6 @@ function QuestionsList() {
                     <div className="product-features">
                     </div>
                     <div className="product-actions">
-                    <Link to={`/create-link/${company.data._id}/${productId}`} className="btn btn-primary">
-                        <span className="material-symbols-rounded">smart_toy</span>
-                        Create Chatbot
-                    </Link>
                     <button className="btn btn-secondary">
                         <span className="material-symbols-rounded">edit</span>
                         Edit Product
@@ -94,28 +64,21 @@ function QuestionsList() {
                 <div className="tab-container">
                 <div className="tab-nav">
                     {/* <button className="tab-btn active">Manuals</button> */}
-                    <button className="tab-btn active">Customers</button>
+                    <button className="tab-btn active">Questions</button>
                 </div>
                 <div className="tab-content">
                     <div className="manual-list">
 
-                    {filteredBots?.length ? (
-                                        filteredBots.map((bot, index) => (
+                    {single_feedback.data?.length ? (
+                                        single_feedback.data.map((feed, index) => (
                                             <div className="manual-item">
                                 <div className="manual-icon">
                                 <span className="material-symbols-rounded">description</span>
                                 </div>
                                 <div className="manual-info">
-                                <div className="manual-title">{bot.useremail || 'N/A'}</div>
-                                <div className="manual-meta">
-                                    <span>PDF • 4.8 MB</span>
-                                    <span>crated:{bot.createdAt || 'N/A'}</span>
-                                </div>
+                                <div className="manual-title">{feed.content || 'N/A'}</div>
                                 </div>
                                 <div className="manual-actions">
-                                <Link to={`/chatbot/${bot.company}/${bot.product}/${bot.uniqueId}`} className="manual-btn">
-                                    <span className="material-symbols-rounded">smart_toy</span>
-                                </Link>
                                 </div>
                             </div>
                                         ))
@@ -130,8 +93,8 @@ function QuestionsList() {
             </div>
             </div>
             </>}
-        </ProductDetailStyle>
-    )
+        </ProductQuestionsStyle>
+  )
 }
 
 export default QuestionsList

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { feedbackInfo, feedbacksList } from '../../../features/analysis/analysisSlice'
 import { fetchProducts } from '../../../features/products/productSlice'
 import { HiH3 } from 'react-icons/hi2'
+import { Link } from 'react-router-dom'
 
 function AnalyticsPage() {
     const dispatch = useDispatch()
@@ -100,14 +101,10 @@ function AnalyticsPage() {
 
 
         <div className="product-actions">
-          <button className="btn btn-secondary">
+          <Link to={`/product-questions/${item.unanswered?.product?._id}`} className="btn btn-primary">
             <span className="material-symbols-rounded">visibility</span>
-            View Details
-          </button>
-          <button className="btn btn-primary">
-            <span className="material-symbols-rounded">edit</span>
-            Improve Manual
-          </button>
+            View Questions
+          </Link>
         </div>
       </div>
     ))}

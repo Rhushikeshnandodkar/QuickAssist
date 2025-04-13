@@ -34,6 +34,22 @@ export const feedbacksList = createAsyncThunk("analysis/feedbacks", async(thunkA
     }
 })
 
+export const fetchSingleFeedback = createAsyncThunk("analysis/singlefeedback", async(id, thunkAPI) =>{
+    try{
+        const res = await fetch(`${url}/api/chatbot/single-product-messages/${id}`, {
+          method : "GET",
+          headers : {
+            "Content-Type" : "application/json",
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Accept: "application/json",
+          }
+        })
+        const data = await res.json()
+        return data
+      }catch(err){
+        return thunkAPI.rejectWithValue(err)
+      } 
+})
 const initialState = {
     isLoading : true,
     ana_data : null,
@@ -70,6 +86,19 @@ const analysisSlice = createSlice({
             state.feedbacks = action.payload
         })
         builder.addCase(feedbacksList.rejected, (state, action) =>{
+            state.isLoading = false,
+            state.error = true
+        })
+
+        builder.addCase(fetchSingleFeedback.pending, (state, action) =>{
+            state.isLoading = true
+        })
+        builder.addCase(fetchSingleFeedback.fulfilled, (state, action) =>{
+            console.log(action)
+            state.isLoading = false,
+            state.single_feedback = action.payload
+        })
+        builder.addCase(fetchSingleFeedback.rejected, (state, action) =>{
             state.isLoading = false,
             state.error = true
         })

@@ -246,7 +246,7 @@ exports.productMessages = async(req, res) =>{
 exports.singleProductMessages = async(req, res) =>{
     try{
         const user = await User.findById(req.user.id)
-        const {productId} = req.body
+        const { id } = req.params;
         const company = await CompanyProfile.findOne({user : user})
         if(!company){
           return res.status(404).json({
@@ -254,7 +254,7 @@ exports.singleProductMessages = async(req, res) =>{
             message : "company not found"
           })
         }
-        const product = await Manual.findById(productId)
+        const product = await Manual.findById(id)
         const messageFeedbacks = await MessageFeedback.find({product : product, answered : false})
         res.status(200).json({success : true, data : messageFeedbacks})
     }catch(err){
