@@ -14,6 +14,7 @@ import Chatbot from "./components/pages/Productpages/Chatbot";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import AnalyticsPage from "./components/pages/Companypages/AnalyticsPage";
 import SettingsPage from "./components/pages/Companypages/SettingsPage";
+import QuestionsList from "./components/pages/Companypages/QuestionList";
 const App = () => {
   return (
     <Router>
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/chatbots" element={<ChatbotsList />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/product-questions" element={<QuestionsList />} />
 
 
         <Route path="/create-link/:companyId/:productId" element={<CreateLink />} />

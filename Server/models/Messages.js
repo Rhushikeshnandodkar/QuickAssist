@@ -10,6 +10,11 @@ const MessageSchema = new mongoose.Schema({
         ref: "CompanyProfile",
         required: true,
       },
+    product: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Manual",
+        required : true
+    },
     content : {
         type : String,
         default : null

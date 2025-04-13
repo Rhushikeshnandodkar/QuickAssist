@@ -101,7 +101,7 @@ exports.askChatbot = async(req, res) => {
         return res.status(404).json({success : false, message : "this bot has expired"})
       }
 
-      const user_message = new Message({sender : "user", content : question, company, uniqueId})
+      const user_message = new Message({sender : "user", product, content : question, company, uniqueId})
       await user_message.save()
 
       const apiUrl = "http://127.0.0.1:8000/ask/";
@@ -120,7 +120,7 @@ exports.askChatbot = async(req, res) => {
         link.queriesUsed = link.queriesUsed + 1
         link.save()
     }
-    const bot_response = new Message({sender : "bot", company,  content : response.data.answer.content, uniqueId})
+    const bot_response = new Message({sender : "bot", product, company,  content : response.data.answer.content, uniqueId})
     await bot_response.save()
     console.log(response.data.answer.content)
     return res.status(200).json({success : true, data : response.data})
@@ -166,10 +166,15 @@ exports.messageFeedback = async(req, res) =>{
         const {uniqueId, message_id, result, product, company} = req.body
         console.log(result)
         const message = await Message.findById(message_id)
+        const existingFeedback = await MessageFeedback.findOne({message_id : message_id})
+        if(existingFeedback){
+            return res.status(403).json({success : false, message : "Feedback allready exists"})
+        }
         if (!message) {
             console.log("Message not found");
             return;
         }
+        
         const feedback = new MessageFeedback({
             uniqueId,
             product : product,
@@ -200,5 +205,59 @@ exports.feedBackInformation = async(req, res) =>{
 
     }catch(err){
         res.status(500).json({success : false, message : err.message})
+    }
+}
+
+exports.productMessages = async(req, res) =>{
+     try{
+       const user = await User.findById(req.user.id)
+       const company = await CompanyProfile.findOne({user : user})
+       if(!company){
+         return res.status(404).json({
+           success : false,
+           message : "company not found"
+         })
+       }
+       const products = await Manual.find({company : company})
+       const productMessages = await Promise.all(
+        products.map(async (product) =>{
+            const unanswered = await MessageFeedback.findOne({product  : product._id, answered : false}).populate("product", "product_name").exec()
+            const unansweredCount = await MessageFeedback.countDocuments({
+                              product: product._id,
+                              answered: false,
+            });
+            const totalCount = await Message.countDocuments({product : product._id})
+
+
+            return {
+                // ...product.toObject(),
+                unansweredCount,
+                unanswered,
+                totalCount
+            }
+        })
+       )
+       res.status(200).json({success : true, data : productMessages})
+     }catch(err){
+        res.status(500).json({ success: false, message: err.message });
+     } 
+}
+
+exports.singleProductMessages = async(req, res) =>{
+    try{
+        const user = await User.findById(req.user.id)
+        const {productId} = req.body
+        const company = await CompanyProfile.findOne({user : user})
+        if(!company){
+          return res.status(404).json({
+            success : false,
+            message : "company not found"
+          })
+        }
+        const product = await Manual.findById(productId)
+        const messageFeedbacks = await MessageFeedback.find({product : product, answered : false})
+        res.status(200).json({success : true, data : messageFeedbacks})
+    }catch(err){
+        res.status(500).json({ success: false, message: err.message });
     }
 }

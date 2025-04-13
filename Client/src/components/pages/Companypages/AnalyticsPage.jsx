@@ -4,22 +4,23 @@ import GlobalStyle from '../../molecules/gloable.style'
 import Navbar from '../../molecules/Navbar'
 import Sidebar from '../../molecules/Sidebar'
 import { useDispatch, useSelector } from 'react-redux'
-import { feedbackInfo } from '../../../features/analysis/analysisSlice'
+import { feedbackInfo, feedbacksList } from '../../../features/analysis/analysisSlice'
 import { fetchProducts } from '../../../features/products/productSlice'
 import { HiH3 } from 'react-icons/hi2'
 
 function AnalyticsPage() {
     const dispatch = useDispatch()
-    const {isLoading, ana_data} = useSelector((state) => state.analysis)
+    const {isLoading, ana_data, feedbacks} = useSelector((state) => state.analysis)
     const { products, isLoading: productLoading } = useSelector((state) => state.products);
     if(!isLoading){
-        console.log(ana_data)
+        // console.log(ana_data)
     }
     useEffect(() =>{
         if(!products){
             dispatch(fetchProducts())
         }
         dispatch(feedbackInfo())
+        dispatch(feedbacksList())
     }, [dispatch])
   return (
     <>
@@ -77,146 +78,44 @@ function AnalyticsPage() {
                 </div>
             </div>
 
-
-
             <div className="product-analysis-container">
                 <div className="section-title">Products Performance</div>
                 <div className="product-list">
+                {feedbacks && feedbacks.data ? (
+  <>
+    {feedbacks.data.map((item, index) => (
+      <div className="product-item" key={index}>
+        <div className="product-header">
+          <div className="product-name">
+            {item.unanswered?.product?.product_name || "Unnamed Product"}
+          </div>
+
+          <div className="product-stats">
+            <div className="stat-item">
+              <span className="stat-icon material-symbols-rounded">forum</span>
+              {item.unansweredCount}
+            </div>
+          </div>
+        </div>
 
 
+        <div className="product-actions">
+          <button className="btn btn-secondary">
+            <span className="material-symbols-rounded">visibility</span>
+            View Details
+          </button>
+          <button className="btn btn-primary">
+            <span className="material-symbols-rounded">edit</span>
+            Improve Manual
+          </button>
+        </div>
+      </div>
+    ))}
+  </>
+) : (
+  <h2>Loading feedbacks...</h2>
+)}
 
-
-                <div className="product-item">
-                    <div className="product-header">
-                    <div className="product-name">Smart Watch Pro</div>
-                    <div className="product-stats">
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">forum</span>
-                        342
-                        </div>
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">check_circle</span>
-                        96%
-                        </div>
-                    </div>
-                    </div>
-                    <div className="progress-container">
-                    <div className="progress-label">
-                        <span>Query Success Rate</span>
-                        <span>96%</span>
-                    </div>
-                    <div className="progress-bar">
-                        <div className="progress-fill high" style={{width: '96%'}} />
-                    </div>
-                    </div>
-                    <div className="confusion-points">
-                    <div className="confusion-title">Common Confusion Points:</div>
-                    <div className="confusion-list">
-                        <div className="confusion-tag">Battery replacement</div>
-                        <div className="confusion-tag">Pairing with iOS devices</div>
-                        <div className="confusion-tag">Water resistance rating</div>
-                    </div>
-                    </div>
-                    <div className="product-actions">
-                    <button className="btn btn-secondary">
-                        <span className="material-symbols-rounded">visibility</span>
-                        View Details
-                    </button>
-                    <button className="btn btn-primary">
-                        <span className="material-symbols-rounded">edit</span>
-                        Improve Manual
-                    </button>
-                    </div>
-                </div>
-
-
-
-
-                <div className="product-item">
-                    <div className="product-header">
-                    <div className="product-name">Coffee Maker XL</div>
-                    <div className="product-stats">
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">forum</span>
-                        278
-                        </div>
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">check_circle</span>
-                        88%
-                        </div>
-                    </div>
-                    </div>
-                    <div className="progress-container">
-                    <div className="progress-label">
-                        <span>Query Success Rate</span>
-                        <span>88%</span>
-                    </div>
-                    <div className="progress-bar">
-                        <div className="progress-fill medium" style={{width: '88%'}} />
-                    </div>
-                    </div>
-                    <div className="confusion-points">
-                    <div className="confusion-title">Common Confusion Points:</div>
-                    <div className="confusion-list">
-                        <div className="confusion-tag">Descaling procedure</div>
-                        <div className="confusion-tag">Filter replacement</div>
-                        <div className="confusion-tag">Brew strength settings</div>
-                        <div className="confusion-tag">Timer programming</div>
-                    </div>
-                    </div>
-                    <div className="product-actions">
-                    <button className="btn btn-secondary">
-                        <span className="material-symbols-rounded">visibility</span>
-                        View Details
-                    </button>
-                    <button className="btn btn-primary">
-                        <span className="material-symbols-rounded">edit</span>
-                        Improve Manual
-                    </button>
-                    </div>
-                </div>
-                <div className="product-item">
-                    <div className="product-header">
-                    <div className="product-name">Wireless Earbuds</div>
-                    <div className="product-stats">
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">forum</span>
-                        186
-                        </div>
-                        <div className="stat-item">
-                        <span className="stat-icon material-symbols-rounded">check_circle</span>
-                        91%
-                        </div>
-                    </div>
-                    </div>
-                    <div className="progress-container">
-                    <div className="progress-label">
-                        <span>Query Success Rate</span>
-                        <span>91%</span>
-                    </div>
-                    <div className="progress-bar">
-                        <div className="progress-fill high" style={{width: '91%'}} />
-                    </div>
-                    </div>
-                    <div className="confusion-points">
-                    <div className="confusion-title">Common Confusion Points:</div>
-                    <div className="confusion-list">
-                        <div className="confusion-tag">Pairing with devices</div>
-                        <div className="confusion-tag">Touch controls</div>
-                        <div className="confusion-tag">Charging case usage</div>
-                    </div>
-                    </div>
-                    <div className="product-actions">
-                    <button className="btn btn-secondary">
-                        <span className="material-symbols-rounded">visibility</span>
-                        View Details
-                    </button>
-                    <button className="btn btn-primary">
-                        <span className="material-symbols-rounded">edit</span>
-                        Improve Manual
-                    </button>
-                    </div>
-                </div>
                 </div>
             </div>
             <div className="queries-container">
