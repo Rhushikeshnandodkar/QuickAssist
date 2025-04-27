@@ -27,17 +27,13 @@ async function createManualEmbedding(productId, manualText, product_name) {
 
 exports.uploadManual = async (req, res) => {
   try {
-    // Fetch user and company details
     const user = await User.findById(req.user.id);
     const companyProfile = await CompanyProfile.findOne({ user: user.id });
     if (!companyProfile) {
       return res.status(400).json({ message: "Company profile not found!" });
     }
 
-    // Check if product exists and belongs to the current user's company
     const { product_name, description } = req.body;
-
-    // Check if the uploaded file is a PDF
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded!" });
     }
@@ -45,7 +41,6 @@ exports.uploadManual = async (req, res) => {
       return res.status(400).json({ message: "Please upload a valid PDF file!" });
     }
 
-    // Read and parse the PDF file only if the company is valid
     const pdfPath = path.join(__dirname, "../uploads", req.file.filename);
     const dataBuffer = await fs.readFile(pdfPath);
     const data = await pdfParse(dataBuffer);
@@ -54,17 +49,15 @@ exports.uploadManual = async (req, res) => {
 
     const productId = companyProfile._id
     await createManualEmbedding(productId, manualText, product_name);
-    // console.log(company)
-    // Save manual to the database
+
     const manual = await Manual.create({
       company : companyProfile._id,
       product_name : product_name,
       description : description,
       filename: req.file.filename,
-      text: data.text, // Store extracted text
+      text: data.text, 
     });
 
-    // Respond with success
     res.status(201).json({ message: "Manual uploaded successfully!", manual });
   } catch (error) {
     console.error(error);
@@ -79,7 +72,6 @@ exports.uploadVideoLink = async(req, res) =>{
     const company = await CompanyProfile.findOne({ user: user });
 
     if (!existingProfile) {
-        // If the profile exists, just return the existing profile without uploading new files
         return res.status(200).json({
           success: true,
           message: "Profile does not exists",
