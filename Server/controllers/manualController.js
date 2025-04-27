@@ -7,7 +7,8 @@ const CompanyProfile = require("../models/Company");
 const User = require("../models/User");
 const axios = require("axios"); 
 const faiss = require("faiss");
-const {OpenAI} = require("openai")
+const {OpenAI} = require("openai");
+const VideoLink = require("../models/VideoLink");
 
 const FASTAPI_URL = "http://127.0.0.1:8000";
 
@@ -70,3 +71,53 @@ exports.uploadManual = async (req, res) => {
     res.status(500).json({ message: "Error uploading manual" });
   }
 };
+
+exports.uploadVideoLink = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id)
+    const existingProfile = await CompanyProfile.findOne({user: user.id})
+    const company = await CompanyProfile.findOne({ user: user });
+
+    if (!existingProfile) {
+        // If the profile exists, just return the existing profile without uploading new files
+        return res.status(200).json({
+          success: true,
+          message: "Profile does not exists",
+          data: existingProfile,
+        });
+      }
+    
+      const {id} = req.params;
+      const {video_description, video_link, video_title} = req.body
+      const product = await Manual.findById(id);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+
+      if (!company || !product.company.equals(company._id)) {
+        console.log(product.company, company._id);
+        return res.status(403).json({
+          success: false,
+          message: "You don't have permission to perform this action",
+        });
+      }
+
+      const videoLink = new VideoLink({
+        product : product,
+        video_link,
+        video_description,
+        video_title
+      })
+      await videoLink.save();
+      res.status(201).json({
+        success: true,
+        message: "video link uploaded successfully",
+        data: videoLink,
+      });    
+  }catch(err){
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
