@@ -15,7 +15,8 @@ import NotFoundPage from "./components/pages/NotFoundPage";
 import AnalyticsPage from "./components/pages/Companypages/AnalyticsPage";
 import SettingsPage from "./components/pages/Companypages/SettingsPage";
 import QuestionsList from "./components/pages/Companypages/QuestionsList";
-// import QuestionsList from "./components/pages/Companypages/QuestionsList";
+import EditProducts from "./components/pages/Productpages/EditProducts";
+import UploadVideoLink from "./components/pages/Productpages/UploadVideoLink";
 const App = () => {
   return (
     <Router>
@@ -30,10 +31,11 @@ const App = () => {
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
 
-
+        <Route path="/upload-video-link/:productId" element={<UploadVideoLink />} />
         <Route path="/product-questions/:productId" element={<QuestionsList />} />
         <Route path="/create-link/:companyId/:productId" element={<CreateLink />} />
         <Route path="/product-details/:productId" element={<ProductDetails />} />
+        <Route path="/edit-products/:productId" element={<EditProducts />} />
         <Route path="/chatbot/:companyId/:productId/:uniqueId" element={<Chatbot/>} />
 
         <Route path="*" element={<NotFoundPage />} />

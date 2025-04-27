@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Videos | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #2A2F4F;
+            --primary-light: #3d4270;
+            --secondary: #2E8BC0;
+            --accent: #FF6F61;
+            --background: #F5F5F5;
+            --text: #333333;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+            --sidebar-width: 250px;
+            --sidebar-collapsed: 70px;
+            --header-height: 70px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Sidebar and Header styles same as original */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary);
+            color: var(--white);
+            height: 100vh;
+            position: fixed;
+            transition: var(--transition);
+            z-index: 100;
+            overflow-y: auto;
+        }
+        
+        /* ... keep existing code (sidebar styles from original) */
+        
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+        }
+        
+        .header {
+            height: var(--header-height);
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: var(--sidebar-width);
+            z-index: 99;
+            transition: var(--transition);
+        }
+        
+        /* ... keep existing code (header styles from original) */
+        
+        .content {
+            padding: 25px;
+            margin-top: var(--header-height);
+        }
+        
+        .form-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-header {
+            margin-bottom: 25px;
+        }
+        
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-description {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #DDD;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(46, 139, 192, 0.2);
+        }
+        
+        /* Video Links Section */
+        .video-links {
+            margin-top: 15px;
+        }
+        
+        .video-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+            background-color: var(--background);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .video-item input {
+            flex: 1;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-add-video {
+            background-color: var(--secondary);
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        .btn-icon {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #232746;
+            transform: translateY(-1px);
+        }
+        
+        .btn-add-video:hover {
+            background-color: #247aa6;
+        }
+        
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .action-button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .action-button.delete:hover {
+            color: var(--accent);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-secondary {
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content, .header {
+                left: 0;
+                margin-left: 0;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .video-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .video-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .form-card {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar structure same as original -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">ChatbotManuals</div>
+            <button class="sidebar-toggle">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+        </div>
+        
+        <!-- ... keep existing code (sidebar menu from original) ... -->
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <button class="mobile-menu-toggle action-button">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+            <div class="page-title">Upload Video Tutorials</div>
+            <div class="header-actions">
+                <button class="action-button">
+                    <span class="material-symbols-rounded">help</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="form-card">
+                <div class="form-header">
+                    <div class="form-title">Product Video Tutorials</div>
+                    <div class="form-description">Add video tutorials and guides for your product</div>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" id="product-name" value="Smart Home Hub X1" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Video Tutorials</label>
+                        <div class="video-links">
+                            <div class="video-item">
+                                <input type="url" placeholder="Enter video URL (YouTube, Vimeo, etc.)" value="https://youtube.com/watch?v=abc123">
+                                <div class="video-actions">
+                                    <button type="button" class="action-button">
+                                        <span class="material-symbols-rounded">visibility</span>
+                                    </button>
+                                    <button type="button" class="action-button delete">
+                                        <span class="material-symbols-rounded">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="video-item">
+                                <input type="url" placeholder="Enter video URL (YouTube, Vimeo, etc.)" value="https://youtube.com/watch?v=xyz789">
+                                <div class="video-actions">
+                                    <button type="button" class="action-button">
+                                        <span class="material-symbols-rounded">visibility</span>
+                                    </button>
+                                    <button type="button" class="action-button delete">
+                                        <span class="material-symbols-rounded">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-add-video">
+                                <span class="material-symbols-rounded" style="margin-right: 8px;">add</span>
+                                Add Video
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Notes (Optional)</label>
+                        <textarea id="description" rows="3" placeholder="Add any notes about the video tutorials"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn">
+                            <span class="btn-icon material-symbols-rounded">save</span>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

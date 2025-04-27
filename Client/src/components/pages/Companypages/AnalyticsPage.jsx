@@ -99,7 +99,6 @@ function AnalyticsPage() {
           </div>
         </div>
 
-
         <div className="product-actions">
           <Link to={`/product-questions/${item.unanswered?.product?._id}`} className="btn btn-primary">
             <span className="material-symbols-rounded">visibility</span>

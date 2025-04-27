@@ -47,7 +47,6 @@ function ProductDetails() {
     return (
         <ProductDetailStyle>
           <GlobalStyle/>
-           
             <Sidebar/>
             <Navbar page={`Product Details - ${singleProduct?.data?.product_name}`} />
             {productLoading || botLoading || companyLoading ? <>
@@ -84,10 +83,10 @@ function ProductDetails() {
                         <span className="material-symbols-rounded">smart_toy</span>
                         Create Chatbot
                     </Link>
-                    <button className="btn btn-secondary">
+                    <Link to={`/edit-products/${productId}`} className="btn btn-secondary">
                         <span className="material-symbols-rounded">edit</span>
                         Edit Product
-                    </button>
+                    </Link>
                     </div>
                 </div>
                 </div>
