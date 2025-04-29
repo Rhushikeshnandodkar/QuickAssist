@@ -65,6 +65,46 @@ exports.uploadManual = async (req, res) => {
   }
 };
 
+exports.updateManual = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const companyProfile = await CompanyProfile.findOne({ user: user.id });
+    const manualId = req.params.id;
+    
+    const product = await Manual.findById(manualId);
+    if (!companyProfile) {
+      return res.status(400).json({ message: "Company profile not found!" });
+    }
+    // Ensure IDs are properly compared as ObjectIds
+    if (!companyProfile || !product.company.equals(companyProfile._id)) {
+      console.log(product.companyProfile, companyProfile._id);
+      return res.status(403).json({
+        success: false,
+        message: "You don't have permission to perform this action",
+      });
+    }
+
+    const { product_name, description, text } = req.body;
+    
+    const manual = await Manual.findOne({ _id: manualId, company: companyProfile._id });
+    if (!manual) {
+      return res.status(404).json({ message: "Manual not found!" });
+    }
+
+    if (product_name) manual.product_name = product_name;
+    if (description) manual.description = description;
+    if (text) manual.text = text;
+
+    await manual.save();
+
+    res.status(200).json({ message: "Manual updated successfully!", manual });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating manual" });
+  }
+};
+
+
 exports.uploadVideoLink = async(req, res) =>{
   try{
     const user = await User.findById(req.user.id)

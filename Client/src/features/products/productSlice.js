@@ -24,6 +24,32 @@ export const uploadProduct = createAsyncThunk("product/upload", async(data, thun
     }
 })
 
+// productSlice.js or wherever your thunks are defined
+export const updateProduct = createAsyncThunk(
+  'product/update',
+  async ({ productId, formData }, thunkAPI) => {
+    try {
+      const response = await fetch(`${url}/api/manual/update-product/${productId}/`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`)
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message)
+    }
+  }
+)
+
 export const fetchProducts = createAsyncThunk("product/fetchall", async(data, thunkAPI) =>{
   try{
     const res = await fetch(`${url}/api/company/all-products`, {
@@ -108,6 +134,18 @@ const productSlice = createSlice({
       state.singleProduct = action.payload
     })
     builder.addCase(fetchSingleProduct.rejected, (state, action) =>{
+      state.isLoading = false,
+      state.error = action.payload
+    })
+
+    builder.addCase(updateProduct.pending, (state, action) =>{
+      state.isLoading = true
+    })
+    builder.addCase(updateProduct.fulfilled, (state, action) =>{
+      state.isLoading = false,
+      state.singleProduct = action.payload
+    })
+    builder.addCase(updateProduct.rejected, (state, action) =>{
       state.isLoading = false,
       state.error = action.payload
     })

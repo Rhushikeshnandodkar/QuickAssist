@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const {uploadManual, uploadVideoLink} = require('../controllers/manualController');
+const {uploadManual, uploadVideoLink, updateManual} = require('../controllers/manualController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -20,5 +20,6 @@ const upload = multer({ storage });
 
 // Route to upload manual
 router.post('/upload', upload.single('file'), authMiddleware.protect, uploadManual);
+router.patch('/update-product/:id', upload.single('file'), authMiddleware.protect, updateManual);
 router.post('/upload-video-link/:id', authMiddleware.protect, uploadVideoLink)
 module.exports = router;
