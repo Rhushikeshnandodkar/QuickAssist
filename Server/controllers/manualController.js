@@ -143,7 +143,7 @@ exports.uploadVideoLink = async(req, res) =>{
       }
     
       const {id} = req.params;
-      const {video_description, video_link, video_title} = req.body
+      const {video_description, link, video_title} = req.body
       const product = await Manual.findById(id);
       if (!product) {
         return res.status(404).json({
@@ -162,7 +162,7 @@ exports.uploadVideoLink = async(req, res) =>{
 
       const videoLink = new VideoLink({
         product : product,
-        video_link,
+        video_link: link,
         video_description,
         video_title
       })

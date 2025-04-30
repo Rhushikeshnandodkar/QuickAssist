@@ -6,7 +6,8 @@ import GlobalStyle from '../../molecules/gloable.style'
 import Sidebar from '../../molecules/Sidebar'
 import Navbar from '../../molecules/Navbar'
 import { EditProductStyle } from './Products.style'
-
+import { url } from '../../common/api'
+import axios from 'axios'
 function EditProducts() {
   const { productId } = useParams()
   const dispatch = useDispatch()
@@ -17,6 +18,8 @@ function EditProducts() {
     category: '',
     description: ''
   })
+
+  const [videos, setVideos] = useState([]); 
 
   useEffect(() => {
     dispatch(fetchSingleProduct(productId))
@@ -31,6 +34,28 @@ function EditProducts() {
       })
     }
   }, [singleProduct])
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get(`${url}/api/manual/get-video-links/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        setVideos(response.data); // Assuming the API returns an array of video objects
+        console.log('Fetched videos:', response.data);
+      } catch (err) {
+        console.error('Error fetching videos:', err);
+      }
+    };
+  
+    fetchVideos();
+  }, [productId]);
+
+
 
   const handleChange = (e) => {
     setFormData({
@@ -100,19 +125,7 @@ function EditProducts() {
                         />
                       </div>
                     </div>
-                    <div className="form-col">
-                      <div className="form-group">
-                        <label htmlFor="category">Category</label>
-                        <input
-                          type="text"
-                          name="category"
-                          id="category"
-                          value={formData.category}
-                          onChange={handleChange}
-                          placeholder="Enter product category"
-                        />
-                      </div>
-                    </div>
+                   
                   </div>
                   <div className="form-group">
                     <label htmlFor="description">Product Description</label>
@@ -126,6 +139,26 @@ function EditProducts() {
                     />
                   </div>
                 </div>
+
+                {videos?.data?.length > 0 ? (
+  videos.data.map((video, index) => (
+    <div key={index} className="video-item">
+      <input type="url" value={video.video_link} disabled />
+      <p style={{ marginTop: '4px' }}>{video.description}</p>
+      <div className="video-actions">
+        <button type="button" className="action-button">
+          <span className="material-symbols-rounded">visibility</span>
+        </button>
+        <button type="button" className="action-button delete">
+          <span className="material-symbols-rounded">delete</span>
+        </button>
+      </div>
+    </div>
+  ))
+) : (
+  <div>No videos uploaded yet.</div>
+)}
+
 
                 <div className="form-section">
                   <div className="section-title">Video Tutorials</div>
