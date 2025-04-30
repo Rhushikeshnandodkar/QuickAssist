@@ -1,92 +1,86 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import GlobalStyle from '../../molecules/gloable.style'
-import Sidebar from '../../molecules/Sidebar'
-import Navbar from '../../molecules/Navbar'
-import { UploadVideoLinkStyle } from './Products.style'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import GlobalStyle from '../../molecules/gloable.style';
+import Sidebar from '../../molecules/Sidebar';
+import Navbar from '../../molecules/Navbar';
+import { UploadVideoLinkStyle } from './Products.style';
+import { uploadVideoLink } from '../../../features/products/productSlice';
+import { useSelector } from 'react-redux';
+import { fetchSingleProduct } from '../../../features/products/productSlice';
 function UploadVideoLink() {
-    const {productId} = useParams()
-    console.log(productId)
+  const { productId } = useParams();
+  const dispatch = useDispatch();
+  const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
+
+
+  const [link, setLink] = useState("");        // ✅ state for video link
+  const [description, setDescription] = useState(""); // ✅ state for description
+
+    useEffect(() => {
+      dispatch(fetchSingleProduct(productId))
+    }, [productId, dispatch])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted")
+    dispatch(uploadVideoLink({
+      productId,
+      link,
+      description,
+    }));
+  };
+
   return (
     <UploadVideoLinkStyle>
-        <GlobalStyle/>
-        <Sidebar/>
-        <Navbar page={`Add Video`} />
+      <GlobalStyle />
+      <Sidebar />
+      <Navbar page={`Add Video`} />
 
-        <div className="main-content">
+      {productLoading ? (
+        <div>Loading...</div>
+      ) : (
+      <div className="main-content">
         <div className="header">
-            <button className="mobile-menu-toggle action-button">
-            <span className="material-symbols-rounded">menu</span>
-            </button>
-            <div className="page-title">Upload Video Tutorials</div>
-            <div className="header-actions">
-            <button className="action-button">
-                <span className="material-symbols-rounded">help</span>
-            </button>
-            </div>
+          <div className="page-title">Upload Video Tutorials</div>
         </div>
         <div className="content">
-            <div className="form-card">
-            <div className="form-header">
-                <div className="form-title">Product Video Tutorials</div>
-                <div className="form-description">Add video tutorials and guides for your product</div>
-            </div>
-            <form>
-                <div className="form-group">
-                <label htmlFor="product-name">Product Name</label>
-                <input type="text" id="product-name" defaultValue="Smart Home Hub X1" readOnly />
-                </div>
-                <div className="form-group">
-                <label>Video Tutorials</label>
-                <div className="video-links">
-                    <div className="video-item">
-                    <input type="url" placeholder="Enter video URL (YouTube, Vimeo, etc.)" defaultValue="https://youtube.com/watch?v=abc123" />
-                    <div className="video-actions">
-                        <button type="button" className="action-button">
-                        <span className="material-symbols-rounded">visibility</span>
-                        </button>
-                        <button type="button" className="action-button delete">
-                        <span className="material-symbols-rounded">delete</span>
-                        </button>
-                    </div>
-                    </div>
-                    <div className="video-item">
-                    <input type="url" placeholder="Enter video URL (YouTube, Vimeo, etc.)" defaultValue="https://youtube.com/watch?v=xyz789" />
-                    <div className="video-actions">
-                        <button type="button" className="action-button">
-                        <span className="material-symbols-rounded">visibility</span>
-                        </button>
-                        <button type="button" className="action-button delete">
-                        <span className="material-symbols-rounded">delete</span>
-                        </button>
-                    </div>
-                    </div>
-                    <button type="button" className="btn btn-add-video">
-                    <span className="material-symbols-rounded" style={{marginRight: 8}}>add</span>
-                    Add Video
-                    </button>
-                </div>
-                </div>
-                <div className="form-group">
-                <label htmlFor="description">Notes (Optional)</label>
-                <textarea id="description" rows={3} placeholder="Add any notes about the video tutorials" defaultValue={""} />
-                </div>
-                <div className="form-actions">
-                <button type="button" className="btn btn-secondary">Cancel</button>
+          <div className="form-card">
+            <form onSubmit={handleSubmit}>
+              <h3>Product Name - {singleProduct.data.product_name}</h3>
+              <div className="form-group">
+                <label>Video Link</label>
+                <input
+                  type="text"
+                  placeholder="Enter video URL"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)} // ✅ capture video link
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>Description of Video</label>
+                <textarea
+                  rows={3}
+                  placeholder="Add any notes"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)} // ✅ capture description
+                />
+              </div>
+
+              <div className="form-actions">
                 <button type="submit" className="btn">
-                    <span className="btn-icon material-symbols-rounded">save</span>
-                    Save Changes
+                  <span className="btn-icon material-symbols-rounded">save</span>
+                  Save Changes
                 </button>
-                </div>
+              </div>
             </form>
-            </div>
+          </div>
         </div>
-        </div>
-
-
+      </div>
+      )}
     </UploadVideoLinkStyle>
-  )
+  );
 }
 
-export default UploadVideoLink
+export default UploadVideoLink;

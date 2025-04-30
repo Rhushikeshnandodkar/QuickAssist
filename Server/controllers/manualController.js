@@ -105,6 +105,29 @@ exports.updateManual = async (req, res) => {
 };
 
 
+exports.videoLinks = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id)
+    const existingProfile = await CompanyProfile.findOne({user: user.id})
+    const company = await CompanyProfile.findOne({ user: user });
+
+    if (!existingProfile) {
+        return res.status(200).json({
+          success: true,
+          message: "Profile does not exists",
+          data: existingProfile,
+        });
+      }
+      
+      const {id} = req.params;
+      const manual = await Manual.findOne({_id : id})
+      const videos = await VideoLink.find({product : manual})
+      return res.status(201).json({data : videos, message: "videos fetched successfully"})
+  }catch(err){
+    res.status(500).json({success : false, message: err.message})
+  }
+}
+
 exports.uploadVideoLink = async(req, res) =>{
   try{
     const user = await User.findById(req.user.id)
@@ -153,3 +176,5 @@ exports.uploadVideoLink = async(req, res) =>{
     res.status(500).json({ success: false, message: err.message });
   }
 }
+
+

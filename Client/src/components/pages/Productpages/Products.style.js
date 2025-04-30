@@ -1445,7 +1445,11 @@ export const UploadVideoLinkStyle = styled.div`
             margin-left: var(--sidebar-width);
             transition: var(--transition);
         }
-        
+        h3{
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
         .header {
             height: var(--header-height);
             background-color: var(--white);

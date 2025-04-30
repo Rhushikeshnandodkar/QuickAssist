@@ -86,6 +86,36 @@ export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, t
 })
 
 
+export const uploadVideoLink = createAsyncThunk(
+  'product/uploadVideoLink',
+  async ({ productId, link, description }, thunkAPI) => {
+    try {
+      console.log(link)
+      const response = await fetch(`${url}/api/manual/upload-video-link/${productId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify({
+          productId,
+          link,
+          description
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 
 
 
