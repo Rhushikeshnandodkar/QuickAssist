@@ -8,6 +8,7 @@ const Message = require("../models/Messages");
 const SECERATE_KEY = "greenbagboogie"
 const MessageFeedback = require("../models/MessageFeedback")
 const nodemailer = require("nodemailer")
+const VideoLink = require("../models/VideoLink");
 
 const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
     try {
@@ -87,47 +88,137 @@ exports.createChatBot = async(req, res) =>{
     }
 }
 
-exports.askChatbot = async(req, res) => {
-    try{
+exports.askChatbot = async (req, res) => {
+    try {
       const { companyId, productId, uniqueId, question } = req.body;
-      const link = await Link.findOne({ uniqueId })
-      const company = await CompanyProfile.findById(companyId)
-      const product = await Manual.findById(productId)
-      if(!link){
-        return res.status(404).json({success : false, message : "Chatbot not found"})
+  
+      const link = await Link.findOne({ uniqueId });
+      const company = await CompanyProfile.findById(companyId);
+      const product = await Manual.findById(productId);
+  
+      if (!link) {
+        return res.status(404).json({ success: false, message: "Chatbot not found" });
       }
-      if(link.queriesUsed >= 10){
-        // link.isExpired = true
-        return res.status(404).json({success : false, message : "this bot has expired"})
+  
+      if (link.queriesUsed >= 50) {
+        return res.status(403).json({ success: false, message: "This bot has expired" });
       }
-
-      const user_message = new Message({sender : "user", product, content : question, company, uniqueId})
-      await user_message.save()
-
+  
+      // 💬 Save User Message
+      const user_message = new Message({
+        sender: "user",
+        product,
+        content: question,
+        company,
+        uniqueId
+      });
+      await user_message.save();
+  
+      // 🧠 Ask FastAPI
       const apiUrl = "http://127.0.0.1:8000/ask/";
-      console.log(product.product_name)
       const requestData = {
         name: product.product_name,
-        question: question,
+        question,
         unique_id: companyId,
-        secerate_key : SECERATE_KEY, // Send the secret key in the request
-    };
-    const response = await axios.post(apiUrl, requestData, {
+        secerate_key: SECERATE_KEY,
+      };
+  
+      const response = await axios.post(apiUrl, requestData, {
         headers: { "Content-Type": "application/json" }
-    });
-    if(response.status == 200){
-        console.log("question asked")
-        link.queriesUsed = link.queriesUsed + 1
-        link.save()
-    }
-    const bot_response = new Message({sender : "bot", product, company,  content : response.data.answer.content, uniqueId})
-    await bot_response.save()
-    console.log(response.data.answer.content)
-    return res.status(200).json({success : true, data : response.data})
-    }catch(err){
+      });
+  
+      if (response.status === 200) {
+        link.queriesUsed += 1;
+        await link.save();
+      }
+  
+      const bot_response = new Message({
+        sender: "bot",
+        product,
+        company,
+        content: response.data.answer.content,
+        uniqueId
+      });
+      await bot_response.save();
+  
+      // 🎥 Fetch all videos for the product
+      const videos = await VideoLink.find({product : product});
+    //   console.log('vidoes are .................', videos)
+      // Format videos to send to FastAPI
+      const formattedVideos = videos.map(video => ({
+        description: video.video_description,
+        video_link: video.video_link
+      }));
+
+      console.log("formated videos are -----------------> ", formattedVideos)
+  
+      // 🔍 Send videos and question to FastAPI for similarity check
+      const suggestApiUrl = "http://127.0.0.1:8000/suggest-videos";
+      const suggestResponse = await axios.post(suggestApiUrl, {
+        query: question,
+        videos: formattedVideos
+      });
+
+    //   console.log(suggestResponse)
+  
+      const suggestedVideos = suggestResponse.data.matched_videos || [];
+  
+      return res.status(200).json({
+        success: true,
+        data: {
+          answer: response.data.answer,
+          videos: suggestedVideos
+        }
+      });
+  
+    } catch (err) {
+      console.error("askChatbot Error:", err);
       res.status(500).json({ success: false, message: err.message });
     }
-}
+  };
+  
+
+// exports.askChatbot = async(req, res) => {
+//     try{
+//       const { companyId, productId, uniqueId, question } = req.body;
+//       const link = await Link.findOne({ uniqueId })
+//       const company = await CompanyProfile.findById(companyId)
+//       const product = await Manual.findById(productId)
+//       if(!link){
+//         return res.status(404).json({success : false, message : "Chatbot not found"})
+//       }
+//       if(link.queriesUsed >= 10){
+//         // link.isExpired = true
+//         return res.status(404).json({success : false, message : "this bot has expired"})
+//       }
+
+//       const user_message = new Message({sender : "user", product, content : question, company, uniqueId})
+//       await user_message.save()
+
+//       const apiUrl = "http://127.0.0.1:8000/ask/";
+//       console.log(product.product_name)
+//       const requestData = {
+//         name: product.product_name,
+//         question: question,
+//         unique_id: companyId,
+//         secerate_key : SECERATE_KEY, // Send the secret key in the request
+//     };
+//     const response = await axios.post(apiUrl, requestData, {
+//         headers: { "Content-Type": "application/json" }
+//     });
+//     if(response.status == 200){
+//         console.log("question asked")
+//         link.queriesUsed = link.queriesUsed + 1
+//         link.save()
+//     }
+//     const bot_response = new Message({sender : "bot", product, company,  content : response.data.answer.content, uniqueId})
+//     await bot_response.save()
+//     console.log(response.data.answer.content)
+//     return res.status(200).json({success : true, data : response.data})
+//     }catch(err){
+//       res.status(500).json({ success: false, message: err.message });
+//     }
+// }
 
 exports.yourBots = async(req, res) =>{
     try{

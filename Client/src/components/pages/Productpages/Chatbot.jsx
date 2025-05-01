@@ -13,6 +13,7 @@ function Chatbot() {
     const [botData, setBotData] = useState(null)
     const [connectUs, SetConnectUs] = useState(false)
     const [company, setCompany] = useState([])
+    const [videos, setVideos] = useState([])
     const formatMessageContent = (content) => {
         return content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")  // Makes text between ** bold **
@@ -38,7 +39,8 @@ function Chatbot() {
                 if(data.data.messages){
                     const formattedMessages = data.data.messages.map(msg => ({
                         ...msg,
-                        content: formatMessageContent(msg.content)  // Apply formatting
+                        content: formatMessageContent(msg.content) ,
+                        videos: msg.videos || []  // Apply formatting
                     }));
                     setMessages(formattedMessages);
                 }
@@ -127,11 +129,13 @@ function Chatbot() {
                     line.trim() ? <p key={index} dangerouslySetInnerHTML={{ __html: line.trim() }}></p> : <br key={index} /> 
                 );  
 
+            const videos = data.data.videos 
             // Add bot's response to chat
             setMessages([...messages, newMessage, {
                 sender: 'bot',
                 content: fanswer,
-                timestamp: new Date().toLocaleTimeString()
+                timestamp: new Date().toLocaleTimeString(),
+                videos: data.data.videos || []
             }]);
             setReply(false);
 
@@ -207,14 +211,34 @@ function Chatbot() {
                         <div className="message-meta">10:15 AM</div>
                     </div>
                     </div>
-
-                        {messages.map((msg, index) => (
-                            <div key={index} className={`message ${msg.sender}`}>
-                                <div className="message-avatar">
-                                    {msg.sender === 'bot' ? <span className="material-symbols-rounded">smart_toy</span> : 'JD'}
+                                {messages.map((msg, index) => (
+                                    <div key={index} className={`message ${msg.sender}`}>
+                                        <div className="message-avatar">
+                                            {msg.sender === 'bot' ? <span className="material-symbols-rounded">smart_toy</span> : 'JD'}
+                                        </div>
+                                        <div>
+                                            <div className="message-content">{msg.content}    {msg.sender === 'bot' && msg.videos && msg.videos.length > 0 && (
+                            <div className="video-links">
+                            {msg.videos.map((video, vIndex) => {
+                              const videoId = new URLSearchParams(new URL(video.video_link).search).get("v");
+                              const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                          
+                              return (
+                                <div className='youtube-sug' key={vIndex} style={{ marginBottom: '1rem' }}>
+                                  <iframe
+                                    width="300"
+                                    height="200"
+                                    src={embedUrl}
+                                    title={`YouTube Video ${vIndex}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                  ></iframe>
                                 </div>
-                                <div>
-                                    <div className="message-content">{msg.content}</div>
+                              );
+                            })}
+                          </div>
+                        )}</div>
                                     <div className="message-meta">{msg.timestamp}</div>
                                     {msg.sender === 'bot' ?   <div className="feedback-buttons">
                                         <ul>

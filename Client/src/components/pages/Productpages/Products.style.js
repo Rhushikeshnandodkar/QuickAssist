@@ -846,6 +846,10 @@ export const ChatbotStyle = styled.div`
             width: 100%;
             height: 100%;
         }
+
+        .youtube-sug{
+            margin-top: 2rem;
+        }
         
         .chat-header {
             padding: 15px 25px;

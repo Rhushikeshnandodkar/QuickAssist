@@ -12,6 +12,9 @@ from langchain.schema import HumanMessage, AIMessage
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
+from pydantic import BaseModel
+from typing import List, Dict
+from sentence_transformers import SentenceTransformer, util
 
 app = FastAPI()
 os.environ['GROQ_API_KEY'] = "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"
@@ -19,6 +22,7 @@ SECERATE_KEY = "greenbagboogie"
 # Set up embeddings
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
+model = SentenceTransformer('all-MiniLM-L6-v2')  # lightweight and fast
 # set up LLM
 llm = ChatGroq(model_name="llama3-70b-8192", api_key="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")
 
@@ -46,6 +50,46 @@ def get_faiss_path(name:str, unique_id:str):
 
 def get_metadata_path(name: str, unique_id: str):
     return os.path.join(FAISS_DIR, f"{name}_{unique_id}.pkl")
+
+
+class Video(BaseModel):
+    description: str
+    video_link: str
+
+class SuggestRequest(BaseModel):
+    query: str
+    videos: List[Video]
+
+@app.post("/suggest-videos")
+async def suggest_videos(request: SuggestRequest):
+    if not request.videos:
+        return {"matched_videos": [], "message": "No videos provided."}
+
+    query_embedding = model.encode(request.query, convert_to_tensor=True)
+
+    video_descriptions = [video.description for video in request.videos]
+    if len(video_descriptions) == 0:
+        return {"matched_videos": [], "message": "No video descriptions to compare."}
+
+    video_embeddings = model.encode(video_descriptions, convert_to_tensor=True)
+
+    similarities = util.pytorch_cos_sim(query_embedding, video_embeddings)[0]
+
+    matched_videos = []
+    for idx, score in enumerate(similarities):
+        if score.item() > 0.6:
+            video = request.videos[idx]
+            matched_videos.append({
+                "description": video.description,
+                "video_link": video.video_link,
+                "similarity": round(score.item(), 2)
+            })
+
+    if not matched_videos:
+        return {"matched_videos": [], "message": "No similar videos found."}
+    
+    return {"matched_videos": matched_videos}
+
 
 @app.post("/store/")
 async def store_text(request: Request):
