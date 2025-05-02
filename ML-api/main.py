@@ -77,7 +77,7 @@ async def suggest_videos(request: SuggestRequest):
 
     matched_videos = []
     for idx, score in enumerate(similarities):
-        if score.item() > 0.6:
+        if score.item() > 0.5:
             video = request.videos[idx]
             matched_videos.append({
                 "description": video.description,

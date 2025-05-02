@@ -23,7 +23,13 @@ const MessageSchema = new mongoose.Schema({
     uniqueId : {
         type : String,
         default : null
-    }
+    },
+    videos: [
+        {
+            video_link : { type: String, required: true },
+            video_description : { type: String }
+        }
+    ]
 })
 
 const Message = mongoose.model("Message", MessageSchema)

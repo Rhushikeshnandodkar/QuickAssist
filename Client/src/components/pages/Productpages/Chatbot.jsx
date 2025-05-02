@@ -36,6 +36,7 @@ function Chatbot() {
                 });
 
                 const data = await response.json();
+                // console.log("messages are ---------------->", data.data.messages)
                 if(data.data.messages){
                     const formattedMessages = data.data.messages.map(msg => ({
                         ...msg,
@@ -45,7 +46,7 @@ function Chatbot() {
                     setMessages(formattedMessages);
                 }
                 if(data.data.botdata){
-                    console.log(botData)
+                    // console.log(botData)
                     setBotData(data.data.botdata)
                 }
                 
@@ -75,7 +76,7 @@ function Chatbot() {
 
     useEffect(() => {
         if (botData) {
-            console.log("Updated botData:", botData);
+            // console.log("Updated botData:", botData);
         }
     }, [botData]);
 
@@ -86,9 +87,9 @@ function Chatbot() {
             body: JSON.stringify({ companyId })
         })
         const company_data = await res.json();
-        console.log(company_data)
+        // console.log(company_data)
         setCompany(company_data.data)
-        console.log(company)
+        // console.log(company)
     }
 
     const handleSendMessage = async () => {
@@ -120,6 +121,8 @@ function Chatbot() {
             });
 
             const data = await response.json();
+
+            console.log(data)
             
             const fanswer = data.data.answer.content
                 .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -129,7 +132,7 @@ function Chatbot() {
                     line.trim() ? <p key={index} dangerouslySetInnerHTML={{ __html: line.trim() }}></p> : <br key={index} /> 
                 );  
 
-            const videos = data.data.videos 
+            // const videos = data.data.videos 
             // Add bot's response to chat
             setMessages([...messages, newMessage, {
                 sender: 'bot',
@@ -160,7 +163,7 @@ function Chatbot() {
                 result : false,
                 content : userMessage.content
             }
-            console.log(req_data)
+            // console.log(req_data)
             try{
                 const response = await fetch("http://localhost:5000/api/chatbot/message-feedback", {
                     method : 'POST',
@@ -169,7 +172,7 @@ function Chatbot() {
                 })
                 const data = await response.json()
                 SetConnectUs(true)
-                console.log(data)
+                // console.log(data)
                 // alert("Thanks for your response our team will try to connect you")
             }catch (error) {
                 console.error('Error fetching chatbot response:', error);

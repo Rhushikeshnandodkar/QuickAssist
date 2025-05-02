@@ -131,17 +131,7 @@ exports.askChatbot = async (req, res) => {
         link.queriesUsed += 1;
         await link.save();
       }
-  
-      const bot_response = new Message({
-        sender: "bot",
-        product,
-        company,
-        content: response.data.answer.content,
-        uniqueId
-      });
-      await bot_response.save();
-  
-      // 🎥 Fetch all videos for the product
+
       const videos = await VideoLink.find({product : product});
     //   console.log('vidoes are .................', videos)
       // Format videos to send to FastAPI
@@ -150,7 +140,7 @@ exports.askChatbot = async (req, res) => {
         video_link: video.video_link
       }));
 
-      console.log("formated videos are -----------------> ", formattedVideos)
+    //   console.log("formated videos are -----------------> ", formattedVideos)
   
       // 🔍 Send videos and question to FastAPI for similarity check
       const suggestApiUrl = "http://127.0.0.1:8000/suggest-videos";
@@ -162,6 +152,26 @@ exports.askChatbot = async (req, res) => {
     //   console.log(suggestResponse)
   
       const suggestedVideos = suggestResponse.data.matched_videos || [];
+
+      console.log('suggested videos are like ------> ', suggestedVideos)
+
+      const bot_response = new Message({
+        sender: "bot",
+        product,
+        company,
+        content: response.data.answer.content,
+        uniqueId,
+        videos: Array.isArray(suggestedVideos)
+        ? suggestedVideos.map(video => ({
+            video_link: video.video_link,
+            video_description: video.description || ""
+          }))
+        : []       
+      });
+      await bot_response.save();
+  
+      // 🎥 Fetch all videos for the product
+
   
       return res.status(200).json({
         success: true,
