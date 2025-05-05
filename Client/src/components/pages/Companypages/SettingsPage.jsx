@@ -61,6 +61,7 @@ function SettingsPage() {
                                     <div className="tabs-container">
                                         <div className="tabs">
                                             <div className="tab active">Company Profile</div>
+                                            <div className="tab">Subscription</div>
                                         </div>
                                     </div>
                                     <div className="settings-header">

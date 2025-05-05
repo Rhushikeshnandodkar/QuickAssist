@@ -64,7 +64,9 @@ function QuestionsList() {
                 <div className="tab-container">
                 <div className="tab-nav">
                     {/* <button className="tab-btn active">Manuals</button> */}
-                    <button className="tab-btn active">Questions</button>
+                    <button className="tab-btn active">Not Answered Questions</button>
+                    <button className="tab-btn "> Answered Questions</button>
+
                 </div>
                 <div className="tab-content">
                     <div className="manual-list">
