@@ -6,6 +6,7 @@ import Sidebar from "../../molecules/Sidebar";
 import { useNavigate } from "react-router-dom";
 import GlobalStyle from "../../molecules/gloable.style";
 import Navbar from "../../molecules/Navbar";
+import Loader from "../../molecules/Loader";
 
 const UploadProducts = () => {
     const navigate = useNavigate()
@@ -15,14 +16,15 @@ const UploadProducts = () => {
         productDescription: "",
         productManual: null,
     });
-
+    
     const [isLoading, setIsLoading] = useState(false)
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        // setIsLoading(true)
     };
-
+    
     const handleFileChange = (e) => {
         setFormData({ ...formData, productManual: e.target.files[0] });
     };
@@ -108,7 +110,7 @@ const UploadProducts = () => {
             </form>
             </div>
         </div>
-        {isLoading && <p className="loading-message">Processing PDF... Please wait.</p>}
+        {isLoading && <p className="loading-message"> <Loader message="Please wait While Processing PDF"/> Processing PDF... Please wait.</p>}
         </div>
 
         </ProductsFormStyle>

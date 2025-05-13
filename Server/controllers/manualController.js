@@ -19,7 +19,7 @@ async function createManualEmbedding(productId, manualText, product_name) {
         unique_id: productId,
         text: manualText,
       });
-    } catch (error) {
+    } catch (error) {   
       console.error("Error creating embeddings:", error);
       throw new Error("Failed to create embeddings");
     }

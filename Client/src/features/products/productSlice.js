@@ -61,7 +61,6 @@ export const fetchProducts = createAsyncThunk("product/fetchall", async(data, th
       }
     })
     const data = await res.json()
-    console.log(data)
     return data
   }catch(err){
     return thunkAPI.rejectWithValue(err)
@@ -137,7 +136,6 @@ const productSlice = createSlice({
     }
     
     const handleFulfilled = (state, {payload}) =>{
-        console.log(payload)
       state.isLoading = false;
       state.products = payload;
       state.status = 200;

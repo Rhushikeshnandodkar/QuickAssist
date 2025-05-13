@@ -132,7 +132,7 @@ export const ProductsFormStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -572,7 +572,8 @@ export const ChatbotListStyle = styled.div`
         .table-container {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            /* box-shadow: var(--shadow); */
+            border: 1px solid #80808030;
             overflow: hidden;
             margin-bottom: 30px;
         }
@@ -864,7 +865,7 @@ export const AnalyticsStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -936,16 +937,17 @@ export const AnalyticsStyle = styled.div`
         .analytics-card {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            /* box-shadow: var(--shadow); */
+            border : 1px solid #80808030;
             padding: 20px;
             transition: var(--transition);
         }
         
-        .analytics-card:hover {
+        /* .analytics-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
-        
+         */
         .card-header {
             display: flex;
             align-items: center;
@@ -1094,16 +1096,17 @@ export const AnalyticsStyle = styled.div`
         .product-item {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            /* box-shadow: var(--shadow); */
+            border : 1px solid #80808030;
             padding: 20px;
             margin-bottom: 15px;
             transition: var(--transition);
         }
         
-        .product-item:hover {
+        /* .product-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-        }
+        } */
         
         .product-header {
             display: flex;
@@ -1497,7 +1500,7 @@ export const SettingStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -2052,7 +2055,7 @@ export const ProductQuestionsStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;

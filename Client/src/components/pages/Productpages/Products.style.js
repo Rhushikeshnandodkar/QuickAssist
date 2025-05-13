@@ -10,7 +10,7 @@ export const ProductStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -445,7 +445,7 @@ export const ProductDetailStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -518,7 +518,7 @@ export const ProductDetailStyle = styled.div`
         .product-image-container {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             padding: 20px;
             overflow: hidden;
         }
@@ -565,7 +565,7 @@ export const ProductDetailStyle = styled.div`
         .product-info {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            border: 1px solid #80808030;
             padding: 25px;
         }
         
@@ -715,7 +715,7 @@ export const ProductDetailStyle = styled.div`
         .tab-content {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            border : 1px solid #80808030;
             padding: 25px;
         }
         
@@ -1217,7 +1217,7 @@ export const EditProductStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            border-bottom: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -1238,7 +1238,7 @@ export const EditProductStyle = styled.div`
         .form-card {
             background-color: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            border: 1px solid #80808030;
             padding: 25px;
             max-width: 800px;
             margin: 0 auto;
@@ -1457,7 +1457,7 @@ export const UploadVideoLinkStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;

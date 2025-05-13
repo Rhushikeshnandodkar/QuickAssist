@@ -8,6 +8,7 @@ import { feedbackInfo, feedbacksList } from '../../../features/analysis/analysis
 import { fetchProducts } from '../../../features/products/productSlice'
 import { HiH3 } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
+import Loader from '../../molecules/Loader'
 
 function AnalyticsPage() {
     const dispatch = useDispatch()
@@ -32,20 +33,6 @@ function AnalyticsPage() {
         {/* <div className="main"> */}
         <div className="main-content">
             <div className="content">
-            <div className="filter-bar">
-                <select className="filter-select">
-                <option>Last 7 day</option>
-                <option>Last 30 days</option>
-                <option>Last 90 days</option>
-                <option>Custom range</option>
-                </select>
-                <select className="filter-select">
-                <option>All Products</option>
-                <option>Smart Watch Pro</option>
-                <option>Coffee Maker XL</option>
-                <option>Wireless Earbuds</option>
-                </select>
-            </div>
             <div className="analytics-grid">
                 <div className="analytics-card">
                 <div className="card-header">
@@ -57,7 +44,7 @@ function AnalyticsPage() {
                 <div className="card-value">{ana_data ? ana_data.answered + ana_data.not_answered : "Loading"}</div>
                 <div className="card-description">+32% from last month</div>
                 </div>
-                <div className="analytics-card">
+                {/* <div className="analytics-card">
                 <div className="card-header">
                     <div className="card-title">Answered Queries</div>
                     <div className="card-icon green">
@@ -66,8 +53,8 @@ function AnalyticsPage() {
                 </div>
                 <div className="card-value">{ana_data ? ana_data.answered : "Loading"}</div>
                 <div className="card-description">{ana_data ? Math.floor((ana_data.answered / (ana_data.answered + ana_data.not_answered)) * 100) : "Loading"}% success rate</div>
-                </div>
-                <div className="analytics-card">
+                </div> */}
+                {/* <div className="analytics-card">
                 <div className="card-header">
                     <div className="card-title">Common Issues</div>
                     <div className="card-icon coral">
@@ -76,7 +63,7 @@ function AnalyticsPage() {
                 </div>
                 <div className="card-value">{ana_data ? ana_data.not_answered : "Loading"}</div>
                 <div className="card-description">5 high priority issues</div>
-                </div>
+                </div> */}
             </div>
 
             <div className="product-analysis-container">
@@ -88,19 +75,19 @@ function AnalyticsPage() {
       <div className="product-item" key={index}>
         <div className="product-header">
           <div className="product-name">
-            {item.unanswered?.product?.product_name || "Unnamed Product"}
+            {item.product_name || "Unnamed Product"}
           </div>
 
           <div className="product-stats">
             <div className="stat-item">
               <span className="stat-icon material-symbols-rounded">forum</span>
-              {item.unansweredCount}
+              {item.totalCount}
             </div>
           </div>
         </div>
 
         <div className="product-actions">
-          <Link to={`/product-questions/${item.unanswered?.product?._id}`} className="btn btn-primary">
+          <Link to={`/product-questions/${item._id}`} className="btn btn-primary">
             <span className="material-symbols-rounded">visibility</span>
             View Questions
           </Link>
@@ -109,7 +96,7 @@ function AnalyticsPage() {
     ))}
   </>
 ) : (
-  <h2>Loading feedbacks...</h2>
+  <Loader/>
 )}
 
                 </div>

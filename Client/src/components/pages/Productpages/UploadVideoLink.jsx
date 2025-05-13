@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import GlobalStyle from '../../molecules/gloable.style';
 import Sidebar from '../../molecules/Sidebar';
@@ -11,6 +11,7 @@ import { fetchSingleProduct } from '../../../features/products/productSlice';
 function UploadVideoLink() {
   const { productId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
 
 
@@ -28,7 +29,9 @@ function UploadVideoLink() {
       productId,
       link,
       description,
-    }));
+    })).then(() =>{
+        navigate(`/edit-products/${productId}`)
+    });
   };
 
   return (

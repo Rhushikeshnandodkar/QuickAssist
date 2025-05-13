@@ -322,19 +322,20 @@ exports.productMessages = async(req, res) =>{
        const products = await Manual.find({company : company})
        const productMessages = await Promise.all(
         products.map(async (product) =>{
-            const unanswered = await MessageFeedback.findOne({product  : product._id, answered : false}).populate("product", "product_name").exec()
-            const unansweredCount = await MessageFeedback.countDocuments({
+            // const unanswered = await MessageFeedback.findOne({product  : product._id, answered : false}).populate("product", "product_name").exec()
+            const unansweredCount = await Message.countDocuments({
                               product: product._id,
-                              answered: false,
+                              sender : "user"             
             });
-            const totalCount = await Message.countDocuments({product : product._id})
-
+            const totalCount = await Message.countDocuments({product : product._id, sender : "user"})
+            const unanswered = await Message.findOne({product : product._id, sender : "user"})
 
             return {
-                // ...product.toObject(),
+                ...product.toObject(),
                 unansweredCount,
                 unanswered,
-                totalCount
+                totalCount,
+                // products
             }
         })
        )
@@ -356,7 +357,7 @@ exports.singleProductMessages = async(req, res) =>{
           })
         }
         const product = await Manual.findById(id)
-        const messageFeedbacks = await MessageFeedback.find({product : product, answered : false})
+        const messageFeedbacks = await Message.find({product : product, sender: "user"})
         res.status(200).json({success : true, data : messageFeedbacks})
     }catch(err){
         res.status(500).json({ success: false, message: err.message });

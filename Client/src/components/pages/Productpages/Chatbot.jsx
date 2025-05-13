@@ -14,6 +14,7 @@ function Chatbot() {
     const [connectUs, SetConnectUs] = useState(false)
     const [company, setCompany] = useState([])
     const [videos, setVideos] = useState([])
+    const [thinking, setThinking] = useState(false)
     const formatMessageContent = (content) => {
         return content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")  // Makes text between ** bold **
@@ -71,7 +72,7 @@ function Chatbot() {
                 top: chatMessagesRef.current.scrollHeight,
                 behavior: "smooth"
             });
-        }
+        }  
     }, [messages, connectUs]);
 
     useEffect(() => {
@@ -94,6 +95,7 @@ function Chatbot() {
 
     const handleSendMessage = async () => {
         SetConnectUs(false)
+        setThinking(true)
         if (!inputMessage.trim()) return;
 
         // Add user message to chat
@@ -140,6 +142,7 @@ function Chatbot() {
                 timestamp: new Date().toLocaleTimeString(),
                 videos: data.data.videos || []
             }]);
+            setThinking(false)
             setReply(false);
 
         } catch (error) {
@@ -153,8 +156,11 @@ function Chatbot() {
 
     const handleConnectUs = async (msg, index) =>{
         if (index > 0) {
+            console.log(msg)
+            console.log(messages``)
             const userMessage = messages[index - 1]; // Get the previous message
             console.log("User message is: ", userMessage);
+            console.log(index)
             const req_data = {
                 uniqueId : uniqueId,
                 message_id : userMessage._id,
@@ -163,7 +169,7 @@ function Chatbot() {
                 result : false,
                 content : userMessage.content
             }
-            // console.log(req_data)
+            console.log(req_data)
             try{
                 const response = await fetch("http://localhost:5000/api/chatbot/message-feedback", {
                     method : 'POST',
@@ -172,8 +178,6 @@ function Chatbot() {
                 })
                 const data = await response.json()
                 SetConnectUs(true)
-                // console.log(data)
-                // alert("Thanks for your response our team will try to connect you")
             }catch (error) {
                 console.error('Error fetching chatbot response:', error);
             }
@@ -208,6 +212,8 @@ function Chatbot() {
                         <span className="material-symbols-rounded">smart_toy</span>
                     </div>
                     <div>
+                        {thinking ? <div className="thinking-widgite">Thinking...</div>: ""}
+                        
                         <div className="message-content">
                         Hello! I'm your assistant for your {botData ? botData.product.product_name : "Loading"} . How can I help you today?
                         </div>
@@ -244,10 +250,10 @@ function Chatbot() {
                         )}</div>
                                     <div className="message-meta">{msg.timestamp}</div>
                                     {msg.sender === 'bot' ?   <div className="feedback-buttons">
-                                        <ul>
+                                        {/* <ul>
                                             <li className='work'>Working</li>
                                             <li className='not-work' onClick={() => handleConnectUs(msg, index)}>Not Working</li> 
-                                        </ul>
+                                        </ul> */}
                                     </div>: ""} 
                                 </div>
                             </div>
@@ -292,6 +298,7 @@ function Chatbot() {
                 </div>
             </ChatbotStyle>
         </>
+
     );
 }
 

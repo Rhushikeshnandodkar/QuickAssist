@@ -170,7 +170,8 @@ export const NavbarStyle = styled.div`
     .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            /* box-shadow: var(--shadow); */
+            border-bottom: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -229,3 +230,40 @@ export const NavbarStyle = styled.div`
 
 `;
 
+export const LoaderStyle = styled.div`
+.loader-container {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: absolute;
+  top: 80px;
+  left: 4%;
+  background:
+white;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+h3{
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+`;

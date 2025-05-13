@@ -9,7 +9,7 @@ export const DashboardStyle = styled.div`
         .header {
             height: var(--header-height);
             background-color: var(--white);
-            box-shadow: var(--shadow);
+            box-shadow: 1px solid #80808030;
             display: flex;
             align-items: center;
             padding: 0 25px;

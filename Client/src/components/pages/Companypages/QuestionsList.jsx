@@ -38,15 +38,15 @@ function QuestionsList() {
                 <div className="product-info">
                     <h1 className="product-title">{singleProduct?.data?.product_name || 'Product Name'}</h1>
                     <div className="product-meta">
-                    <div className="meta-item">
+                    {/* <div className="meta-item">
                         <span className="material-symbols-rounded">category</span>
                         <span>Electronics</span>
                     </div>
                     <div className="meta-item">
                         <span className="material-symbols-rounded">inventory_2</span>
                         <span>SKU: SHH-2023-PRO</span>
-                    </div>
-                    <div className="product-badge">New</div>
+                    </div> */}
+                    {/* <div className="product-badge">New</div> */}
                     </div>
                     <p className="product-description">
                     {singleProduct?.data?.description || 'No description available'}
@@ -64,14 +64,14 @@ function QuestionsList() {
                 <div className="tab-container">
                 <div className="tab-nav">
                     {/* <button className="tab-btn active">Manuals</button> */}
-                    <button className="tab-btn active">Not Answered Questions</button>
-                    <button className="tab-btn "> Answered Questions</button>
+                    <button className="tab-btn active">Questions Asked</button>
+                    {/* <button className="tab-btn "> Answered Questions</button> */}
 
                 </div>
                 <div className="tab-content">
                     <div className="manual-list">
 
-                    {single_feedback.data?.length ? (
+                    {single_feedback?.data?.length ? (
                                         single_feedback.data.map((feed, index) => (
                                             <div className="manual-item">
                                 <div className="manual-icon">

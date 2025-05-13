@@ -8,6 +8,7 @@ import { companyInfo } from '../../features/company/companySlice';
 import { fetchProducts } from '../../features/products/productSlice';
 import { Link } from 'react-router-dom';
 import GlobalStyle from '../molecules/gloable.style';
+import Loader from '../molecules/Loader';
 
 function Dashboard() {
   const dispatch = useDispatch()
@@ -70,7 +71,7 @@ function Dashboard() {
                       <div className="card-description">+32% from last week</div>
                     </div>
                   </div>
-                    </> : <>Loading...</>}
+                    </> : <Loader/>}
       
                   <div className="quick-actions">
                     <div className="section-title">Quick Actions</div>

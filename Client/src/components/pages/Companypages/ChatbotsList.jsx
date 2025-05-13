@@ -6,6 +6,7 @@ import Navbar from '../../molecules/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllbots } from '../../../features/chatbots/chatbotSlice'
 import { Link } from 'react-router-dom'
+import Loader from '../../molecules/Loader'
 
 function ChatbotsList() {
     const dispatch = useDispatch()
@@ -21,18 +22,7 @@ function ChatbotsList() {
         <Sidebar />
         <Navbar page="Chatbots"/>
         <main className="main">
-        <div className="page-header">
-            <h1 className="page-title">My Chatbots</h1>
-            <div className="page-actions">
-            <button className="btn btn-primary">
-                <Link to={'/products'}><span>+ New Chatbot</span></Link>
-            </button>
-            </div>
-        </div>
-        <div className="search-box">
-            <input type="text" className="search-input" placeholder="Search chatbots..." />
-            <span className="search-icon">🔍</span>
-        </div>
+       
         <div className="table-container">
             <table className="table">
             <thead>
@@ -49,7 +39,7 @@ function ChatbotsList() {
             <tbody>
 
                 {isLoading ? (
-                  <tr>Loading..</tr>
+                  <Loader/>
                 ) : yourbots.data.map((data) =>(
                     <tr key={data._id}>
                     <td className="truncate">{data.product.product_name}</td>

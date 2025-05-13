@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../../features/products/productSlice';
 import { Link } from 'react-router-dom';
 import Navbar from '../../molecules/Navbar';
+import Loader from '../../molecules/Loader';
 
 function ProductsPage() {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ function ProductsPage() {
 
 
             {isLoading ? (
-              <h3>Loading...</h3>
+              <Loader/>
             ) : filteredProducts.length > 0 ? (
               filteredProducts.map((data) => (
                 <div className="product-card" key={data._id}>
@@ -74,10 +75,10 @@ function ProductsPage() {
                       <span className="material-symbols-rounded">visibility</span>
                       <span>View</span>
                     </Link>
-                    <button className="product-btn secondary">
+                    <Link to={'/edit-products/:productId'} className="product-btn secondary">
                       <span className="material-symbols-rounded">edit</span>
                       <span>Edit</span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
