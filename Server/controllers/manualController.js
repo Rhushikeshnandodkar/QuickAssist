@@ -65,19 +65,58 @@ exports.uploadManual = async (req, res) => {
   }
 };
 
+// exports.updateManual = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id);
+//     const companyProfile = await CompanyProfile.findOne({ user: user.id });
+//     const manualId = req.params.id;
+    
+//     const product = await Manual.findById(manualId);
+//     if (!companyProfile) {
+//       return res.status(400).json({ message: "Company profile not found!" });
+//     }
+//     // Ensure IDs are properly compared as ObjectIds
+//     if (!companyProfile || !product.company.equals(companyProfile._id)) {
+//       console.log(product.companyProfile, companyProfile._id);
+//       return res.status(403).json({
+//         success: false,
+//         message: "You don't have permission to perform this action",
+//       });
+//     }
+
+//     const { product_name, description, text } = req.body;
+    
+//     const manual = await Manual.findOne({ _id: manualId, company: companyProfile._id });
+//     if (!manual) {
+//       return res.status(404).json({ message: "Manual not found!" });
+//     }
+
+//     if (product_name) manual.product_name = product_name;
+//     if (description) manual.description = description;
+//     if (text) manual.text = text;
+
+//     await manual.save();
+
+//     res.status(200).json({ message: "Manual updated successfully!", manual });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error updating manual" });
+//   }
+// };
+
+
 exports.updateManual = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     const companyProfile = await CompanyProfile.findOne({ user: user.id });
     const manualId = req.params.id;
-    
+
     const product = await Manual.findById(manualId);
     if (!companyProfile) {
       return res.status(400).json({ message: "Company profile not found!" });
     }
-    // Ensure IDs are properly compared as ObjectIds
-    if (!companyProfile || !product.company.equals(companyProfile._id)) {
-      console.log(product.companyProfile, companyProfile._id);
+
+    if (!product.company.equals(companyProfile._id)) {
       return res.status(403).json({
         success: false,
         message: "You don't have permission to perform this action",
@@ -85,15 +124,43 @@ exports.updateManual = async (req, res) => {
     }
 
     const { product_name, description, text } = req.body;
-    
+
     const manual = await Manual.findOne({ _id: manualId, company: companyProfile._id });
     if (!manual) {
       return res.status(404).json({ message: "Manual not found!" });
     }
 
+    // Update fields if provided
     if (product_name) manual.product_name = product_name;
     if (description) manual.description = description;
     if (text) manual.text = text;
+
+    // If a new PDF file is uploaded
+    if (req.file) {
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ message: "Please upload a valid PDF file!" });
+      }
+
+      // Delete old PDF from uploads folder
+      const oldPdfPath = path.join(__dirname, "../uploads", manual.filename);
+      try {
+        await fs.unlink(oldPdfPath);
+      } catch (err) {
+        console.warn("Failed to delete old PDF, maybe it doesn't exist.");
+      }
+
+      // Save new file info
+      manual.filename = req.file.filename;
+
+      // Read and extract text from new PDF
+      const newPdfPath = path.join(__dirname, "../uploads", req.file.filename);
+      const dataBuffer = await fs.readFile(newPdfPath);
+      const data = await pdfParse(dataBuffer);
+      manual.text = data.text;
+
+      // Update embeddings with new text
+      await createManualEmbedding(companyProfile._id, data.text, manual.product_name);
+    }
 
     await manual.save();
 
@@ -103,7 +170,6 @@ exports.updateManual = async (req, res) => {
     res.status(500).json({ message: "Error updating manual" });
   }
 };
-
 
 exports.videoLinks = async(req, res) =>{
   try{

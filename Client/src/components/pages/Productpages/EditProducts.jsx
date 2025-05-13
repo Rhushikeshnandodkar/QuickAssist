@@ -12,7 +12,7 @@ function EditProducts() {
   const { productId } = useParams()
   const dispatch = useDispatch()
   const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
-
+  const [pdfFile, setPdfFile] = useState(null);
   const [formData, setFormData] = useState({
     product_name: '',
     category: '',
@@ -30,7 +30,8 @@ function EditProducts() {
       setFormData({
         product_name: singleProduct.data.product_name || '',
         category: singleProduct.data.category || '',
-        description: singleProduct.data.description || ''
+        description: singleProduct.data.description || '',
+        filename : singleProduct.data.filename || ''
       })
     }
   }, [singleProduct])
@@ -65,23 +66,44 @@ function EditProducts() {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const data = {
-      product_name: formData.product_name,
-      category: formData.category,
-      description: formData.description
+    e.preventDefault();
+  
+    const formDataToSend = new FormData();
+    formDataToSend.append("product_name", formData.product_name);
+    formDataToSend.append("description", formData.description);
+  
+    if (pdfFile) {
+      formDataToSend.append("file", pdfFile);
     }
   
-    dispatch(updateProduct({ productId, formData: data }))
+    dispatch(updateProduct({ productId, formData: formDataToSend }))
       .unwrap()
-      .then(res => {
-        console.log('Product updated successfully:', res)
-        // Optional: show success toast or redirect
+      .then((res) => {
+        console.log("Product updated successfully:", res);
+
       })
-      .catch(err => {
-        console.error('Failed to update product:', err)
-      })
-  }
+      .catch((err) => {
+        console.error("Failed to update product:", err);
+      });
+  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   const data = {
+  //     product_name: formData.product_name,
+  //     category: formData.category,
+  //     description: formData.description
+  //   }
+  
+  //   dispatch(updateProduct({ productId, formData: data }))
+  //     .unwrap()
+  //     .then(res => {
+  //       console.log('Product updated successfully:', res)
+  //       // Optional: show success toast or redirect
+  //     })
+  //     .catch(err => {
+  //       console.error('Failed to update product:', err)
+  //     })
+  // }
 
   return (
     <EditProductStyle>
@@ -160,6 +182,8 @@ function EditProducts() {
 )}
 
 
+
+
                 <div className="form-section">
                   <div className="section-title">Video Tutorials</div>
                   <div className="form-description" style={{ marginBottom: 20 }}>
@@ -171,6 +195,27 @@ function EditProducts() {
                       Add Video
                     </Link>
                   </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="manual_pdf">Update PDF Manual</label>
+                  <div style={{ marginBottom: '20px' }}>
+                    <a
+                      href={`http://localhost:5000/uploads/${formData.filename}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      // className="btn btn-secondary"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      {formData.filename}
+                    </a>
+                  </div>
+                  <input
+                    type="file"
+                    id="manual_pdf"
+                    accept="application/pdf"
+                    onChange={(e) => setPdfFile(e.target.files[0])}
+                  />
                 </div>
 
                 <div className="form-actions">

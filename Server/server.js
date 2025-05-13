@@ -11,6 +11,8 @@ app.use(express.json());
 // const cors = require("cors");
 app.use(cors({ origin: "*", credentials: true, methods: "GET,POST,PUT,PATCH,DELETE" })); 
 
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/company", require("./routes/companyRoutes"));

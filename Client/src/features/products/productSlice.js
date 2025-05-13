@@ -32,23 +32,24 @@ export const updateProduct = createAsyncThunk(
       const response = await fetch(`${url}/api/manual/update-product/${productId}/`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          // Do NOT set Content-Type manually for FormData
         },
-        body: JSON.stringify(formData),
-      })
+        body: formData,
+      });
 
       if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`)
+        throw new Error(`Server error: ${response.status}`);
       }
 
-      const data = await response.json()
-      return data
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message)
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
-)
+);
+
 
 export const fetchProducts = createAsyncThunk("product/fetchall", async(data, thunkAPI) =>{
   try{
