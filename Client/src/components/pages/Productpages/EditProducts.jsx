@@ -163,26 +163,23 @@ function EditProducts() {
                 </div>
 
                 {videos?.data?.length > 0 ? (
-  videos.data.map((video, index) => (
-    <div key={index} className="video-item">
-      <input type="url" value={video.video_link} disabled />
-      <p style={{ marginTop: '4px' }}>{video.description}</p>
-      <div className="video-actions">
-        <button type="button" className="action-button">
-          <span className="material-symbols-rounded">visibility</span>
-        </button>
-        <button type="button" className="action-button delete">
-          <span className="material-symbols-rounded">delete</span>
-        </button>
-      </div>
-    </div>
-  ))
-) : (
-  <div>No videos uploaded yet.</div>
-)}
-
-
-
+                  videos.data.map((video, index) => (
+                    <div key={index} className="video-item">
+                      <input type="url" value={video.video_link} disabled />
+                      <p>{video.video_description}</p>
+                      <div className="video-actions">
+                        <button type="button" className="action-button">
+                          <a href={video.video_link} target="_blank" rel="noopener noreferrer"><span className="material-symbols-rounded">visibility</span></a>
+                        </button>
+                        <button type="button" className="action-button delete">
+                          <span className="material-symbols-rounded">delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div>No videos uploaded yet.</div>
+                )}
 
                 <div className="form-section">
                   <div className="section-title">Video Tutorials</div>
