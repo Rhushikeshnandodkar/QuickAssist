@@ -1,6 +1,6 @@
 const express = require("express");
-const { createChatBot, askChatbot, yourBots, currentBot, messageFeedback, feedBackInformation, productMessages, singleProductMessages } = require("../controllers/cahtbotController");
-const middleware = require("../middleware/authMiddleware")
+const { createChatBot, askChatbot, yourBots, currentBot, deleteChatBot, messageFeedback, feedBackInformation, productMessages, singleProductMessages } = require("../controllers/cahtbotController");
+const middleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/create-bot",middleware.protect, createChatBot);
@@ -12,5 +12,7 @@ router.get('/feedback-info', middleware.protect, feedBackInformation)
 router.get('/product-messages-info', middleware.protect, productMessages)
 
 router.get('/single-product-messages/:id', middleware.protect, singleProductMessages)
+router.delete('/delete-chatbot/:productId/:uniqueId', middleware.protect, deleteChatBot);
+
 
 module.exports = router;

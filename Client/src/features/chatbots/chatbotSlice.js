@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { url } from "../../components/common/api";
-
+import axios from "axios";
 export const createLink = createAsyncThunk('createlink', async(data, thunkAPI) =>{
     console.log(data)
     try{
@@ -38,6 +38,24 @@ export const fetchAllbots = createAsyncThunk('chatbot/allbots', async(thunkAPI) 
         return thunkAPI.rejectWithValue(err)
     }
 })
+
+export const deleteChatbot = createAsyncThunk(
+    'chatbot/deleteChatbot',
+    async ({ productId, uniqueId }, thunkAPI) => {
+        // console.log(productId, uniqueId)
+        try {
+            await axios.delete(`${url}/api/chatbot/delete-chatbot/${productId}/${uniqueId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                },
+            });
+            return { productId, uniqueId }; // For local filtering
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data.message);
+        }
+    }
+);
+
 const initialState = {
     isLoading : true,
     link : null,
@@ -75,7 +93,15 @@ const chatbotSlicec = createSlice({
             state.isLoading = false,
             state.error = true
         })
-        
+
+        builder.addCase(deleteChatbot.fulfilled, (state, action) => {
+            const { productId, uniqueId } = action.payload;
+            state.yourbots.data = state.yourbots.data.filter(
+                (bot) =>
+                    bot.product._id !== productId || bot.uniqueId !== uniqueId
+            );
+        });
+
     }
 })
 

@@ -9,6 +9,7 @@ const axios = require("axios");
 const faiss = require("faiss");
 const {OpenAI} = require("openai");
 const VideoLink = require("../models/VideoLink");
+const Link = require("../models/Link");
 
 const FASTAPI_URL = "http://127.0.0.1:8000";
 
@@ -62,6 +63,44 @@ exports.uploadManual = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error uploading manual" });
+  }
+};
+
+
+
+exports.deleteManual = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    const companyProfile = await CompanyProfile.findOne({ user: user._id });
+    if (!companyProfile) {
+      return res.status(404).json({ message: "Company profile not found!" });
+    }
+    const { productId } = req.params;
+    const manual = await Manual.findById(productId);
+    if (!manual) {
+      return res.status(404).json({ message: "Manual not found!" });
+    }
+    if (!manual.company.equals(companyProfile._id)) {
+      return res.status(403).json({ message: "You are not authorized to delete this manual!" });
+    }
+    const filePath = path.join(__dirname, "../uploads", manual.filename);
+    try {
+      await fs.unlink(filePath);
+    } catch (fileErr) {
+      console.warn(`Failed to delete file: ${filePath}, maybe it doesn't exist.`, fileErr);
+    }
+
+    const deletedBots = await Link.deleteMany({ product: manual._id });
+    console.log(`Deleted ${deletedBots.deletedCount} chatbots linked to manual.`);
+    await manual.deleteOne();
+
+    res.status(200).json({ message: "Manual deleted successfully!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error while deleting manual" });
   }
 };
 

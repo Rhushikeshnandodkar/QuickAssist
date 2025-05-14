@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Analytics | Admin Panel</title>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2F4F',
+                        secondary: '#2E8BC0',
+                        accent: '#FF6F61',
+                        background: '#F5F5F5',
+                        text: '#333333',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="bg-background">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex flex-col w-64 bg-primary">
+            <div class="flex items-center justify-center h-16 border-b border-gray-700">
+                <span class="text-white text-xl font-bold">ManualMind</span>
+            </div>
+            <div class="flex flex-col flex-grow p-4 overflow-y-auto">
+                <nav class="flex-1 space-y-2">
+                    <a href="dashboard.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="clients.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <span>Clients</span>
+                    </a>
+                    <a href="products.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span>Products / Manuals</span>
+                    </a>
+                    <a href="analytics.html" class="flex items-center px-4 py-2 text-white bg-primary-800 rounded-md group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="pricing.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Pricing Plans</span>
+                    </a>
+                    <a href="subscriptions.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                        <span>Subscriptions</span>
+                    </a>
+                    <a href="settings.html" class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-primary-800 hover:text-white group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+                <div class="mt-auto">
+                    <div class="flex items-center p-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Admin+User" alt="Admin User">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-white">Admin User</p>
+                            <p class="text-xs font-medium text-gray-300">admin@manualmind.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navbar -->
+            <header class="bg-white shadow">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <!-- Mobile menu button -->
+                            <div class="flex md:hidden">
+                                <button type="button" class="p-2 text-gray-500 rounded-md hover:bg-gray-100 focus:outline-none">
+                                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="text-xl font-bold text-primary md:hidden">ManualMind</div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="ml-4 flex items-center md:ml-6">
+                                <button class="p-1 text-gray-400 rounded-full hover:bg-gray-100">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                                    </svg>
+                                </button>
+                                <div class="ml-3 relative">
+                                    <button class="max-w-xs bg-secondary flex items-center text-sm rounded-full focus:outline-none">
+                                        <span class="sr-only">Open user menu</span>
+                                        <span class="bg-secondary text-white px-3 py-1 rounded-md">Help</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="max-w-7xl mx-auto">
+                    <h1 class="text-2xl font-semibold text-text mb-6">Query Analytics</h1>
+                    
+                    <!-- Filters -->
+                    <div class="bg-white p-4 rounded-lg shadow mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-4">
+                            <div class="relative">
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 sm:text-sm px-4 py-2 border">
+                                    <option>All Clients</option>
+                                    <option>Client A</option>
+                                    <option>Client B</option>
+                                    <option>Client C</option>
+                                </select>
+                            </div>
+                            <div class="relative">
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 sm:text-sm px-4 py-2 border">
+                                    <option>All Products</option>
+                                    <option>Product Manual v2.4</option>
+                                    <option>User Guide - Enterprise</option>
+                                    <option>Quick Start Guide</option>
+                                </select>
+                            </div>
+                            <div class="relative">
+                                <select class="block w-full rounded-md border-gray-300 shadow-sm focus:border-secondary focus:ring focus:ring-secondary focus:ring-opacity-50 sm:text-sm px-4 py-2 border">
+                                    <option>Last 30 days</option>
+                                    <option>Last 7 days</option>
+                                    <option>Last 90 days</option>
+                                    <option>This year</option>
+                                </select>
+                            </div>
+                            <div class="relative ml-auto">
+                                <button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    Export Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Queries per Client -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Queries Used per Client (This Month)</h3>
+                            <div class="h-64 bg-gray-50 border border-gray-200 rounded-md flex items-center justify-center">
+                                <!-- Placeholder for a bar chart -->
+                                <div class="w-full h-full px-4 py-6">
+                                    <div class="flex h-full items-end space-x-2">
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-secondary w-12 rounded-t" style="height: 70%"></div>
+                                            <span class="text-xs mt-1">Client A</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-secondary w-12 rounded-t" style="height: 90%"></div>
+                                            <span class="text-xs mt-1">Client B</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-secondary w-12 rounded-t" style="height: 45%"></div>
+                                            <span class="text-xs mt-1">Client C</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-secondary w-12 rounded-t" style="height: 60%"></div>
+                                            <span class="text-xs mt-1">Client D</span>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="bg-secondary w-12 rounded-t" style="height: 25%"></div>
+                                            <span class="text-xs mt-1">Client E</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Peak Usage Times -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Peak Usage Times</h3>
+                            <div class="h-64 bg-gray-50 border border-gray-200 rounded-md flex items-center justify-center">
+                                <!-- Placeholder for a line chart -->
+                                <div class="w-full h-full px-4 py-6">
+                                    <div class="relative h-full">
+                                        <!-- Line chart simulation -->
+                                        <svg class="w-full h-full" viewBox="0 0 300 150" preserveAspectRatio="none">
+                                            <!-- Grid lines -->
+                                            <line x1="0" y1="0" x2="300" y2="0" stroke="#e5e7eb" stroke-width="1" />
+                                            <line x1="0" y1="30" x2="300" y2="30" stroke="#e5e7eb" stroke-width="1" />
+                                            <line x1="0" y1="60" x2="300" y2="60" stroke="#e5e7eb" stroke-width="1" />
+                                            <line x1="0" y1="90" x2="300" y2="90" stroke="#e5e7eb" stroke-width="1" />
+                                            <line x1="0" y1="120" x2="300" y2="120" stroke="#e5e7eb" stroke-width="1" />
+                                            <line x1="0" y1="150" x2="300" y2="150" stroke="#e5e7eb" stroke-width="1" />
+                                            
+                                            <!-- Data line -->
+                                            <path d="M0,120 C20,100 40,110 60,80 C80,60 100,50 120,30 C140,20 160,40 180,60 C200,80 220,90 240,70 C260,60 280,100 300,120" 
+                                                fill="none" stroke="#2E8BC0" stroke-width="3" />
+                                            
+                                            <!-- Data points -->
+                                            <circle cx="0" cy="120" r="3" fill="#2E8BC0" />
+                                            <circle cx="60" cy="80" r="3" fill="#2E8BC0" />
+                                            <circle cx="120" cy="30" r="3" fill="#2E8BC0" />
+                                            <circle cx="180" cy="60" r="3" fill="#2E8BC0" />
+                                            <circle cx="240" cy="70" r="3" fill="#2E8BC0" />
+                                            <circle cx="300" cy="120" r="3" fill="#2E8BC0" />
+                                        </svg>
+                                        
+                                        <!-- Time labels -->
+                                        <div class="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-gray-500">
+                                            <span>12 AM</span>
+                                            <span>6 AM</span>
+                                            <span>12 PM</span>
+                                            <span>6 PM</span>
+                                            <span>12 AM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success vs Failure -->
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Query Success Rate</h3>
+                        <div class="flex items-center mb-6">
+                            <div class="w-full bg-gray-200 rounded-full h-4">
+                                <div class="bg-green-500 h-4 rounded-full" style="width: 92%"></div>
+                            </div>
+                            <span class="ml-4 text-sm font-medium">92%</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-medium text-gray-700">Total Queries</h4>
+                                <p class="text-2xl font-bold text-text">8,429</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-medium text-gray-700">Successful</h4>
+                                <p class="text-2xl font-bold text-green-600">7,755</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="text-sm font-medium text-gray-700">Failed</h4>
+                                <p class="text-2xl font-bold text-red-600">674</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-sm text-gray-600">
+                            <p><strong>Summary:</strong> This month has shown a 92% success rate for queries across all clients. Most failures are due to ambiguous questions (45%) or questions outside the scope of uploaded manuals (38%).</p>
+                            <p class="mt-2"><strong>Recommendation:</strong> Consider updating manual for Client B's Product Manual v2.4 with additional FAQs to improve query success rate.</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Queries -->
+                    <div class="bg-white shadow rounded-lg">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-medium text-text">Recent Queries</h3>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Query
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Client
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Product
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Timestamp
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">How do I reset my device?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">John Doe</div>
+                                            <div class="text-xs text-gray-500">TechCorp Inc.</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Product Manual v2.4</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2023-05-15 14:32:45
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Successful
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">What are the system requirements?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Jane Smith</div>
+                                            <div class="text-xs text-gray-500">Data Systems LLC</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">User Guide - Enterprise</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2023-05-15 13:52:18
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Successful
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Where can I find warranty information?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Robert Johnson</div>
+                                            <div class="text-xs text-gray-500">Infotech Solutions</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Quick Start Guide</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2023-05-15 13:41:36
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                Failed
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">How to troubleshoot network connectivity?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Emily Davis</div>
+                                            <div class="text-xs text-gray-500">Smart Gadgets Co.</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">Troubleshooting Guide</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2023-05-15 13:27:52
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Successful
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">What are the API rate limits?</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">John Doe</div>
+                                            <div class="text-xs text-gray-500">TechCorp Inc.</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">API Documentation</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            2023-05-15 13:12:05
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Successful
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                            <div class="flex items-center">
+                                <a href="#" class="text-sm font-medium text-secondary hover:text-secondary-800">
+                                    View all queries →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

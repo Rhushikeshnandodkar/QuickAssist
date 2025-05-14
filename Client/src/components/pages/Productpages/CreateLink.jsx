@@ -26,21 +26,9 @@ function CreateLink() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const {companyId, productId, email} = formData
-        // dispatch(createLink({companyId, productId, email}))
-        try {
-            const response = await dispatch(createLink({ companyId, productId, email }));
-            console.log(response)
-            if (response.meta.requestStatus === 'fulfilled') {
-                // ✅ Redirect on success
-                navigate(`/dashboard`);
-            } else {
-                console.error('Failed to create link:', response.error.message);
-                alert('Failed to submit. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred.');
-        }
+        dispatch(createLink({companyId, productId, email})).then(() =>{
+            navigate('/products')
+        })
     };
 
     return (

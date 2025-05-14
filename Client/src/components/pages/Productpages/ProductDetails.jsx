@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { ProductDetailStyle } from './Products.style'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchSingleProduct } from '../../../features/products/productSlice'
+import { deleteProduct, fetchSingleProduct } from '../../../features/products/productSlice'
 import { fetchAllbots } from '../../../features/chatbots/chatbotSlice'
 import { Link } from 'react-router-dom'
 import { companyInfo } from '../../../features/company/companySlice'
@@ -11,6 +11,7 @@ import Sidebar from '../../molecules/Sidebar'
 import Navbar from '../../molecules/Navbar'
 function ProductDetails() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { singleProduct, isLoading: productLoading } = useSelector((state) => state.products)
     const { yourbots, isLoading: botLoading, error: botError } = useSelector((state) => state.chatbot)
     const { company, isLoading : companyLoading } = useSelector((state) => state.company)
@@ -41,6 +42,17 @@ function ProductDetails() {
         }
     }, [yourbots, company, productId])
     console.log(filteredBots)
+
+    
+    const handleDelete = () => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            dispatch(deleteProduct(productId)).then((res) => {
+                if (res.meta.requestStatus === 'fulfilled') {
+                    navigate('/products')
+                }
+            })
+        }
+    }
 
     if (botError) return <h3>Error loading bots: {botError}</h3>
 
@@ -87,6 +99,13 @@ function ProductDetails() {
                         <span className="material-symbols-rounded">edit</span>
                         Edit Product
                     </Link>
+
+                    <button onClick={handleDelete} className="btn btn-danger">
+                    <span className="material-symbols-rounded">delete</span>
+                    Delete Product
+                    </button>
+
+
                     </div>
                 </div>
                 </div>

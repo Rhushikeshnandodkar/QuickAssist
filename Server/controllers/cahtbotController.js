@@ -88,6 +88,45 @@ exports.createChatBot = async(req, res) =>{
     }
 }
 
+// DELETE: Delete a chatbot link
+exports.deleteChatBot = async (req, res) => {
+  try {
+      const user = await User.findById(req.user.id);
+      if (!user) {
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      const { uniqueId, productId} = req.params;
+
+      // Find the link by uniqueId and productId
+      const link = await Link.findOne({ uniqueId, product: productId }).populate({
+          path: 'company',
+          populate: { path: 'user' }
+      });
+
+      if (!link) {
+          return res.status(404).json({ success: false, message: "Chatbot link not found" });
+      }
+
+      // Check if the logged-in user owns the company
+      if (!link.company.user._id.equals(user._id)) {
+          return res.status(403).json({ success: false, message: "You are not authorized to delete this chatbot" });
+      }
+
+      // Delete the link
+      await Link.deleteOne({ _id: link._id });
+
+      return res.status(200).json({
+          success: true,
+          message: "Chatbot link deleted successfully"
+      });
+
+  } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+
 exports.askChatbot = async (req, res) => {
     try {
       const { companyId, productId, uniqueId, question } = req.body;

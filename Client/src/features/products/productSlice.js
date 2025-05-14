@@ -85,6 +85,22 @@ export const fetchSingleProduct = createAsyncThunk("product/detils", async(id, t
   }
 })
 
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${url}/api/manual/delete-manual/${productId}`, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+    }) 
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
 
 export const uploadVideoLink = createAsyncThunk(
   'product/uploadVideoLink',
@@ -125,6 +141,7 @@ const initialState = {
   singleProduct : null,
   error : false,
   status : null,
+  deleteSuccess: false
 }
 
 const productSlice = createSlice({
@@ -179,7 +196,19 @@ const productSlice = createSlice({
       state.error = action.payload
     })
 
-
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.isLoading = true
+      state.error = null
+      state.deleteSuccess = false
+    })
+    builder.addCase(deleteProduct.fulfilled, (state) => {
+      state.isLoading = false
+      state.deleteSuccess = true
+    })
+    builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    })
 
   }
 })
