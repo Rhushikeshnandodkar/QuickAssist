@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Manual = require("../models/Manual")
 const LinkSchema = require("../models/Link")
 const MessageModel = require("../models/Messages")
+const CompanyDataModel = require("../models/CompanyData")
 exports.createCompanyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -14,7 +15,7 @@ exports.createCompanyProfile = async (req, res) => {
         return res.status(200).json({
           success: true,
           message: "Profile already exists",
-          data: existingProfile,
+          // data: existingProfile,
         });
       }
     const { company_name, description, address, company_email, company_website, company_contact } = req.body;
@@ -29,11 +30,16 @@ exports.createCompanyProfile = async (req, res) => {
     });
 
     await profile.save();
-
+    const companyData = new CompanyDataModel({
+      company : profile,
+      tokens_used : 0,
+      queries_used : 0
+    })
+    companyData.save()
     res.status(201).json({
       success: true,
       message: "Company profile created successfully",
-      data: profile,
+      data: {"profile" : profile, "company_data" : companyData},
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -95,6 +101,8 @@ exports.companyProfile = async(req, res) =>{
       no_of_products = await Manual.find({company : profile})
       chatbots = await LinkSchema.find({company : profile})
       interactions = await MessageModel.find({company : profile})
+      // const company_data = await CompanyDataModel.findOne({profile})
+      // const purchaseData = await Purchase.findOne({profile})
       console.log(interactions)
       return res.status(200).json({
         success : true,
@@ -198,6 +206,8 @@ const mongoose = require("mongoose");
 const Message = require("../models/Messages");
 const Link = require("../models/Link");
 const MessageFeedback = require("../models/MessageFeedback");
+const CompanyData = require("../models/CompanyData");
+const Purchase = require("../models/Purchase");
 
 exports.getSingleProduct = async (req, res) => {
   try {
@@ -233,3 +243,5 @@ exports.getSingleProduct = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+

@@ -9,6 +9,7 @@ const SECERATE_KEY = "greenbagboogie"
 const MessageFeedback = require("../models/MessageFeedback")
 const nodemailer = require("nodemailer")
 const VideoLink = require("../models/VideoLink");
+const CompanyDataModel = require("../models/CompanyData");
 
 const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
     try {
@@ -165,12 +166,21 @@ exports.askChatbot = async (req, res) => {
       const response = await axios.post(apiUrl, requestData, {
         headers: { "Content-Type": "application/json" }
       });
+
+      // console.log(response)
   
       if (response.status === 200) {
         link.queriesUsed += 1;
         await link.save();
       }
 
+      // TOKEN DATA UPDATION CODE
+      // if(response.data.answer){
+      //   const companydata = await CompanyDataModel.findOne({company})
+      //   companydata.tokens_used += response.data.answer.response_metadata.token_usage.total_tokens;  // or however you want to count
+      //   companydata.queries_used += 1;
+      //   await companydata.save()
+      // }
       const videos = await VideoLink.find({product : product});
     //   console.log('vidoes are .................', videos)
       // Format videos to send to FastAPI
@@ -192,7 +202,7 @@ exports.askChatbot = async (req, res) => {
   
       const suggestedVideos = suggestResponse.data.matched_videos || [];
 
-      console.log('suggested videos are like ------> ', suggestedVideos)
+      // console.log('suggested videos are like ------> ', suggestedVideos)
 
       const bot_response = new Message({
         sender: "bot",
@@ -210,6 +220,7 @@ exports.askChatbot = async (req, res) => {
       await bot_response.save();
   
       // 🎥 Fetch all videos for the product
+      
 
   
       return res.status(200).json({
@@ -304,7 +315,7 @@ exports.currentBot = async(req, res) =>{
 exports.messageFeedback = async(req, res) =>{
     try{
         const {uniqueId, message_id, result, product, company} = req.body
-        console.log(result)
+        // console.log(result)
         const message = await Message.findById(message_id)
         const existingFeedback = await MessageFeedback.findOne({message_id : message_id})
         if(existingFeedback){
