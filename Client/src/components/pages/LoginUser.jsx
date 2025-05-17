@@ -38,47 +38,6 @@ const LoginUser = () => {
   return (
     <LoginStyle>
       <GlobalStyle/>
-
-    {/* <div className="container">
-      <div className="auth-container">
-        <div className="image-section">
-          <img
-            src={chatimage}
-            alt="Robot illustration"
-          />
-        </div>
-        <div className="form-section">
-          <h1>Login</h1>
-          <p className="subtitle">Turn Your user manuals into conversation!</p>
-          {status==401 ? <><div className="alert"><h6>Please Enter Valid Details</h6></div></> : <></>}
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <button type="submit" className="auth-button">
-              Login Now
-            </button>
-          </form>
-
-          <p className="switch-auth">
-            Don't have account? <Link to={'/register'}>Signup</Link>
-          </p>
-        </div>
-      </div>
-    </div> */}
     <div className="container-main">
 <div className="login-container">
       <div className="login-card">
@@ -92,10 +51,6 @@ const LoginUser = () => {
         </div>
 
         <div className="auth-container">
-          {/* <div className="image-section">
-            <img src={chatimage} alt="Robot illustration" />
-          </div> */}
-
           <div className="form-section">
             <h2 className="login-heading">Welcome back</h2>
             <p className="login-subheading">Enter your credentials to access your account</p>
@@ -133,16 +88,15 @@ const LoginUser = () => {
                 <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" />
               </div>
             </div>
-<br />
+            <br />
             <p className="switch-auth">
-              Don't have an account? <Link to="/register">Signup</Link>
+              Don't have an account? <Link to="/register">Login</Link>
             </p>
           </div>
         </div>
       </div>
     </div>
     </div>
-
     </LoginStyle>
   );
 };

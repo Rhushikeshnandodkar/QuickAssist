@@ -18,6 +18,8 @@ import QuestionsList from "./components/pages/Companypages/QuestionsList";
 import EditProducts from "./components/pages/Productpages/EditProducts";
 import UploadVideoLink from "./components/pages/Productpages/UploadVideoLink";
 import SubscriptionInfo from "./components/pages/Companypages/SubscriptionInfo";
+import LandingPage from "./components/pages/LandingPage";
+import PurchasePage from "./components/pages/Companypages/PurchasePage";
 const App = () => {
   return (
     <Router>
@@ -32,6 +34,8 @@ const App = () => {
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/subscription-info" element={<SubscriptionInfo />} />
+        <Route path="/" element={<LandingPage />}></Route>
+        <Route path="/purchase-item" element={<PurchasePage />}></Route>
 
         <Route path="/upload-video-link/:productId" element={<UploadVideoLink />} />
         <Route path="/product-questions/:productId" element={<QuestionsList />} />

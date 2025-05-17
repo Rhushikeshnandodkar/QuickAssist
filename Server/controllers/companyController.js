@@ -5,6 +5,10 @@ const Manual = require("../models/Manual")
 const LinkSchema = require("../models/Link")
 const MessageModel = require("../models/Messages")
 const CompanyDataModel = require("../models/CompanyData")
+
+const Link = require("../models/Link");
+const MessageFeedback = require("../models/MessageFeedback");
+
 exports.createCompanyProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
@@ -175,14 +179,11 @@ exports.allProducts = async(req, res) =>{
       products.map(async (product) => {
         const product_info = await Manual.findById(product._id)
         const chatbotCount = await Link.countDocuments({ product: product._id });
-
         const answered = await MessageFeedback.findOne({product  : product._id, answered : false})
 
         const chatbotIds = await Link.find({ product: product._id }).distinct("_id");
         const interactionCount = await MessageModel.countDocuments({ uniqueId: { $in: chatbotIds.uniqueId } });
 
-        // console.log(product_info, answeredCount, unansweredCount)
-                // Count answered and unanswered messages for this product
         const answeredCount = await MessageFeedback.countDocuments({
                   product: product._id,
                   answered: false,
@@ -203,18 +204,9 @@ exports.allProducts = async(req, res) =>{
   }
 }
 
-const mongoose = require("mongoose");
-const Message = require("../models/Messages");
-const Link = require("../models/Link");
-const MessageFeedback = require("../models/MessageFeedback");
-const CompanyData = require("../models/CompanyData");
-const Purchase = require("../models/Purchase");
-
 exports.getSingleProduct = async (req, res) => {
   try {
     const { id } = req.params;
-
-    // Fetch product, user, and company
     const product = await Manual.findById(id);
     const user = await User.findById(req.user.id);
     const company = await CompanyProfile.findOne({ user: user });
@@ -226,7 +218,6 @@ exports.getSingleProduct = async (req, res) => {
       });
     }
 
-    // Ensure IDs are properly compared as ObjectIds
     if (!company || !product.company.equals(company._id)) {
       console.log(product.company, company._id);
       return res.status(403).json({
@@ -245,7 +236,6 @@ exports.getSingleProduct = async (req, res) => {
   }
 };
 
-
 exports.usageInfo = async(req, res) =>{
   try{
     const user = await User.findById(req.user.id);
@@ -254,8 +244,6 @@ exports.usageInfo = async(req, res) =>{
     }
     const { id } = req.params;
     const company = await CompanyProfile.findOne({ user: user });
-    
-            // Corrected ID comparison
     if (!company._id.equals(id)) {
         return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
     }
@@ -266,6 +254,7 @@ exports.usageInfo = async(req, res) =>{
       data: company_data,
     });
   }catch(err){
-
+    res.status(500).json({ success: false, message: err.message });
   }
 }
+
