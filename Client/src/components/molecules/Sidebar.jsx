@@ -53,7 +53,7 @@ function Sidebar() {
                 </span>
                 <span class="menu-text">Analytics</span>
             </Link>
-            <Link to={`/settings`} class={`menu-item ${window.location.pathname === "/settings" ? "active" : ""}`}>
+            <Link to={`/subscription-info`} class={`menu-item ${window.location.pathname === "/subscription-info" ? "active" : ""}`}>
                 <span class="menu-icon">
                     <span class="material-symbols-rounded">settings</span>
                 </span>

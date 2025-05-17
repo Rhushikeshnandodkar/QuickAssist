@@ -5,6 +5,7 @@ import GlobalStyle from '../../molecules/gloable.style'
 import { SettingStyle } from './company.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { companyInfo, updateCompanyProfile } from '../../../features/company/companySlice'
+import { Link } from 'react-router-dom'
 
 function SettingsPage() {
     const {isLoading, company} = useSelector((state) => state.company)
@@ -60,8 +61,8 @@ function SettingsPage() {
                                 <div className="settings-content">
                                     <div className="tabs-container">
                                         <div className="tabs">
-                                            <div className="tab active">Company Profile</div>
-                                            <div className="tab">Subscription</div>
+                                            <Link to={'/subscription-info'} className="tab">Subscription</Link>
+                                            <Link to={'/settings'} className="tab active">Company Profile</Link>
                                         </div>
                                     </div>
                                     <div className="settings-header">

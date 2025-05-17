@@ -123,6 +123,7 @@ exports.companyProfile = async(req, res) =>{
   }
 }
 
+
 exports.createProduct = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
@@ -245,3 +246,26 @@ exports.getSingleProduct = async (req, res) => {
 };
 
 
+exports.usageInfo = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const { id } = req.params;
+    const company = await CompanyProfile.findOne({ user: user });
+    
+            // Corrected ID comparison
+    if (!company._id.equals(id)) {
+        return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
+    }
+    console.log(id)
+    const company_data = await CompanyDataModel.findOne({company : company})
+    res.status(200).json({
+      success: true,
+      data: company_data,
+    });
+  }catch(err){
+
+  }
+}

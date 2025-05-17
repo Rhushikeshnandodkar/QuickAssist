@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios"
 import {url} from "../../components/common/api"
+import { data } from "react-router-dom";
 
 export const createCompany = createAsyncThunk("company/create", async(data, thunkAPI) =>{
     try{
@@ -50,8 +51,6 @@ export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAP
 })
 
 export const updateCompanyProfile = createAsyncThunk("company/update", async(data, thunkAPI) =>{
-  console.log(data)
-  console.log(localStorage.getItem("token"))
   try{
     const res = await fetch(`${url}/api/company/update-profile`, {
       method : "PATCH",
@@ -68,9 +67,27 @@ export const updateCompanyProfile = createAsyncThunk("company/update", async(dat
   }
 })
 
+export const getUsageInfo = createAsyncThunk("company/usageinfo", async(id, thunkAPI) =>{
+  try{
+    const res = await fetch(`${url}/api/company/usage-info/${id}`, {
+      method : "GET",
+      headers : {
+        "Content-Type" : "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        Accept: "application/json",
+      }
+    })
+    const data = await res.json()
+    return data
+  }catch(err){
+    return thunkAPI.rejectWithValue(err)
+  }
+})
+
 const initialState = {
   isLoading : true,
   company : null,
+  usageInfo : null,
   error : false,
   status : null,
 }
@@ -112,6 +129,18 @@ const companySlice = createSlice({
       state.company = action.payload
     })
     builder.addCase(updateCompanyProfile.rejected, (state, action) =>{
+      state.isLoading = false,
+      state.error = action.payload
+    })
+
+    builder.addCase(getUsageInfo.pending, (state, action) =>{
+      state.isLoading = true
+    })
+    builder.addCase(getUsageInfo.fulfilled, (state, action) =>{
+      state.isLoading = false,
+      state.usageInfo = action.payload
+    })
+    builder.addCase(getUsageInfo.rejected, (state, action) =>{
       state.isLoading = false,
       state.error = action.payload
     })

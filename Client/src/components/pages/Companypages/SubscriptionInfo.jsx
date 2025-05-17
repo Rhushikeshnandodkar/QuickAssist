@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../molecules/Navbar'
 import Sidebar from '../../molecules/Sidebar'
 import GlobalStyle from '../../molecules/gloable.style'
 import { SettingStyle } from './company.styled'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { companyInfo, getUsageInfo } from '../../../features/company/companySlice'
+import Loader from '../../molecules/Loader'
 function SubscriptionInfo() {
-    const isLoading = false
+    // const isLoading = false
+    const dispatch = useDispatch()
+    const {isLoading, company, usageInfo} = useSelector((state) => state.company)
+    useEffect(() =>{
+        if(!company){
+            dispatch(companyInfo())
+        }
+    }, [dispatch, company])
+
+    useEffect(() => {
+        if (company?.data?._id) {
+          const companyId = company.data._id;
+          console.log(companyId)
+          dispatch(getUsageInfo(companyId)); // if you want to fetch usage info
+        }
+        console.log(usageInfo)
+    }, [company, dispatch])
+
   return (
     <>
     <GlobalStyle/>
@@ -14,11 +35,16 @@ function SubscriptionInfo() {
     <div className="main-content">
                 <Navbar page="Settings" />
                 <div className="content">
-                {isLoading ? (
-                            <div className="loading">Loading...</div>
+                <div className="tabs-container">
+                                        <div className="tabs">
+                                            <div className="tab active">Subscription</div>
+                                            <Link to={'/settings'} className="tab ">Company Profile</Link>
+                                        </div>
+                                    </div>
+                {isLoading || !usageInfo ? (
+                           <Loader/>
                         ) : (
                     <div>
-                    &lt;&gt;
                     <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
                         <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-semibold">Token Usage</h2>
@@ -27,16 +53,16 @@ function SubscriptionInfo() {
                         <div className="mb-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="bg-gray-50 rounded-lg p-4">
-                            <div className="text-sm text-gray-500 mb-1">Available Tokens</div>
+                            <div className="text-sm text-gray-500 mb-1">Available Queries</div>
                             <div className="flex items-end">
-                                <span className="text-2xl font-semibold">387,500</span>
-                                <span className="text-sm text-gray-500 ml-2">tokens</span>
+                                <span className="text-2xl font-semibold">{usageInfo.data.queries_used}</span>
+                                <span className="text-sm text-gray-500 ml-2">Queries</span>
                             </div>
                             </div>
                             <div className="bg-gray-50 rounded-lg p-4">
-                            <div className="text-sm text-gray-500 mb-1">Used This Month</div>
+                            <div className="text-sm text-gray-500 mb-1">Tokens Used This Month</div>
                             <div className="flex items-end">
-                                <span className="text-2xl font-semibold">112,500</span>
+                                <span className="text-2xl font-semibold">{usageInfo.data.tokens_used}</span>
                                 <span className="text-sm text-gray-500 ml-2">tokens</span>
                             </div>
                             </div>
