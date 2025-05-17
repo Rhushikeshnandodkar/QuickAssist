@@ -35,7 +35,7 @@ exports.createCompanyProfile = async (req, res) => {
       tokens_used : 0,
       queries_used : 0
     })
-    companyData.save()
+    await companyData.save()
     res.status(201).json({
       success: true,
       message: "Company profile created successfully",

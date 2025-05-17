@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - Tokens & Billing | ChatbotManuals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2F4F',
+                        'primary-light': '#3d4270',
+                        secondary: '#2E8BC0',
+                        accent: '#FF6F61',
+                        background: '#F5F5F5',
+                    },
+                    boxShadow: {
+                        custom: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+                fontFamily: {
+                    poppins: ['Poppins', 'sans-serif'],
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-rounded {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background font-poppins text-gray-800 min-h-screen flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-primary text-white h-screen fixed transition-all duration-300 z-40 overflow-y-auto">
+        <div class="flex items-center p-5 h-[70px] border-b border-white/10">
+            <div class="font-semibold text-xl">ChatbotManuals</div>
+            <button class="ml-auto bg-transparent border-none text-white cursor-pointer w-8 h-8 flex items-center justify-center rounded transition-all hover:bg-white/10">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+        </div>
+        
+        <div class="py-4">
+            <a href="dashboard.html" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">dashboard</span>
+                </span>
+                <span class="text-sm">Dashboard</span>
+            </a>
+            <a href="products.html" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">apps</span>
+                </span>
+                <span class="text-sm">Products</span>
+            </a>
+            <a href="upload-manual.html" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">upload_file</span>
+                </span>
+                <span class="text-sm">Upload Manuals</span>
+            </a>
+            <a href="create-customer.html" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">person_add</span>
+                </span>
+                <span class="text-sm">Customers</span>
+            </a>
+            <a href="chatbot.html" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">smart_toy</span>
+                </span>
+                <span class="text-sm">Chatbots</span>
+            </a>
+            <a href="#" class="flex items-center px-5 py-3 text-white/80 hover:bg-primary-light hover:text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">analytics</span>
+                </span>
+                <span class="text-sm">Analytics</span>
+            </a>
+            <a href="settings.html" class="flex items-center px-5 py-3 bg-primary-light text-white transition-colors">
+                <span class="flex items-center justify-center mr-3 text-xl">
+                    <span class="material-symbols-rounded">settings</span>
+                </span>
+                <span class="text-sm">Settings</span>
+            </a>
+        </div>
+        
+        <div class="absolute bottom-0 w-full p-4 border-t border-white/10">
+            <div class="flex items-center">
+                <div class="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-base">JD</div>
+                <div class="ml-3 overflow-hidden">
+                    <div class="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">John Doe</div>
+                    <div class="text-xs text-white/60 whitespace-nowrap overflow-hidden text-ellipsis">Administrator</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 ml-64 transition-all duration-300">
+        <!-- Header -->
+        <div class="h-[70px] bg-white shadow-custom flex items-center px-6 fixed top-0 right-0 left-64 z-30 transition-all duration-300">
+            <button class="md:hidden flex items-center justify-center w-9 h-9 rounded hover:bg-background transition-colors">
+                <span class="material-symbols-rounded">menu</span>
+            </button>
+            <div class="font-semibold text-lg">Account Settings</div>
+            <div class="ml-auto flex items-center gap-4">
+                <button class="flex items-center justify-center w-9 h-9 rounded hover:bg-background transition-colors">
+                    <span class="material-symbols-rounded">help</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Page Content -->
+        <div class="pt-[70px] p-6">
+            <!-- Settings Navigation -->
+            <div class="mb-8 border-b border-gray-200">
+                <div class="flex flex-wrap -mb-px">
+                    <a href="#" class="inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 border-transparent hover:border-gray-300">Profile</a>
+                    <a href="#" class="inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 border-transparent hover:border-gray-300">Security</a>
+                    <a href="#" class="inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 border-secondary text-secondary">Billing</a>
+                    <a href="#" class="inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 border-transparent hover:border-gray-300">Notifications</a>
+                    <a href="#" class="inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 border-transparent hover:border-gray-300">API</a>
+                </div>
+            </div>
+
+            <!-- Tokens Overview -->
+            <div class="bg-white rounded-xl shadow-custom p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold">Token Usage</h2>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Pro Plan</span>
+                </div>
+
+                <div class="mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Available Tokens -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-500 mb-1">Available Tokens</div>
+                            <div class="flex items-end">
+                                <span class="text-2xl font-semibold">387,500</span>
+                                <span class="text-sm text-gray-500 ml-2">tokens</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Used This Month -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-500 mb-1">Used This Month</div>
+                            <div class="flex items-end">
+                                <span class="text-2xl font-semibold">112,500</span>
+                                <span class="text-sm text-gray-500 ml-2">tokens</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Token Refresh -->
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-500 mb-1">Next Refresh</div>
+                            <div class="flex items-end">
+                                <span class="text-2xl font-semibold">June 15, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usage Progress -->
+                <div class="mb-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm font-medium">Monthly Usage</span>
+                        <span class="text-sm text-gray-500">112,500 / 500,000 tokens (22.5%)</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-secondary h-2.5 rounded-full" style="width: 22.5%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Usage Stats -->
+            <div class="bg-white rounded-xl shadow-custom p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-6">Usage Metrics</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-left">
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Date</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Tokens Used</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Total Queries</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Avg. Per Query</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="py-3 px-4 text-sm">May 15, 2025</td>
+                                <td class="py-3 px-4 text-sm">3,245</td>
+                                <td class="py-3 px-4 text-sm">42</td>
+                                <td class="py-3 px-4 text-sm">77.3</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 text-sm">May 14, 2025</td>
+                                <td class="py-3 px-4 text-sm">5,120</td>
+                                <td class="py-3 px-4 text-sm">67</td>
+                                <td class="py-3 px-4 text-sm">76.4</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 text-sm">May 13, 2025</td>
+                                <td class="py-3 px-4 text-sm">4,876</td>
+                                <td class="py-3 px-4 text-sm">53</td>
+                                <td class="py-3 px-4 text-sm">92.0</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 text-sm">May 12, 2025</td>
+                                <td class="py-3 px-4 text-sm">6,234</td>
+                                <td class="py-3 px-4 text-sm">78</td>
+                                <td class="py-3 px-4 text-sm">79.9</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 text-sm">May 11, 2025</td>
+                                <td class="py-3 px-4 text-sm">2,987</td>
+                                <td class="py-3 px-4 text-sm">34</td>
+                                <td class="py-3 px-4 text-sm">87.9</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Billing History -->
+            <div class="bg-white rounded-xl shadow-custom p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold">Billing History</h2>
+                    <a href="#" class="text-sm text-secondary font-medium hover:underline">Download All Invoices</a>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-left">
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Invoice</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Date</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Amount</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Status</th>
+                                <th class="py-3 px-4 text-sm font-medium text-gray-500">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="py-4 px-4 text-sm">INV-2025-0512</td>
+                                <td class="py-4 px-4 text-sm">May 12, 2025</td>
+                                <td class="py-4 px-4 text-sm">$49.99</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
+                                </td>
+                                <td class="py-4 px-4 text-sm">
+                                    <a href="#" class="text-secondary hover:underline">Download</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-4 text-sm">INV-2025-0412</td>
+                                <td class="py-4 px-4 text-sm">April 12, 2025</td>
+                                <td class="py-4 px-4 text-sm">$49.99</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
+                                </td>
+                                <td class="py-4 px-4 text-sm">
+                                    <a href="#" class="text-secondary hover:underline">Download</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-4 text-sm">INV-2025-0312</td>
+                                <td class="py-4 px-4 text-sm">March 12, 2025</td>
+                                <td class="py-4 px-4 text-sm">$49.99</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
+                                </td>
+                                <td class="py-4 px-4 text-sm">
+                                    <a href="#" class="text-secondary hover:underline">Download</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-4 text-sm">INV-2025-0212</td>
+                                <td class="py-4 px-4 text-sm">February 12, 2025</td>
+                                <td class="py-4 px-4 text-sm">$39.99</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
+                                </td>
+                                <td class="py-4 px-4 text-sm">
+                                    <a href="#" class="text-secondary hover:underline">Download</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-4 text-sm">INV-2025-0112</td>
+                                <td class="py-4 px-4 text-sm">January 12, 2025</td>
+                                <td class="py-4 px-4 text-sm">$39.99</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
+                                </td>
+                                <td class="py-4 px-4 text-sm">
+                                    <a href="#" class="text-secondary hover:underline">Download</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Current Plan -->
+            <div class="bg-white rounded-xl shadow-custom p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-6">Current Plan</h2>
+                
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-lg font-medium">Pro Plan</span>
+                            <span class="bg-primary text-white text-xs font-medium px-2.5 py-0.5 rounded">Current</span>
+                        </div>
+                        <div class="text-2xl font-semibold mb-1">$49.99<span class="text-sm text-gray-500 font-normal">/month</span></div>
+                        <p class="text-gray-500 text-sm mb-4">Your plan renews on June 15, 2025</p>
+                        
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-sm">
+                                <span class="material-symbols-rounded text-green-500 mr-2">check_circle</span>
+                                500,000 tokens per month
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <span class="material-symbols-rounded text-green-500 mr-2">check_circle</span>
+                                Unlimited chatbot instances
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <span class="material-symbols-rounded text-green-500 mr-2">check_circle</span>
+                                Advanced analytics
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <span class="material-symbols-rounded text-green-500 mr-2">check_circle</span>
+                                Priority support
+                            </li>
+                        </ul>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <button class="px-5 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors font-medium text-sm">Upgrade Plan</button>
+                            <button class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">Cancel Subscription</button>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full md:w-64 bg-gray-50 rounded-lg p-4">
+                        <h3 class="font-medium text-sm mb-3">Payment Method</h3>
+                        <div class="flex items-center mb-4">
+                            <span class="material-symbols-rounded mr-3 text-gray-500">credit_card</span>
+                            <div>
+                                <div class="font-medium text-sm">Visa ending in 4242</div>
+                                <div class="text-xs text-gray-500">Expires 05/2026</div>
+                            </div>
+                        </div>
+                        <button class="text-secondary text-sm font-medium hover:underline">Update payment method</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add-ons -->
+            <div class="bg-white rounded-xl shadow-custom p-6">
+                <h2 class="text-xl font-semibold mb-4">Additional Tokens</h2>
+                <p class="text-gray-500 text-sm mb-6">Need more tokens this month? Purchase additional tokens that never expire.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-secondary hover:shadow-md transition-all cursor-pointer">
+                        <div class="text-lg font-medium">100,000 Tokens</div>
+                        <div class="text-xl font-semibold my-2">$10.00</div>
+                        <div class="text-gray-500 text-sm">$0.10 per 1,000 tokens</div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-secondary hover:shadow-md transition-all cursor-pointer">
+                        <div class="text-lg font-medium">500,000 Tokens</div>
+                        <div class="text-xl font-semibold my-2">$45.00</div>
+                        <div class="text-gray-500 text-sm">$0.09 per 1,000 tokens</div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-secondary hover:shadow-md transition-all cursor-pointer">
+                        <div class="text-lg font-medium">1,000,000 Tokens</div>
+                        <div class="text-xl font-semibold my-2">$80.00</div>
+                        <div class="text-gray-500 text-sm">$0.08 per 1,000 tokens</div>
+                    </div>
+                </div>
+                
+                <button class="px-5 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium text-sm">
+                    <span class="material-symbols-rounded mr-1 text-base align-text-bottom">add_shopping_cart</span>
+                    Purchase Additional Tokens
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

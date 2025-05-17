@@ -17,6 +17,7 @@ import SettingsPage from "./components/pages/Companypages/SettingsPage";
 import QuestionsList from "./components/pages/Companypages/QuestionsList";
 import EditProducts from "./components/pages/Productpages/EditProducts";
 import UploadVideoLink from "./components/pages/Productpages/UploadVideoLink";
+import SubscriptionInfo from "./components/pages/Companypages/SubscriptionInfo";
 const App = () => {
   return (
     <Router>
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/chatbots" element={<ChatbotsList />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/subscription-info" element={<SubscriptionInfo />} />
 
         <Route path="/upload-video-link/:productId" element={<UploadVideoLink />} />
         <Route path="/product-questions/:productId" element={<QuestionsList />} />

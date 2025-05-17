@@ -10,22 +10,18 @@ const MessageFeedback = require("../models/MessageFeedback")
 const nodemailer = require("nodemailer")
 const VideoLink = require("../models/VideoLink");
 const CompanyDataModel = require("../models/CompanyData");
-
+require("dotenv").config()
 const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
     try {
-        // Configure Nodemailer transporter
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "quickassistofficial@gmail.com",  // Replace with your email
-                pass: "dkll yqiu vdhg rshi"  // Replace with your app password
+                user: process.env.EMAIL, 
+                pass: process.env.PASSWORD 
             }
-            //sfbs qscm dyee ezsf 
         });
-
-        // Email content
         let mailOptions = {
-            from: "quickassistofficial@gmail.com",
+            from: process.env.EMAIL,
             to: toEmail,
             subject: "Your Chatbot is Ready!",
             html: `
@@ -42,7 +38,6 @@ const sendEmail = async (toEmail, companyName, productName, chatbotLink) =>{
             `
         };
 
-        // Send email
         await transporter.sendMail(mailOptions);
         console.log(`Email sent to ${toEmail}`);
 
@@ -62,7 +57,6 @@ exports.createChatBot = async(req, res) =>{
             return res.status(404).json({ success: false, message: "Company not found" });
         }
 
-        // Corrected ID comparison
         if (!company.user._id.equals(user._id)) {
             return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
         }    
@@ -99,7 +93,6 @@ exports.deleteChatBot = async (req, res) => {
 
       const { uniqueId, productId} = req.params;
 
-      // Find the link by uniqueId and productId
       const link = await Link.findOne({ uniqueId, product: productId }).populate({
           path: 'company',
           populate: { path: 'user' }
@@ -144,7 +137,6 @@ exports.askChatbot = async (req, res) => {
         return res.status(403).json({ success: false, message: "This bot has expired" });
       }
   
-      // 💬 Save User Message
       const user_message = new Message({
         sender: "user",
         product,
@@ -153,8 +145,6 @@ exports.askChatbot = async (req, res) => {
         uniqueId
       });
       await user_message.save();
-  
-      // 🧠 Ask FastAPI
       const apiUrl = "http://127.0.0.1:8000/ask/";
       const requestData = {
         name: product.product_name,
@@ -167,7 +157,6 @@ exports.askChatbot = async (req, res) => {
         headers: { "Content-Type": "application/json" }
       });
 
-      // console.log(response)
   
       if (response.status === 200) {
         link.queriesUsed += 1;
@@ -175,34 +164,26 @@ exports.askChatbot = async (req, res) => {
       }
 
       // TOKEN DATA UPDATION CODE
-      // if(response.data.answer){
-      //   const companydata = await CompanyDataModel.findOne({company})
-      //   companydata.tokens_used += response.data.answer.response_metadata.token_usage.total_tokens;  // or however you want to count
-      //   companydata.queries_used += 1;
-      //   await companydata.save()
-      // }
+      if(response.data.answer){
+        const companydata = await CompanyDataModel.findOne({company})
+        companydata.tokens_used += response.data.answer.response_metadata.token_usage.total_tokens;  // or however you want to count
+        companydata.queries_used += 1;
+        await companydata.save()
+      }
       const videos = await VideoLink.find({product : product});
-    //   console.log('vidoes are .................', videos)
-      // Format videos to send to FastAPI
+
       const formattedVideos = videos.map(video => ({
         description: video.video_description,
         video_link: video.video_link
       }));
 
-    //   console.log("formated videos are -----------------> ", formattedVideos)
-  
-      // 🔍 Send videos and question to FastAPI for similarity check
       const suggestApiUrl = "http://127.0.0.1:8000/suggest-videos";
       const suggestResponse = await axios.post(suggestApiUrl, {
         query: question,
         videos: formattedVideos
       });
-
-    //   console.log(suggestResponse)
   
       const suggestedVideos = suggestResponse.data.matched_videos || [];
-
-      // console.log('suggested videos are like ------> ', suggestedVideos)
 
       const bot_response = new Message({
         sender: "bot",
@@ -218,11 +199,6 @@ exports.askChatbot = async (req, res) => {
         : []       
       });
       await bot_response.save();
-  
-      // 🎥 Fetch all videos for the product
-      
-
-  
       return res.status(200).json({
         success: true,
         data: {

@@ -9,7 +9,7 @@ const CompanyDataSchema = new mongoose.Schema({
     purchase : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Purchase", // Reference to the CustomUser model
-        required: true, 
+        required: false, 
       },
   tokens_used: {
     type: Number,
