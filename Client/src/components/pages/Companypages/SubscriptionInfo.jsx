@@ -48,7 +48,7 @@ function SubscriptionInfo() {
                     <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
                         <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-semibold">Token Usage</h2>
-                        <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Pro Plan</span>
+                        <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Free Plan</span>
                         </div>
                         <div className="mb-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

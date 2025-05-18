@@ -84,6 +84,31 @@ export const getUsageInfo = createAsyncThunk("company/usageinfo", async(id, thun
   }
 })
 
+export const createPurchase = createAsyncThunk("company/createPurchase", async(data, thunkAPI) =>{
+  try{
+      const res = await fetch(`${url}/api/purchase/create-purchase`, {
+          method: "POST",
+          headers : {
+              "Content-Type" : "application/json",
+              Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+              Accept: "application/json",
+          }  ,
+          body: JSON.stringify(data)
+      })
+      const {dispatch} = thunkAPI
+      dispatch(companyInfo())
+      if(res.status == 201){
+          const response = await res.json()
+          return response.data
+
+      }else{
+          return thunkAPI.rejectWithValue(res.json())
+      }
+  }catch(err){
+      return thunkAPI.rejectWithValue(err)
+  }
+})
+
 const initialState = {
   isLoading : true,
   company : null,
@@ -141,6 +166,18 @@ const companySlice = createSlice({
       state.usageInfo = action.payload
     })
     builder.addCase(getUsageInfo.rejected, (state, action) =>{
+      state.isLoading = false,
+      state.error = action.payload
+    })
+
+    builder.addCase(createPurchase.pending, (state, action) =>{
+      state.isLoading = true
+    })
+    builder.addCase(createPurchase.fulfilled, (state, action) =>{
+      state.isLoading = false
+      // state.usageInfo = action.payload
+    })
+    builder.addCase(createPurchase.rejected, (state, action) =>{
       state.isLoading = false,
       state.error = action.payload
     })

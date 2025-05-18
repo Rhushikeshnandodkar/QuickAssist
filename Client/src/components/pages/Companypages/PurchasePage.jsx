@@ -1,6 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
+import { companyInfo, createPurchase } from '../../../features/company/companySlice';
 function PurchasePage() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {company} = useSelector((state) => state.company)
+    const [companyId, setCompanyId] = useState(null);   
+    useEffect(() =>{
+        if(!company){
+            dispatch(companyInfo())
+            // const companyId = company?.data?._id 
+        }else{
+            const id = company?.data?._id;
+            if (id) setCompanyId(id);
+        }
+    }, [company, dispatch])
+    const handlePurchase = (plan) => {
+    //   const companyId = localStorage.getItem("companyId"); // or pass it via props/context
+      dispatch(createPurchase({ companyId, plan }))
+        .unwrap()
+        .then(() => {
+          navigate("/dashboard");
+        })
+        .catch((err) => {
+          console.error("Purchase failed:", err);
+        });
+    };
   return (
     <main>
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
@@ -73,9 +99,11 @@ function PurchasePage() {
                         </ul>
                     </div>
                     <div class="mt-8">
-                        <Link to={"/create-company"} class="block w-full bg-black text-white text-center px-4 py-3 rounded-md text-sm font-medium">
-                            Get Started Now
-                        </Link>
+                    <button
+          onClick={() => handlePurchase("Free")}
+          className="block w-full bg-black text-white text-center px-4 py-3 rounded-md text-sm font-medium"
+        >          Buy Standard
+        </button>
                     </div>
                 </div>
             </div>

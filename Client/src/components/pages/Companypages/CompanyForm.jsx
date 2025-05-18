@@ -36,7 +36,7 @@ const CompanyForm = () => {
             }
             if (response.meta.requestStatus === 'fulfilled') {
                 // ✅ Redirect on success
-                navigate(`/dashboard`);
+                navigate(`/purchase-item`);
             } else {
                 console.error('Failed to create link:', response.error.message);
                 alert('Failed to submit. Please try again.');

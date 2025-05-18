@@ -2,6 +2,7 @@ const PurchaseModel = require("../models/Purchase")
 const {PLAN_DETAILS} = require("../config/planeDetails")
 const User = require("../models/User");
 const CompanyProfile = require("../models/Company");
+const CompanyData = require("../models/CompanyData");
 
 exports.createPurchase = async(req, res) =>{
     try{
@@ -32,6 +33,11 @@ exports.createPurchase = async(req, res) =>{
             nextBillingDate: getNextBillingDate()
         })
         await purchase.save();
+
+        const company_data = await CompanyData.findOne({ company: companyId })
+        console.log(company_data)
+        company_data.purchase = purchase._id;
+        await company_data.save()
 
         res.status(201).json({
             message: "Plan purchased successfully",

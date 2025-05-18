@@ -24,7 +24,7 @@ const RegisterUser = () => {
 
   useEffect(() => {
     if (status === 200) {
-      navigate("/purchase-item");
+      navigate("/create-company");
     }
   }, [status, navigate]);
 
