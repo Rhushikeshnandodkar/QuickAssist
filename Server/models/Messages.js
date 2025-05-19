@@ -15,6 +15,7 @@ const MessageSchema = new mongoose.Schema({
         ref : "Manual",
         required : true
     },
+    tokensUsed: { type: Number, default: 0 },
     content : {
         type : String,
         default : null

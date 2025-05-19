@@ -142,7 +142,8 @@ exports.askChatbot = async (req, res) => {
         product,
         content: question,
         company,
-        uniqueId
+        uniqueId,
+        tokensUsed: 0 
       });
       await user_message.save();
       const apiUrl = "http://127.0.0.1:8000/ask/";
@@ -196,7 +197,8 @@ exports.askChatbot = async (req, res) => {
             video_link: video.video_link,
             video_description: video.description || ""
           }))
-        : []       
+        : [],   
+        tokensUsed : response.data.answer.response_metadata.token_usage.total_tokens    
       });
       await bot_response.save();
       return res.status(200).json({
