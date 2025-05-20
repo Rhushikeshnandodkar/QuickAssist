@@ -248,7 +248,12 @@ function Chatbot() {
                             })}
                           </div>
                         )}</div>
-                                    <div className="message-meta">{msg.timestamp}</div>
+                                    <div className="message-meta">{new Date(msg.timestamp).toLocaleTimeString('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+//   second: '0-digit',
+  hour12: true  // change to true for AM/PM
+})}</div>
                                     {msg.sender === 'bot' ?   <div className="feedback-buttons">
                                         {/* <ul>
                                             <li className='work'>Working</li>

@@ -10,7 +10,7 @@ import Loader from '../../molecules/Loader'
 function SubscriptionInfo() {
     // const isLoading = false
     const dispatch = useDispatch()
-    const {isLoading, company, usageInfo} = useSelector((state) => state.company)
+    const {isLoading, company, usageInfo, plan} = useSelector((state) => state.company)
     useEffect(() =>{
         if(!company){
             dispatch(companyInfo())
@@ -66,157 +66,35 @@ function SubscriptionInfo() {
                                 <span className="text-sm text-gray-500 ml-2">tokens</span>
                             </div>
                             </div>
-                            <div className="bg-gray-50 rounded-lg p-4">
+                            {/* <div className="bg-gray-50 rounded-lg p-4">
                             <div className="text-sm text-gray-500 mb-1">Next Refresh</div>
                             <div className="flex items-end">
                                 <span className="text-2xl font-semibold">June 15, 2025</span>
                             </div>
-                            </div>
+                            </div> */}
                         </div>
                         </div>
                         <div className="mb-4">
-                        <div className="flex justify-between mb-2">
+                        {/* <div className="flex justify-between mb-2">
                             <span className="text-sm font-medium">Monthly Usage</span>
                             <span className="text-sm text-gray-500">112,500 / 500,000 tokens (22.5%)</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        </div> */}
+                        {/* <div className="w-full bg-gray-200 rounded-full h-2.5">
                             <div className="bg-secondary h-2.5 rounded-full" style={{width: '22.5%'}} />
-                        </div>
-                        </div>
-                    </div>
-                    <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
-                        <h2 className="text-xl font-semibold mb-6">Usage Metrics</h2>
-                        <div className="overflow-x-auto">
-                        <table className="min-w-full border-collapse">
-                            <thead>
-                            <tr className="bg-gray-50 text-left">
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Date</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Tokens Used</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Total Queries</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Avg. Per Query</th>
-                            </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                            <tr>
-                                <td className="py-3 px-4 text-sm">May 15, 2025</td>
-                                <td className="py-3 px-4 text-sm">3,245</td>
-                                <td className="py-3 px-4 text-sm">42</td>
-                                <td className="py-3 px-4 text-sm">77.3</td>
-                            </tr>
-                            <tr>
-                                <td className="py-3 px-4 text-sm">May 14, 2025</td>
-                                <td className="py-3 px-4 text-sm">5,120</td>
-                                <td className="py-3 px-4 text-sm">67</td>
-                                <td className="py-3 px-4 text-sm">76.4</td>
-                            </tr>
-                            <tr>
-                                <td className="py-3 px-4 text-sm">May 13, 2025</td>
-                                <td className="py-3 px-4 text-sm">4,876</td>
-                                <td className="py-3 px-4 text-sm">53</td>
-                                <td className="py-3 px-4 text-sm">92.0</td>
-                            </tr>
-                            <tr>
-                                <td className="py-3 px-4 text-sm">May 12, 2025</td>
-                                <td className="py-3 px-4 text-sm">6,234</td>
-                                <td className="py-3 px-4 text-sm">78</td>
-                                <td className="py-3 px-4 text-sm">79.9</td>
-                            </tr>
-                            <tr>
-                                <td className="py-3 px-4 text-sm">May 11, 2025</td>
-                                <td className="py-3 px-4 text-sm">2,987</td>
-                                <td className="py-3 px-4 text-sm">34</td>
-                                <td className="py-3 px-4 text-sm">87.9</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        </div> */}
                         </div>
                     </div>
-                    <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
-                        <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-semibold">Billing History</h2>
-                        <a href="#" className="text-sm text-secondary font-medium hover:underline">Download All Invoices</a>
-                        </div>
-                        <div className="overflow-x-auto">
-                        <table className="min-w-full border-collapse">
-                            <thead>
-                            <tr className="bg-gray-50 text-left">
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Invoice</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Date</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Amount</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Status</th>
-                                <th className="py-3 px-4 text-sm font-medium text-gray-500">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                            <tr>
-                                <td className="py-4 px-4 text-sm">INV-2025-0512</td>
-                                <td className="py-4 px-4 text-sm">May 12, 2025</td>
-                                <td className="py-4 px-4 text-sm">$49.99</td>
-                                <td className="py-4 px-4 text-sm">
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
-                                </td>
-                                <td className="py-4 px-4 text-sm">
-                                <a href="#" className="text-secondary hover:underline">Download</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="py-4 px-4 text-sm">INV-2025-0412</td>
-                                <td className="py-4 px-4 text-sm">April 12, 2025</td>
-                                <td className="py-4 px-4 text-sm">$49.99</td>
-                                <td className="py-4 px-4 text-sm">
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
-                                </td>
-                                <td className="py-4 px-4 text-sm">
-                                <a href="#" className="text-secondary hover:underline">Download</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="py-4 px-4 text-sm">INV-2025-0312</td>
-                                <td className="py-4 px-4 text-sm">March 12, 2025</td>
-                                <td className="py-4 px-4 text-sm">$49.99</td>
-                                <td className="py-4 px-4 text-sm">
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
-                                </td>
-                                <td className="py-4 px-4 text-sm">
-                                <a href="#" className="text-secondary hover:underline">Download</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="py-4 px-4 text-sm">INV-2025-0212</td>
-                                <td className="py-4 px-4 text-sm">February 12, 2025</td>
-                                <td className="py-4 px-4 text-sm">$39.99</td>
-                                <td className="py-4 px-4 text-sm">
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
-                                </td>
-                                <td className="py-4 px-4 text-sm">
-                                <a href="#" className="text-secondary hover:underline">Download</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="py-4 px-4 text-sm">INV-2025-0112</td>
-                                <td className="py-4 px-4 text-sm">January 12, 2025</td>
-                                <td className="py-4 px-4 text-sm">$39.99</td>
-                                <td className="py-4 px-4 text-sm">
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Paid</span>
-                                </td>
-                                <td className="py-4 px-4 text-sm">
-                                <a href="#" className="text-secondary hover:underline">Download</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
+                 
                     <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
                         <h2 className="text-xl font-semibold mb-6">Current Plan</h2>
                         <div className="flex flex-col md:flex-row gap-6 items-start">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
-                            <span className="text-lg font-medium">Pro Plan</span>
+                            <span className="text-lg font-medium">{plan.plan}</span>
                             <span className="bg-primary text-white text-xs font-medium px-2.5 py-0.5 rounded">Current</span>
                             </div>
-                            <div className="text-2xl font-semibold mb-1">$49.99<span className="text-sm text-gray-500 font-normal">/month</span></div>
-                            <p className="text-gray-500 text-sm mb-4">Your plan renews on June 15, 2025</p>
+                            <div className="text-2xl font-semibold mb-1">{plan.price}<span className="text-sm text-gray-500 font-normal">/month</span></div>
+                            <p className="text-gray-500 text-sm mb-4">Your plan renews on {new Date(plan.nextBillingDate).toLocaleDateString()}</p>
                             <ul className="space-y-2 mb-6">
                             <li className="flex items-center text-sm">
                                 <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>

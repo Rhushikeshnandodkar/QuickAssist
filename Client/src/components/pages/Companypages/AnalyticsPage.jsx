@@ -101,7 +101,7 @@ function AnalyticsPage() {
 
                 </div>
             </div>
-            <div className="queries-container">
+            {/* <div className="queries-container">
                 <div className="section-title">Common Customer Queries</div>
                 <div className="query-list">
                 <div className="query-card">
@@ -238,8 +238,8 @@ function AnalyticsPage() {
                     Update Manual
                     </button>
                 </div>
-                </div>
-            </div>
+                </div> */}
+            {/* </div> */}
             </div>
             </div>
         {/* </div> */}

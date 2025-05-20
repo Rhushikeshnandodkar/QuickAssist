@@ -99,8 +99,8 @@ export const createPurchase = createAsyncThunk("company/createPurchase", async(d
       dispatch(companyInfo())
       if(res.status == 201){
           const response = await res.json()
-          return response.data
-
+          console.log(response)
+          return response.purchase
       }else{
           return thunkAPI.rejectWithValue(res.json())
       }
@@ -115,6 +115,7 @@ const initialState = {
   usageInfo : null,
   error : false,
   status : null,
+  plan : null
 }
 
 const companySlice = createSlice({
@@ -174,8 +175,9 @@ const companySlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(createPurchase.fulfilled, (state, action) =>{
+      console.log(action)
       state.isLoading = false
-      // state.usageInfo = action.payload
+      state.plan = action.payload 
     })
     builder.addCase(createPurchase.rejected, (state, action) =>{
       state.isLoading = false,
