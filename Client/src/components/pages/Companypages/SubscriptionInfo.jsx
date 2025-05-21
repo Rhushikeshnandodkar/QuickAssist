@@ -5,7 +5,7 @@ import GlobalStyle from '../../molecules/gloable.style'
 import { SettingStyle } from './company.styled'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { companyInfo, getUsageInfo } from '../../../features/company/companySlice'
+import { companyInfo, getPurchaseData, getUsageInfo } from '../../../features/company/companySlice'
 import Loader from '../../molecules/Loader'
 function SubscriptionInfo() {
     // const isLoading = false
@@ -23,7 +23,9 @@ function SubscriptionInfo() {
           console.log(companyId)
           dispatch(getUsageInfo(companyId)); // if you want to fetch usage info
         }
-        console.log(usageInfo)
+        if(!plan){
+            dispatch(getPurchaseData())
+        }
     }, [company, dispatch])
 
   return (
@@ -90,15 +92,19 @@ function SubscriptionInfo() {
                         <div className="flex flex-col md:flex-row gap-6 items-start">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
-                            <span className="text-lg font-medium">{plan.plan}</span>
+                            <span className="text-lg font-medium">{plan.currentPlan.plan}</span>
                             <span className="bg-primary text-white text-xs font-medium px-2.5 py-0.5 rounded">Current</span>
                             </div>
-                            <div className="text-2xl font-semibold mb-1">{plan.price}<span className="text-sm text-gray-500 font-normal">/month</span></div>
-                            <p className="text-gray-500 text-sm mb-4">Your plan renews on {new Date(plan.nextBillingDate).toLocaleDateString()}</p>
+                            <div className="text-2xl font-semibold mb-1">{plan.currentPlan.price}<span className="text-sm text-gray-500 font-normal">/month</span></div>
+                            <p className="text-gray-500 text-sm mb-4">Your plan renews on {new Date(plan.currentPlan.nextBillingDate).toLocaleDateString()}</p>
                             <ul className="space-y-2 mb-6">
                             <li className="flex items-center text-sm">
                                 <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>
-                                500,000 tokens per month
+                                {plan.currentPlan.maxProducts} Products & {plan.currentPlan.maxQueries} Queries per month
+                            </li>
+                            <li className="flex items-center text-sm">
+                                <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>
+                                {plan.currentPlan.tokenLimitPerMonth} tokens per month
                             </li>
                             <li className="flex items-center text-sm">
                                 <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>
@@ -108,17 +114,14 @@ function SubscriptionInfo() {
                                 <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>
                                 Advanced analytics
                             </li>
-                            <li className="flex items-center text-sm">
-                                <span className="material-symbols-rounded text-green-500 mr-2">check_circle</span>
-                                Priority support
-                            </li>
+                           
                             </ul>
                             <div className="flex flex-wrap gap-3">
                             <button className="px-5 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors font-medium text-sm">Upgrade Plan</button>
-                            <button className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">Cancel Subscription</button>
+                            {/* <button className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">Cancel Subscription</button> */}
                             </div>
                         </div>
-                        <div className="w-full md:w-64 bg-gray-50 rounded-lg p-4">
+                        {/* <div className="w-full md:w-64 bg-gray-50 rounded-lg p-4">
                             <h3 className="font-medium text-sm mb-3">Payment Method</h3>
                             <div className="flex items-center mb-4">
                             <span className="material-symbols-rounded mr-3 text-gray-500">credit_card</span>
@@ -128,7 +131,7 @@ function SubscriptionInfo() {
                             </div>
                             </div>
                             <button className="text-secondary text-sm font-medium hover:underline">Update payment method</button>
-                        </div>
+                        </div> */}
                         </div>
                     </div>
                     </div>

@@ -4,7 +4,7 @@ import { DashboardStyle } from './Dashboard.style';
 import { NavbarStyle } from '../molecules/molecule.style';
 import Navbar from '../molecules/Navbar';
 import { useDispatch, useSelector } from 'react-redux'
-import { companyInfo } from '../../features/company/companySlice';
+import { companyInfo, getPurchaseData } from '../../features/company/companySlice';
 import { fetchProducts } from '../../features/products/productSlice';
 import { Link } from 'react-router-dom';
 import GlobalStyle from '../molecules/gloable.style';
@@ -17,17 +17,10 @@ function Dashboard() {
   const { isLoading : productsLoading, company} = useSelector((state) =>(state.company))
   // const {products, isLoading: productsLoading} = useSelector((state) =>(state.products))
 
-  const fetchData = useCallback(() => {
-
-      dispatch(companyInfo())
-      // dispatch(fetchProducts())
-  
+  useEffect(() => {
+    dispatch(companyInfo());
+    dispatch(getPurchaseData())
   }, [dispatch]);
-
-  useEffect(() =>{
-    fetchData();
-  }, [fetchData])
-  // if(productsLoading) return <h3>       <Sidebar /> Loading...</h3>
   return (
     <>
     <DashboardStyle>

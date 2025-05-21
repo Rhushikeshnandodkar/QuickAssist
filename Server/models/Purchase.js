@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const PurchaseSchema = new mongoose.Schema({
-    company : {
+  company : {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company", // Reference to the CustomUser model
       required: true, 
@@ -24,6 +24,14 @@ const PurchaseSchema = new mongoose.Schema({
   tokenLimitPerMonth: {
     type: Number,
     required: true
+  },
+  maxProducts: {
+    type: Number,
+    default : 5
+  },
+  maxQueries: {
+    type: Number,
+    default : 100
   },
   isPaid: {
     type: Boolean,
