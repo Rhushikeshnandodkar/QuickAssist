@@ -29,11 +29,11 @@ const LoginUser = () => {
     console.log("Form Data:", formData);
   };
 
-  useEffect(() => {
-    if (status === 200) {
-      navigate("/dashboard");
-    }
-  }, [status, navigate]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [status, navigate, user]);
 
   return (
     <LoginStyle>

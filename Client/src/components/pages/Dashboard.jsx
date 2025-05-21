@@ -19,8 +19,14 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(companyInfo());
+  }, [dispatch, company]);
+
+  useEffect(() =>{
+    // if(company.plan){
+    //   return
+    // }
     dispatch(getPurchaseData())
-  }, [dispatch]);
+  }, [dispatch])
   return (
     <>
     <DashboardStyle>

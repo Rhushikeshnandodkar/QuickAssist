@@ -4,19 +4,30 @@ import { CompanyFormStyle } from "./company.styled";
 import Sidebar from "../../molecules/Sidebar";
 import { getUserInfo } from "../../../features/userAuth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { createCompany } from "../../../features/company/companySlice";
+import { companyInfo, createCompany } from "../../../features/company/companySlice";
 import GlobalStyle from "../../molecules/gloable.style";
+import Loader from "../../molecules/Loader";
 
 const CompanyForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {user} = useSelector((state) =>(state.user))
+  const { isLoading, company} = useSelector((state) => state.company)
   const [formData, setFormData] = useState({
     company_name: "",
     description: "",
     address: "",
   });
 
+  useEffect(() =>{
+    if(!user){
+      return navigate("/login")
+    }
+    dispatch(companyInfo())
+    if(company){
+      return navigate("/Dashboard")
+    }
+  }, [dispatch, company])
   // Handle form field changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -46,7 +57,7 @@ const CompanyForm = () => {
             alert('An error occurred.');
         }
   };
-
+  if(isLoading) return <><Loader/></>
   return (
     <CompanyFormStyle>
       <GlobalStyle/>

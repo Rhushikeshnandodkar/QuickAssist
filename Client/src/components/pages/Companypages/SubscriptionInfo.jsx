@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { companyInfo, getPurchaseData, getUsageInfo } from '../../../features/company/companySlice'
 import Loader from '../../molecules/Loader'
+import { DiAppcelerator } from 'react-icons/di'
 function SubscriptionInfo() {
     // const isLoading = false
     const dispatch = useDispatch()
@@ -15,13 +16,12 @@ function SubscriptionInfo() {
         if(!company){
             dispatch(companyInfo())
         }
+        // dispatch(usageInfo(company.data._id))
     }, [dispatch, company])
 
     useEffect(() => {
-        if (company?.data?._id) {
-          const companyId = company.data._id;
-          console.log(companyId)
-          dispatch(getUsageInfo(companyId)); // if you want to fetch usage info
+        if (company && company.data && company.data._id) {
+            dispatch(getUsageInfo(company.data._id));
         }
         if(!plan){
             dispatch(getPurchaseData())
@@ -43,7 +43,7 @@ function SubscriptionInfo() {
                                             <Link to={'/settings'} className="tab ">Company Profile</Link>
                                         </div>
                                     </div>
-                {isLoading || !usageInfo ? (
+                {isLoading || !usageInfo  ? (
                            <Loader/>
                         ) : (
                     <div>
