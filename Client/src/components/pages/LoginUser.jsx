@@ -10,7 +10,7 @@ import GlobalStyle from "../molecules/gloable.style";
 const LoginUser = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {user, userToken, status} = useSelector((state) =>(
+  const {user, isAuthenticated,  userToken, status} = useSelector((state) =>(
     state.user))
     
   const [formData, setFormData] = useState({
@@ -29,11 +29,18 @@ const LoginUser = () => {
     console.log("Form Data:", formData);
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [status, navigate, user]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
+  useEffect(() =>{
+      if(user){
+        navigate("/dashboard");
+      }
+  }, [user]);
+
 
   return (
     <LoginStyle>

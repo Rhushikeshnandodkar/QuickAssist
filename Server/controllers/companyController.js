@@ -90,7 +90,7 @@ exports.companyInfo = async(req, res) =>{
   try{
     const {companyId} = req.body;
     const company = await CompanyProfile.findOne({_id : companyId})
-    console.log(company)
+    // console.log(company)
     return res.status(200).json({success : true, data : company})
   }catch(err){
     res.status(500).json({ success: false, message: err.message });
@@ -107,7 +107,7 @@ exports.companyProfile = async(req, res) =>{
       interactions = await MessageModel.find({company : profile})
       // const company_data = await CompanyDataModel.findOne({profile})
       // const purchaseData = await Purchase.findOne({profile})
-      console.log(interactions)
+      // console.log(interactions)
       return res.status(200).json({
         success : true,
         message : "your profile data",
@@ -188,7 +188,7 @@ exports.allProducts = async(req, res) =>{
                   product: product._id,
                   answered: false,
         });
-        console.log(answeredCount)
+        // console.log(answeredCount)
         return {
           ...product.toObject(),
           chatbotCount,
@@ -197,7 +197,7 @@ exports.allProducts = async(req, res) =>{
         };
       })
     );
-    console.log(enrichedProducts.interactionCount)
+    // console.log(enrichedProducts.interactionCount)
     res.status(200).json({ success: true, data: enrichedProducts});
   }catch(err){
     res.status(500).json({ success: false, message: err.message });
@@ -219,7 +219,7 @@ exports.getSingleProduct = async (req, res) => {
     }
 
     if (!company || !product.company.equals(company._id)) {
-      console.log(product.company, company._id);
+      // console.log(product.company, company._id);
       return res.status(403).json({
         success: false,
         message: "You don't have permission to perform this action",
@@ -247,7 +247,7 @@ exports.usageInfo = async(req, res) =>{
     if (!company._id.equals(id)) {
         return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
     }
-    console.log(id)
+    // console.log(id)
     const company_data = await CompanyDataModel.findOne({company : company})
     res.status(200).json({
       success: true,

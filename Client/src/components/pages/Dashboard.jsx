@@ -15,16 +15,12 @@ function Dashboard() {
   const { user } = useSelector((state) => (
     state.user))
   const { isLoading : productsLoading, company} = useSelector((state) =>(state.company))
-  // const {products, isLoading: productsLoading} = useSelector((state) =>(state.products))
 
   useEffect(() => {
     dispatch(companyInfo());
-  }, [dispatch, company]);
+  }, [dispatch]);
 
   useEffect(() =>{
-    // if(company.plan){
-    //   return
-    // }
     dispatch(getPurchaseData())
   }, [dispatch])
   return (
@@ -32,12 +28,10 @@ function Dashboard() {
     <DashboardStyle>
       <GlobalStyle/>
       <Sidebar />
-
                 <div classname="main-content">
                 <Navbar page="Dashboard" />
                 <div className="content">
                     {company ? <>
-      
                   <div className="dashboard-grid">
                     <div className="analytics-card">
                       <div className="card-header">
@@ -71,7 +65,6 @@ function Dashboard() {
                     </div>
                   </div>
                     </> : <Loader/>}
-      
                   <div className="quick-actions">
                     <div className="section-title">Quick Actions</div>
                     <div className="actions-grid">
@@ -81,12 +74,6 @@ function Dashboard() {
                         </div>
                         <div className="action-label">Upload Manual</div>
                       </Link>
-                      {/* <a href="create-customer.html" className="action-card">
-                        <div className="action-icon">
-                          <span className="material-symbols-rounded">person_add</span>
-                        </div>
-                        <div className="action-label">Add Customer</div>
-                      </a> */}
                       <Link to={'/chatbots'} className="action-card">
                         <div className="action-icon">
                           <span className="material-symbols-rounded">smart_toy</span>
@@ -103,10 +90,8 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
-
     </DashboardStyle>
     </>
   )
 }
-
 export default Dashboard;
