@@ -43,7 +43,6 @@ const App = () => {
         <Route path="/product-details/:productId" element={<ProductDetails />} />
         <Route path="/edit-products/:productId" element={<EditProducts />} />
         <Route path="/chatbot/:companyId/:productId/:uniqueId" element={<Chatbot/>} />
-
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

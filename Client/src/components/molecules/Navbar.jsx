@@ -8,11 +8,11 @@ function Navbar(props) {
     const navigate = useNavigate()
     const {user} = useSelector((state) => (state.user))
     const {company} = useSelector((state) => (state.company))
-    useEffect(() =>{
-        if(!user){
-            navigate('/login')
-        }
-    }, [user])
+    // useEffect(() =>{
+    //     if(!user){
+    //         navigate('/login')
+    //     }
+    // }, [user])
     // console.log(company)
   return (
     <NavbarStyle>

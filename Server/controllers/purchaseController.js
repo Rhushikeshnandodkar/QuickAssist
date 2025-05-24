@@ -68,10 +68,9 @@ exports.getCurrentPlan = async(req, res) =>{
             })
         }
         const purchaseInfo = await PurchaseModel.find({company : profile})
-           // Get the most recent purchase
     const latestPurchase = await PurchaseModel.findOne({ company: profile._id })
-    .sort({ purchaseDate: -1 }) // Sort by newest first
-    .populate("plan"); // Optional: populate plan details if it's referenced
+    .sort({ purchaseDate: -1 })
+    .populate("plan");
   if (!latestPurchase) {
     return res.status(404).json({
       success: false,
