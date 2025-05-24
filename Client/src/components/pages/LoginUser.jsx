@@ -97,7 +97,7 @@ const LoginUser = () => {
             </div>
             <br />
             <p className="switch-auth">
-              Don't have an account? <Link to="/register">Login</Link>
+              Don't have an account? <Link to="/register">Signup</Link>
             </p>
           </div>
         </div>

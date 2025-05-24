@@ -90,7 +90,6 @@ exports.companyInfo = async(req, res) =>{
   try{
     const {companyId} = req.body;
     const company = await CompanyProfile.findOne({_id : companyId})
-    // console.log(company)
     return res.status(200).json({success : true, data : company})
   }catch(err){
     res.status(500).json({ success: false, message: err.message });

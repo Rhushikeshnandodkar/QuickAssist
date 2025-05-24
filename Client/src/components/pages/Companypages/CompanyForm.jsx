@@ -23,10 +23,10 @@ const CompanyForm = () => {
     if(!user){
       return navigate("/login")
     }
-    dispatch(companyInfo())
-    if(company){
-      return navigate("/Dashboard")
-    }
+    // dispatch(companyInfo())
+    // if(company){
+    //   return navigate("/Dashboard")
+    // }
   }, [dispatch, company])
   // Handle form field changes
   const handleChange = (e) => {
@@ -57,7 +57,7 @@ const CompanyForm = () => {
             alert('An error occurred.');
         }
   };
-  if(isLoading) return <><Loader/></>
+  // if(isLoading) return <><Loader/></>
   return (
     <CompanyFormStyle>
       <GlobalStyle/>
