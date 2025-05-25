@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios"
 import {url} from "../../components/common/api"
+import { DiAptana } from "react-icons/di";
 
 export const userSignup = createAsyncThunk("user/signup", async(data, thunkAPI) =>{
   const config = {

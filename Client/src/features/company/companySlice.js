@@ -39,6 +39,7 @@ export const companyInfo = createAsyncThunk("company/fetch", async(data, thunkAP
       }
     })
     const data = await res.json()
+    console.log(data)
 
     if(res.status == 200){
       return {...data}

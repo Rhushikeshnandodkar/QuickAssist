@@ -10,6 +10,8 @@ const faiss = require("faiss");
 const {OpenAI} = require("openai");
 const VideoLink = require("../models/VideoLink");
 const Link = require("../models/Link");
+const Purchase = require("../models/Purchase");
+const CompanyData = require("../models/CompanyData");
 
 const FASTAPI_URL = "http://127.0.0.1:8000";
 
@@ -33,7 +35,6 @@ exports.uploadManual = async (req, res) => {
     if (!companyProfile) {
       return res.status(400).json({ message: "Company profile not found!" });
     }
-
     const { product_name, description } = req.body;
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded!" });
@@ -41,7 +42,6 @@ exports.uploadManual = async (req, res) => {
     if (req.file.mimetype !== 'application/pdf') {
       return res.status(400).json({ message: "Please upload a valid PDF file!" });
     }
-
     const pdfPath = path.join(__dirname, "../uploads", req.file.filename);
     const dataBuffer = await fs.readFile(pdfPath);
     const data = await pdfParse(dataBuffer);
@@ -66,7 +66,22 @@ exports.uploadManual = async (req, res) => {
   }
 };
 
-
+exports.dataTracker = async(req, res) =>{
+  try{
+    const user = await User.findById(req.user.id);
+    const companyProfile = await CompanyProfile.findOne({ user: user.id });
+    if (!companyProfile) {
+      return res.status(400).json({ message: "Company profile not found!" });
+    }
+    const data = await CompanyData.findOne({company : companyProfile._id}).populate({
+      path : "purchase", 
+    })
+    console.log(data)
+    res.status(200).json({ message: "Manual deleted successfully!" });
+  }catch(err){
+    res.status(500).json({ error : err, message: "Server error while deleting manual" });
+  }
+}
 
 exports.deleteManual = async (req, res) => {
   try {

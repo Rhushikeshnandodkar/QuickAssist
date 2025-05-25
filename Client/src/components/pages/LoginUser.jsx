@@ -35,11 +35,6 @@ const LoginUser = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  useEffect(() =>{
-      if(user){
-        navigate("/dashboard");
-      }
-  }, [user]);
 
 
   return (

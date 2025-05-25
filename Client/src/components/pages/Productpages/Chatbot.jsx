@@ -212,7 +212,7 @@ function Chatbot() {
                         <span className="material-symbols-rounded">smart_toy</span>
                     </div>
                     <div>
-                        {thinking ? <div className="thinking-widgite">Thinking...</div>: ""}
+                      
                         
                         <div className="message-content">
                         Hello! I'm your assistant for your {botData ? botData.product.product_name : "Loading"} . How can I help you today?
@@ -263,6 +263,8 @@ function Chatbot() {
                                 </div>
                             </div>
                         ))}
+                          {thinking ? <div className="thinking-widgite">Thinking...</div>: ""}
+
                         <div className="contact-info" ref={connectUsRef}>
                         <div className={`btn-connect ${connectUs ? "visible" : ""}`}>
                         <span className="material-symbols-outlined">support_agent</span>

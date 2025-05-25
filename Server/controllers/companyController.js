@@ -19,12 +19,11 @@ exports.createCompanyProfile = async (req, res) => {
         return res.status(200).json({
           success: true,
           message: "Profile already exists",
-          // data: existingProfile,
         });
       }
     const { company_name, description, address, company_email, company_website, company_contact } = req.body;
     const profile = new CompanyProfile({
-      user: user.id, // Link the profile to the user
+      user: user.id,
       company_name,
       description,
       address,
@@ -62,17 +61,14 @@ exports.updateCompanyProfile = async (req, res) => {
       });
     }
 
-    // Extract fields to update
     const { company_name, description, address, company_email, company_website, company_contact} = req.body;
 
-    // Update only the provided fields
     if (company_name) existingProfile.company_name = company_name;
     if (description) existingProfile.description = description;
     if (address) existingProfile.address = address;
     if (company_email) existingProfile.company_email = company_email;
     if (company_website) existingProfile.company_website = company_website;
     if (company_contact) existingProfile.company_contact = company_contact;
-
 
     await existingProfile.save();
 
@@ -140,13 +136,12 @@ exports.createProduct = async (req, res) => {
             return res.status(404).json({ success: false, message: "Company not found" });
         }
 
-        // Corrected ID comparison
         if (!company.user._id.equals(user._id)) {
             return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
         }
 
         const product = new ProductModel({
-            company: company._id, // Store ObjectId
+            company: company._id, 
             product_name,
             description
         });
@@ -173,6 +168,7 @@ exports.allProducts = async(req, res) =>{
         message : "company not found"
       })
     }
+
     const products = await Manual.find({company : company})
     const enrichedProducts = await Promise.all(
       products.map(async (product) => {
@@ -187,7 +183,6 @@ exports.allProducts = async(req, res) =>{
                   product: product._id,
                   answered: false,
         });
-        // console.log(answeredCount)
         return {
           ...product.toObject(),
           chatbotCount,
@@ -196,7 +191,6 @@ exports.allProducts = async(req, res) =>{
         };
       })
     );
-    // console.log(enrichedProducts.interactionCount)
     res.status(200).json({ success: true, data: enrichedProducts});
   }catch(err){
     res.status(500).json({ success: false, message: err.message });
@@ -218,7 +212,6 @@ exports.getSingleProduct = async (req, res) => {
     }
 
     if (!company || !product.company.equals(company._id)) {
-      // console.log(product.company, company._id);
       return res.status(403).json({
         success: false,
         message: "You don't have permission to perform this action",
@@ -246,7 +239,6 @@ exports.usageInfo = async(req, res) =>{
     if (!company._id.equals(id)) {
         return res.status(403).json({ success: false, message: "You cannot create a product for this company" });
     }
-    // console.log(id)
     const company_data = await CompanyDataModel.findOne({company : company})
     res.status(200).json({
       success: true,
