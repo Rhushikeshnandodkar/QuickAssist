@@ -16,6 +16,7 @@ export const userSignup = createAsyncThunk("user/signup", async(data, thunkAPI) 
   const response = await axios(config)
   localStorage.setItem("userToken", response.data.token)
   localStorage.setItem('user', JSON.stringify({...data}))
+  localStorage.setItem("role", response.data.role)
   console.log(response)
   return response.data
 })
@@ -33,6 +34,7 @@ export const userLogin = createAsyncThunk("user/login", async(data, thunkAPI) =>
     }
     const response = await axios(config)
     localStorage.setItem("userToken", response.data.token)
+    localStorage.setItem("role", response.data.role)
     const {dispatch} = thunkAPI
     dispatch(getUserInfo())
     return response.data
@@ -53,6 +55,7 @@ export const getUserInfo = createAsyncThunk("user/userInfo", async(__dirname, th
   })
   const data = await res.json()
   localStorage.setItem('user', JSON.stringify({...data}))
+  localStorage.setItem("role", response.data.role)
   console.log(res)
 
   if(res.status==201){

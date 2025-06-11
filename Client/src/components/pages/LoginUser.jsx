@@ -48,7 +48,7 @@ const LoginUser = () => {
         <div className="floating-circle circle-3"></div>
 
         <div className="login-logo">
-          <h1>ChatbotManuals</h1>
+          <h1>HelpXpert</h1>
           <p>Transform manuals into interactive experiences</p>
         </div>
 
@@ -84,12 +84,12 @@ const LoginUser = () => {
               <button type="submit" className="btn">Login Now</button>
             </form>
 
-            <div className="divider">or continue with</div>
+            {/* <div className="divider">or continue with</div>
             <div className="social-login">
               <div className="social-btn">
                 <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google" />
               </div>
-            </div>
+            </div> */}
             <br />
             <p className="switch-auth">
               Don't have an account? <Link to="/register">Signup</Link>

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import GlobalStyle from '../../molecules/gloable.style';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import { QueryStatus } from '@reduxjs/toolkit/query';
 
 function Chatbot() {
     const { companyId, productId, uniqueId } = useParams();
@@ -15,6 +16,7 @@ function Chatbot() {
     const [company, setCompany] = useState([])
     const [videos, setVideos] = useState([])
     const [thinking, setThinking] = useState(false)
+    const [queriesError, setQueriesError] = useState(false)
     const formatMessageContent = (content) => {
         return content
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")  // Makes text between ** bold **
@@ -82,7 +84,7 @@ function Chatbot() {
     }, [botData]);
 
     const fetchCompanyInfo = async() =>{
-        const res = await fetch("http://localhost:5000/api/company/company-info", {
+        const res = await fetch(`http://localhost:5000/api/company/company-info`, {
             method : "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ companyId })
@@ -121,10 +123,14 @@ function Chatbot() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
-
+            if(response.status == 402){
+                console.log('query error occured')
+                setThinking(false)
+                setQueriesError(true)
+            }
             const data = await response.json();
 
-            console.log(data)
+            console.log(response)
             
             const fanswer = data.data.answer.content
                 .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -255,23 +261,21 @@ function Chatbot() {
   hour12: true  // change to true for AM/PM
 })}</div>
                                     {msg.sender === 'bot' ?   <div className="feedback-buttons">
-                                        {/* <ul>
-                                            <li className='work'>Working</li>
-                                            <li className='not-work' onClick={() => handleConnectUs(msg, index)}>Not Working</li> 
-                                        </ul> */}
                                     </div>: ""} 
                                 </div>
                             </div>
                         ))}
                           {thinking ? <div className="thinking-widgite">Thinking...</div>: ""}
-
-                        <div className="contact-info" ref={connectUsRef}>
-                        <div className={`btn-connect ${connectUs ? "visible" : ""}`}>
+                          {queriesError ?  <>{company && Object.keys(company).length > 0 ? (
+                                <>
+                               <div className="contact-info" ref={connectUsRef}>
+                        <div className="visible">
                         <span className="material-symbols-outlined">support_agent</span>
                         <strong>Connect with us</strong> <br />
                         <ul>
                             {company && Object.keys(company).length > 0 ? (
                                 <>
+                                <b>We are currently out of quries please contact our team for support</b>
                                     <li><b>Company Email</b> : {company.company_email}</li>
                                     <li><b>Company Contact</b> : {company.company_contact}</li>
                                 </>
@@ -281,6 +285,13 @@ function Chatbot() {
                         </ul>
                         </div>
                         </div>
+                                </>
+                            ) : (
+                                "Loading..."
+                            )} </>: ""}
+
+
+                     
                     </div>
                 
                     <div className="chat-input-container">

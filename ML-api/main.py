@@ -17,14 +17,14 @@ from typing import List, Dict
 from sentence_transformers import SentenceTransformer, util
 
 app = FastAPI()
-os.environ['GROQ_API_KEY'] = "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"
+os.environ['GROQ_API_KEY'] = "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"
 SECERATE_KEY = "greenbagboogie"
 # Set up embeddings
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 model = SentenceTransformer('all-MiniLM-L6-v2')  # lightweight and fast
 # set up LLM
-llm = ChatGroq(model_name="llama3-70b-8192", api_key="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")
+llm = ChatGroq(model_name="llama3-70b-8192", api_key="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")
 
 FAISS_DIR = "indexes"
 # os.mkdir(FAISS_DIR)

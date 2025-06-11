@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const PurchaseSchema = new mongoose.Schema({
   company : {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company", // Reference to the CustomUser model
+      ref: "Company",
       required: true,
     },
  plan: {

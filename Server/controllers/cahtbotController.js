@@ -128,12 +128,17 @@ exports.askChatbot = async (req, res) => {
       const link = await Link.findOne({ uniqueId });
       const company = await CompanyProfile.findById(companyId);
       const product = await Manual.findById(productId);
-  
+      const companyInfo = await CompanyDataModel.findOne({company: company})
+    //   console.log(companyInfo, companyInfo.purchase)
+      if ((company.total_tokens - companyInfo.tokens_used) < 1000){
+        return res.status(402).json({success : false, message : "owner don't have enough queries"})
+      } 
+      console.log(companyInfo.tokens_used, company.total_tokens)
       if (!link) {
         return res.status(404).json({ success: false, message: "Chatbot not found" });
       }
   
-      if (link.queriesUsed >= 50) {
+      if (link.queriesUsed >= 15) {
         return res.status(403).json({ success: false, message: "This bot has expired" });
       }
   

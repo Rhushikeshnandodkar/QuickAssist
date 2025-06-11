@@ -33,6 +33,11 @@ const companyProfileSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  total_tokens : {
+    type : Number,
+    require : false,
+    default : 0,
+  },
   company_contact:{
     type: String,
     default: null

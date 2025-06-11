@@ -17,6 +17,9 @@ const CompanyForm = () => {
     company_name: "",
     description: "",
     address: "",
+    company_email : "",
+    company_website : "",
+    company_contact : ""
   });
 
   useEffect(() =>{
@@ -37,17 +40,17 @@ const CompanyForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {company_name, description, address} = formData
+    const {company_name, description, address, company_email, company_website, company_contact} = formData
     // dispatch(createCompany({company_name, description, address}))
     try {
-            const response = await dispatch(createCompany({company_name, description, address}));
+            const response = await dispatch(createCompany({company_name, description, address, company_email, company_website, company_contact}));
             console.log(response)
             if(response.meta.requestStatus === "pending"){
               return <h2>Loading PDF please wait.....</h2>
             }
             if (response.meta.requestStatus === 'fulfilled') {
                 // ✅ Redirect on success
-                navigate(`/purchase-item`);
+                navigate(`/thanks`);
             } else {
                 console.error('Failed to create link:', response.error.message);
                 alert('Failed to submit. Please try again.');
@@ -61,7 +64,7 @@ const CompanyForm = () => {
   return (
     <CompanyFormStyle>
       <GlobalStyle/>
-        <Sidebar/>
+        {/* <Sidebar/> */}
     <main className="main-content">
       <div className="form-container">
         <div className="form-header">
@@ -88,6 +91,38 @@ const CompanyForm = () => {
               id="description"
               placeholder="Enter company description"
               value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="productDescription">Company Email</label>
+            <input
+              type="email"
+              id="company_email"
+              placeholder="Enter company Email"
+              value={formData.company_email}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="productDescription">Company website</label>
+            <input
+            type="url"
+              id="company_website"
+              placeholder="Enter company website url"
+              value={formData.company_website}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="productDescription">Company Contact No.</label>
+            <input
+              id="company_contact"
+              placeholder="Enter company contact number"
+              value={formData.company_contact}
               onChange={handleChange}
             />
           </div>

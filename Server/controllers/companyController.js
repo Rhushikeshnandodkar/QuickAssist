@@ -15,7 +15,6 @@ exports.createCompanyProfile = async (req, res) => {
     const existingProfile = await CompanyProfile.findOne({user: user.id})
 
     if (existingProfile) {
-        // If the profile exists, just return the existing profile without uploading new files
         return res.status(200).json({
           success: true,
           message: "Profile already exists",
@@ -100,9 +99,6 @@ exports.companyProfile = async(req, res) =>{
       no_of_products = await Manual.find({company : profile})
       chatbots = await LinkSchema.find({company : profile})
       interactions = await MessageModel.find({company : profile})
-      // const company_data = await CompanyDataModel.findOne({profile})
-      // const purchaseData = await Purchase.findOne({profile})
-      // console.log(interactions)
       return res.status(200).json({
         success : true,
         message : "your profile data",

@@ -20,14 +20,25 @@ import UploadVideoLink from "./components/pages/Productpages/UploadVideoLink";
 import SubscriptionInfo from "./components/pages/Companypages/SubscriptionInfo";
 import LandingPage from "./components/pages/LandingPage";
 import PurchasePage from "./components/pages/Companypages/PurchasePage";
+import UnauthorizedPage from "./components/molecules/UnauthorizedPage";
+import ProtectedRoute from "./components/molecules/ProtectedRoutes";
+import Thanks from "./components/pages/Companypages/Thanks";
+import ProfileForm from "./components/pages/Companypages/ProfileForm";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
+      <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["company"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/register" element={<RegisterUser />} />
         <Route path="/login" element={<LoginUser />} />
-        <Route path="/create-company" element={<CompanyForm />} />
+        <Route path="/create-company" element={<ProfileForm />} />
         <Route path="/upload-product" element={<UploadProducts />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/chatbots" element={<ChatbotsList />} />
@@ -35,7 +46,20 @@ const App = () => {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/subscription-info" element={<SubscriptionInfo />} />
         <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/purchase-item" element={<PurchasePage />}></Route>
+
+        {/* <Route path="/profile-form" element={<ProfileForm />}></Route> */}
+
+        
+        {/* <Route path="/purchase-item" element={<PurchasePage />}></Route> */}
+        <Route
+          path="/purchase-item"
+          element={
+            <ProtectedRoute allowedRoles={["company"]}>
+              <PurchasePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/thanks-page" element={<Thanks />} />
 
         <Route path="/upload-video-link/:productId" element={<UploadVideoLink />} />
         <Route path="/product-questions/:productId" element={<QuestionsList />} />
@@ -43,6 +67,7 @@ const App = () => {
         <Route path="/product-details/:productId" element={<ProductDetails />} />
         <Route path="/edit-products/:productId" element={<EditProducts />} />
         <Route path="/chatbot/:companyId/:productId/:uniqueId" element={<Chatbot/>} />
+        <Route path="/unauthorized" element={<UnauthorizedPage/>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

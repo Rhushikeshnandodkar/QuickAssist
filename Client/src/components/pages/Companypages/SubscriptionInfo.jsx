@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../molecules/Navbar'
 import Sidebar from '../../molecules/Sidebar'
 import GlobalStyle from '../../molecules/gloable.style'
@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { companyInfo, getPurchaseData, getUsageInfo } from '../../../features/company/companySlice'
 import Loader from '../../molecules/Loader'
-import { DiAppcelerator } from 'react-icons/di'
 function SubscriptionInfo() {
+    const [alert, setAlert] = useState(false)
     // const isLoading = false
     const dispatch = useDispatch()
     const {isLoading, company, usageInfo, plan} = useSelector((state) => state.company)
@@ -16,7 +16,6 @@ function SubscriptionInfo() {
         if(!company){
             dispatch(companyInfo())
         }
-        // dispatch(usageInfo(company.data._id))
     }, [dispatch, company])
 
     useEffect(() => {
@@ -47,6 +46,22 @@ function SubscriptionInfo() {
                            <Loader/>
                         ) : (
                     <div>
+                    <>
+                        {(plan.currentPlan.tokenLimitPerMonth - usageInfo.data.tokens_used) < 10000 & (plan.currentPlan.tokenLimitPerMonth - usageInfo.data.tokens_used) > 4000 ? (
+                            <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-md shadow-sm mt-4">
+                            <p className="font-medium">You're nearing your usage limit.</p>
+                            <p className="text-sm">Upgrade your subscription now to avoid interruptions.</p>
+                            </div>
+                        ) : null}
+                    </>
+                    <>
+                    {(plan.currentPlan.tokenLimitPerMonth - usageInfo.data.tokens_used) < 100 ? (
+                        <div className="bg-red-100 border-l-4 border-red-500 text-red-800 p-4 rounded-md shadow-sm mt-4">
+                        <p className="font-semibold">You're out of tokens!</p>
+                        <p className="text-sm">Please upgrade your subscription to continue using the service.</p>
+                        </div>
+                    ) : null}
+                    </>
                     <div className="bg-white rounded-xl shadow-custom p-6 mb-6">
                         <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-semibold">Token Usage</h2>
@@ -65,6 +80,14 @@ function SubscriptionInfo() {
                             <div className="text-sm text-gray-500 mb-1">Tokens Used This Month</div>
                             <div className="flex items-end">
                                 <span className="text-2xl font-semibold">{usageInfo.data.tokens_used}</span>
+                                <span className="text-sm text-gray-500 ml-2">tokens</span>
+                            </div>
+                            </div>
+
+                              <div className="bg-gray-50 rounded-lg p-4">
+                            <div className="text-sm text-gray-500 mb-1">Token remaining</div>
+                            <div className="flex items-end">
+                                <span className="text-2xl font-semibold">{plan.currentPlan.tokenLimitPerMonth - usageInfo.data.tokens_used}</span>
                                 <span className="text-sm text-gray-500 ml-2">tokens</span>
                             </div>
                             </div>
@@ -117,8 +140,8 @@ function SubscriptionInfo() {
                            
                             </ul>
                             <div className="flex flex-wrap gap-3">
-                            <button className="px-5 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors font-medium text-sm">Upgrade Plan</button>
-                            {/* <button className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">Cancel Subscription</button> */}
+                            <Link to={'/purchase-item'}><button className="px-5 py-2 bg-black text-white rounded-lg hover:bg-secondary/90 transition-colors font-medium text-sm">Upgrade Plan</button></Link>
+                            <button className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm">Cancel Subscription</button>
                             </div>
                         </div>
                         {/* <div className="w-full md:w-64 bg-gray-50 rounded-lg p-4">

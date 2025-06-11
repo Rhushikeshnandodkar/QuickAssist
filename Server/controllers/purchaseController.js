@@ -37,6 +37,10 @@ exports.createPurchase = async(req, res) =>{
         })
         await purchase.save();
 
+        company.total_tokens = planDetails.tokenLimit
+        await company.save()
+        // console.log(company)
+
         const company_data = await CompanyData.findOne({ company: companyId })
         console.log(company_data)
         company_data.purchase = purchase._id;
