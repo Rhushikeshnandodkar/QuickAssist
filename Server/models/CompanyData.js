@@ -3,12 +3,12 @@ const mongoose = require("mongoose")
 const CompanyDataSchema = new mongoose.Schema({
     company : {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company", // Reference to the CustomUser model
+      ref: "CompanyProfile", // Reference to the CustomUser model
       required: true, 
     },
     purchase : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Purchase", // Reference to the CustomUser model
+        ref: "PurchaseModel", // Reference to the CustomUser model
         required: false, 
       },
   tokens_used: {

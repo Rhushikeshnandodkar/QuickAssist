@@ -31,7 +31,6 @@ const Thanks = () => {
               </div>
             </div>
           </div>
-
           {/* Thank You Message */}
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Thank You!

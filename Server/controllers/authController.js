@@ -68,6 +68,7 @@ exports.loginUser = async (req, res) => {
 exports.userInfo = async(req, res) =>{
   try{
     const user = await User.findById(req.user.id)
+    
     console.log(user)
     res.status(201).json({
       success : true,

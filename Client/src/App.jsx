@@ -24,6 +24,9 @@ import UnauthorizedPage from "./components/molecules/UnauthorizedPage";
 import ProtectedRoute from "./components/molecules/ProtectedRoutes";
 import Thanks from "./components/pages/Companypages/Thanks";
 import ProfileForm from "./components/pages/Companypages/ProfileForm";
+import GetAllUser from "./components/pages/AdminPages/GetAllUser";
+import AdminProtection from "./components/molecules/AdminProtection";
+import ClientDetails from "./components/pages/AdminPages/ClientDetails";
 const App = () => {
   return (
     <Router>
@@ -31,7 +34,7 @@ const App = () => {
       <Route
           path="/dashboard"
           element={
-            <ProtectedRoute allowedRoles={["company"]}>
+            <ProtectedRoute allowedRoles={["company", "admin"]}>
               <Dashboard />
             </ProtectedRoute>
           }
@@ -69,6 +72,22 @@ const App = () => {
         <Route path="/chatbot/:companyId/:productId/:uniqueId" element={<Chatbot/>} />
         <Route path="/unauthorized" element={<UnauthorizedPage/>} />
         <Route path="*" element={<NotFoundPage />} />
+
+        <Route 
+           path="/admin/get-users"
+           element = {
+              <AdminProtection allowedRoles={['admin']}>
+                <GetAllUser />
+              </AdminProtection>
+           }/>
+
+          <Route 
+           path="/admin/get-user/:userId"
+           element = {
+              <AdminProtection allowedRoles={['admin']}>
+                <ClientDetails />
+              </AdminProtection>
+           }/>
       </Routes>
     </Router>
   );

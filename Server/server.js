@@ -18,7 +18,8 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/company", require("./routes/companyRoutes"));
 app.use("/api/manual", require("./routes/manualRoutes"));
 app.use("/api/chatbot", require("./routes/chatbotRoutes"));
-app.use("/api/purchase", require("./routes/purchaseRoutes"))
+app.use("/api/purchase", require("./routes/purchaseRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"))
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

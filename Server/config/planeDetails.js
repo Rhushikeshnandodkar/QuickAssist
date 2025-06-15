@@ -1,13 +1,13 @@
 module.exports.PLAN_DETAILS = {
     Free: {
       price: 0,
-      tokenLimit: 1000,
+      tokenLimit: 100000,
       maxProducts : 5,
       maxQueries : 100 
     },
     Starter: {
       price: 9,
-      tokenLimit: 50000,
+      tokenLimit: 500000,
       maxProducts : 15,
       maxQueries : 500 
     },
