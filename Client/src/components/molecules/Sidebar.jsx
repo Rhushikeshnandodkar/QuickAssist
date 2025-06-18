@@ -61,7 +61,7 @@ function Sidebar() {
             </Link>
         </div>
         
-        <div class="sidebar-footer">
+        {/* <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-avatar">JD</div>
                 <div class="user-details">
@@ -71,7 +71,7 @@ function Sidebar() {
                     <div class="user-role">Administrator</div>
                 </div>
             </div>
-        </div>
+        </div> */}
     </div>
 </SidebarStyle>
     </>

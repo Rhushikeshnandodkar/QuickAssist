@@ -9,6 +9,7 @@ import { companyInfo } from '../../../features/company/companySlice'
 import GlobalStyle from '../../molecules/gloable.style'
 import Sidebar from '../../molecules/Sidebar'
 import Navbar from '../../molecules/Navbar'
+import { Loader } from 'lucide-react'
 function ProductDetails() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -57,15 +58,19 @@ function ProductDetails() {
     if (botError) return <h3>Error loading bots: {botError}</h3>
 
     return (
+        <>
+        <Sidebar/>
         <ProductDetailStyle>
           <GlobalStyle/>
-            <Sidebar/>
             <Navbar page={`Product Details - ${singleProduct?.data?.product_name}`} />
             {productLoading || botLoading || companyLoading ? <>
                   return <div>Loading...</div>   
             
             </> : <>
-            <div className="main-content">
+            {!singleProduct?.data ? <><Loader/></> : 
+            
+            <>
+                        <div className="main-content">
             <div className="content">
                 <Link to={'/products'} className="back-link">
                 <span className="material-symbols-rounded">arrow_back</span>
@@ -148,7 +153,10 @@ function ProductDetails() {
             </div>
             </div>
             </>}
+
+            </>}
         </ProductDetailStyle>
+        </>
     )
 }
 

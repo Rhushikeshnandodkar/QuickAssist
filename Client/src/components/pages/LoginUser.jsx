@@ -58,9 +58,10 @@ const LoginUser = () => {
             <p className="login-subheading">Enter your credentials to access your account</p>
 
             {status === 401 && (
-              <div className="alert">
-                <h6>Please Enter Valid Details</h6>
-              </div>
+         <div className="alert bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm mt-4" role="alert">
+  <span className="block sm:inline font-medium">Please Enter Valid Details</span>
+</div>
+
             )}
 
             <form className="auth-form" onSubmit={handleSubmit}>

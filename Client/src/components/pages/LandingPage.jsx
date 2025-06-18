@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { Link, Links } from 'react-router-dom'
 function LandingPage() {
  
-
+  const dispatch = useDispatch()
   const [sliderValue, setSliderValue] = useState(30);
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const [loggedIn, setLoggedIn] = useState(false)
+  useEffect(() => {
+    const userData = localStorage.getItem("userToken")
+    if(userData){
+      setLoggedIn(true)
+    }
+  }, [dispatch])
   // Map slider value to a specific plan
   const getPlan = () => {
     if (sliderValue <= 20) return { queries: 500, price: 199 };
@@ -14,6 +22,7 @@ function LandingPage() {
     if (sliderValue <= 80) return { queries: 2000, price: 499 };
     return { queries: 5000, price: 999 };
   };
+
 
   const plan = getPlan();
   return (
@@ -30,12 +39,14 @@ function LandingPage() {
             <a href="#pricing" className="text-gray-600 hover:text-primary-600 transition-colors">Pricing</a>
             <a href="#faq" className="text-gray-600 hover:text-primary-600 transition-colors">FAQ</a>
           </nav>
-
-          {/* Desktop Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+        {loggedIn ? <><Link className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors shadow-md" to={'/dashboard'}>Dashboard</Link></> : <>
+         <div className="hidden md:flex items-center space-x-4">
             <Link to="/login" className="text-gray-600 hover:text-primary-600 transition-colors">Login</Link>
             <Link to="/register" className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors shadow-md">Sign Up</Link>
           </div>
+        </>}
+          {/* Desktop Buttons */}
+         
 
           {/* Mobile Toggle Button */}
           <button className="md:hidden text-gray-600" onClick={toggleMenu}>
@@ -80,12 +91,12 @@ function LandingPage() {
 Stop overwhelming your customers with PDFs or Paper manuals. Let them talk to your product — and get instant, helpful answers anytime.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#" class="bg-primary-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-primary-700 transition-colors shadow-md inline-flex items-center justify-center">
+            <Link to={"/demo-form"} class="bg-primary-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-primary-700 transition-colors shadow-md inline-flex items-center justify-center">
               Start Free Trial
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
               </svg>
-            </a>
+            </Link>
             <a href="#product" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
               See Demo
             </a>
