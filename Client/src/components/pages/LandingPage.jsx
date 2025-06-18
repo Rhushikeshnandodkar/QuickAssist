@@ -1,46 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 function LandingPage() {
+ 
+
+  const [sliderValue, setSliderValue] = useState(30);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  // Map slider value to a specific plan
+  const getPlan = () => {
+    if (sliderValue <= 20) return { queries: 500, price: 199 };
+    if (sliderValue <= 40) return { queries: 1000, price: 300 };
+    if (sliderValue <= 60) return { queries: 1500, price: 450 };
+    if (sliderValue <= 80) return { queries: 2000, price: 499 };
+    return { queries: 5000, price: 999 };
+  };
+
+  const plan = getPlan();
   return (
 <div class="bg-gray-50 font-sans text-gray-800">
-  <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-4">
-        <div class="flex items-center">
-          <a href="#" class="text-2xl font-bold text-primary-600">
-            HelpXpert
-          </a>
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
+          <a href="#" className="text-2xl font-bold text-primary-600">HelpXpert</a>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex space-x-8">
+            <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
+            <a href="#product" className="text-gray-600 hover:text-primary-600 transition-colors">Product</a>
+            <a href="#pricing" className="text-gray-600 hover:text-primary-600 transition-colors">Pricing</a>
+            <a href="#faq" className="text-gray-600 hover:text-primary-600 transition-colors">FAQ</a>
+          </nav>
+
+          {/* Desktop Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/login" className="text-gray-600 hover:text-primary-600 transition-colors">Login</Link>
+            <Link to="/register" className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors shadow-md">Sign Up</Link>
+          </div>
+
+          {/* Mobile Toggle Button */}
+          <button className="md:hidden text-gray-600" onClick={toggleMenu}>
+            {menuOpen ? (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
-        <nav class="hidden md:flex space-x-8">
-          <Link href="#features" class="text-gray-600 hover:text-primary-600 transition-colors">Features</Link>
-          <a href="#product" class="text-gray-600 hover:text-primary-600 transition-colors">Product</a>
-          <a href="#pricing" class="text-gray-600 hover:text-primary-600 transition-colors">Pricing</a>
-          <a href="#faq" class="text-gray-600 hover:text-primary-600 transition-colors">FAQ</a>
-        </nav>
-        <div class="flex items-center space-x-4">
-          <Link to={"/login"} class="hidden md:block text-gray-600 hover:text-primary-600 transition-colors">Login</Link>
-          <Link to={"/register"} class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors shadow-md">
-            Sign Up
-          </Link>
-        </div>
-        <button class="md:hidden text-gray-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-          </svg>
-        </button>
       </div>
-    </div>
-  </header>
+
+      {/* Mobile Sidebar */}
+      {menuOpen && (
+<div
+  className={`md:hidden fixed left-0 w-full bg-white z-40 flex flex-col px-6 py-8 gap-4 shadow-lg transition-transform duration-300 ease-in-out ${
+    menuOpen ? 'top-14 translate-y-0' : '-top-full -translate-y-full'
+  }`}
+>
+          <a href="#features" onClick={toggleMenu} className="text-lg text-gray-700 hover:text-primary-600">Features</a>
+          <a href="#product" onClick={toggleMenu} className="text-lg text-gray-700 hover:text-primary-600">Product</a>
+          <a href="#pricing" onClick={toggleMenu} className="text-lg text-gray-700 hover:text-primary-600">Pricing</a>
+          <a href="#faq" onClick={toggleMenu} className="text-lg text-gray-700 hover:text-primary-600">FAQ</a>
+          <hr />
+          <Link to="/login" onClick={toggleMenu} className="text-lg text-gray-700 hover:text-primary-600">Login</Link>
+          <Link to="/register" onClick={toggleMenu} className="bg-primary-600 text-white px-4 py-2 rounded-md text-center hover:bg-primary-700">Sign Up</Link>
+        </div>
+      )}
+    </header>
   <section class="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between">
         <div class="md:w-1/2 md:pr-12 mb-10 md:mb-0">
           <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Transform Manuals into <span class="text-primary-600">AI Chatbots</span>
+            Turn Your Manuals into  <span class="text-primary-600">AI Support Agents</span>
           </h1>
           <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            Upload your product manuals and instantly create intelligent AI chatbots 
-            that answer customer questions accurately and save support time.
+Stop overwhelming your customers with PDFs or Paper manuals. Let them talk to your product — and get instant, helpful answers anytime.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <a href="#" class="bg-primary-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-primary-700 transition-colors shadow-md inline-flex items-center justify-center">
@@ -70,10 +107,10 @@ function LandingPage() {
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Powerful Features for Support Teams
+       Everything You Need to Support Customers at Scale
         </h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          ManualMind helps you deliver instant support with AI that understands your product documentation.
+         HelpXpert gives your team AI tools to deliver faster, smarter, and more scalable support — powered by your own manuals.
         </p>
       </div>
       
@@ -87,7 +124,7 @@ function LandingPage() {
           </div>
           <h3 class="text-xl font-semibold text-gray-900 mb-3">PDF Upload & Processing</h3>
           <p class="text-gray-600">
-            Simply upload your product manuals in PDF format and our system will automatically parse and understand the content.
+Upload your product manuals once — our AI instantly reads and understands them to build a knowledge base, saving hours of manual setup.
           </p>
         </div>
 
@@ -100,7 +137,7 @@ function LandingPage() {
           </div>
           <h3 class="text-xl font-semibold text-gray-900 mb-3">AI-Powered Chatbots</h3>
           <p class="text-gray-600">
-            Our advanced AI turns your documentation into intelligent chatbots that answer customer questions accurately and contextually.
+Turn your manuals into 24/7 AI assistants that instantly resolve customer queries — trained specifically on your product.
           </p>
         </div>
 
@@ -124,7 +161,7 @@ function LandingPage() {
           </div>
           <h3 class="text-xl font-semibold text-gray-900 mb-3">Multi-Product Support</h3>
           <p class="text-gray-600">
-            Manage chatbots for multiple products from a single dashboard and maintain separate knowledge bases.
+        Manage support for all your products in one place — keep answers clean and accurate with separate knowledge bases.
           </p>
         </div>
 
@@ -134,9 +171,9 @@ function LandingPage() {
               <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Team Collaboration</h3>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Automated Bot Generation & Sharing</h3>
           <p class="text-gray-600">
-            Invite team members, assign roles, and collaborate to improve AI responses based on customer interactions.
+         As soon as you add customer, we automatically generate a chatbot and send email with ready-to-use link to your customer 
           </p>
         </div>
 
@@ -146,9 +183,9 @@ function LandingPage() {
               <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">Seamless Integration</h3>
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">Easy to use</h3>
           <p class="text-gray-600">
-            Embed your AI chatbot on your website, help center, or product interface with just a few lines of code.
+Our simple interface ensures even non-technical teams can deploy and monitor chatbots without writing a single line of code.
           </p>
         </div>
       </div>
@@ -171,10 +208,10 @@ function LandingPage() {
           <div class="flex">
             <div class="hidden md:block w-60 bg-gray-100 p-4 border-r border-gray-200">
               <div class="flex items-center space-x-2 mb-6">
-                <div class="w-8 h-8 bg-primary-500 rounded-md flex items-center justify-center">
+                {/* <div class="w-8 h-8 bg-primary-500 rounded-md flex items-center justify-center">
                   <span class="text-white font-bold">M</span>
-                </div>
-                <span class="font-semibold text-gray-800">ManualMind</span>
+                </div> */}
+                <span class="font-semibold text-gray-800">HelpXpert</span>
               </div>
               <div class="space-y-2">
                 <div class="bg-primary-50 text-primary-700 rounded-md px-3 py-2 font-medium">Products</div>
@@ -423,7 +460,7 @@ function LandingPage() {
         </p>
       </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 flex flex-col">
           <div class="p-6 border-b border-gray-100">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Basic</h3>
@@ -571,124 +608,68 @@ function LandingPage() {
           </div>
         </div>
         
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 flex flex-col">
-          <div class="p-6 border-b border-gray-100">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Enterprise</h3>
-            <div class="flex items-baseline mb-4">
-              <span class="text-3xl font-bold">Custom</span>
-            </div>
-            <p class="text-gray-600 text-sm">Tailored solutions for large organizations with complex needs.</p>
-          </div>
-          <ul class="p-6 space-y-3 flex-grow">
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">Unlimited product manuals</span>
-            </li>
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">Custom query volume</span>
-            </li>
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">Advanced security features</span>
-            </li>
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">Dedicated account manager</span>
-            </li>
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">Custom AI model training</span>
-            </li>
-            <li class="flex items-center">
-              <svg class="h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">SLA & premium support</span>
-            </li>
-          </ul>
-          <div class="p-6 border-t border-gray-100">
-            <a href="#" class="block text-center bg-white border border-primary-600 text-primary-600 px-6 py-2 rounded-md hover:bg-primary-50 transition-colors">
-              Contact Sales
-            </a>
-          </div>
-        </div>
       </div>
       
-      <div class="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto mt-16">
-        <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">Calculate Your Price</h3>
-        
-        <div class="mb-6">
-          <label class="block text-gray-700 font-semibold mb-2">Queries Needed</label>
-          <div class="relative">
-            <input type="range" min="1" max="100" value="30" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" disabled />
-            <div class="absolute pointer-events-none -top-2 left-[30%] w-4 h-4 bg-primary-600 rounded-full"></div>
-          </div>
-          
-          <div class="flex justify-between mt-2 text-sm text-gray-600">
-            <span>500</span>
-            <span>1000</span>
-            <span>1500</span>
-            <span>2000</span>
-            <span>5000+</span>
-          </div>
+       <div className="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto mt-16">
+      <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Calculate Your Price</h3>
+
+      <div className="mb-6">
+        <label className="block text-gray-700 font-semibold mb-2">Queries Needed</label>
+        <div className="relative">
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value={sliderValue}
+            onChange={(e) => setSliderValue(Number(e.target.value))}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+          />
+          <div
+            className="absolute pointer-events-none -top-2 w-4 h-4 bg-primary-600 rounded-full"
+            style={{ left: `${sliderValue}%`, transform: 'translateX(-50%)' }}
+          ></div>
         </div>
-        
-        <div class="space-y-3 border-t border-gray-100 pt-6">
-          <div class="flex justify-between items-center">
-            <div class="text-gray-700">
-              <span class="font-medium">500 queries</span>
-              <span class="text-gray-500 text-sm"> / month</span>
-            </div>
-            <div class="text-xl font-semibold">₹199</div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-gray-700">
-              <span class="font-medium">1000 queries</span>
-              <span class="text-gray-500 text-sm"> / month</span>
-            </div>
-            <div class="text-xl font-semibold">₹300</div>
-          </div>
-          <div class="flex justify-between items-center bg-primary-50 p-3 rounded-lg">
-            <div class="text-gray-700">
-              <span class="font-medium">1500 queries</span>
-              <span class="text-gray-500 text-sm"> / month</span>
-            </div>
-            <div class="text-xl font-semibold">₹450</div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-gray-700">
-              <span class="font-medium">2000 queries</span>
-              <span class="text-gray-500 text-sm"> / month</span>
-            </div>
-            <div class="text-xl font-semibold">₹499</div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-gray-700">
-              <span class="font-medium">5000 queries</span>
-              <span class="text-gray-500 text-sm"> / month</span>
-            </div>
-            <div class="text-xl font-semibold">₹999</div>
-          </div>
-        </div>
-        
-        <div class="mt-8">
-          <a href="#" class="block text-center bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors shadow">
-            Start Your Free Trial
-          </a>
-          <p class="text-center text-sm text-gray-500 mt-3">14-day free trial. No credit card required.</p>
+
+        <div className="flex justify-between mt-2 text-sm text-gray-600">
+          <span>500</span>
+          <span>1000</span>
+          <span>1500</span>
+          <span>2000</span>
+          <span>5000+</span>
         </div>
       </div>
+
+      {/* Pricing Section */}
+      <div className="space-y-3 border-t border-gray-100 pt-6">
+        {[500, 1000, 1500, 2000, 5000].map((q, i) => {
+          const prices = [199, 300, 450, 499, 999];
+          const isActive = plan.queries === q;
+          return (
+            <div
+              key={q}
+              className={`flex justify-between items-center ${isActive ? 'bg-primary-50 p-3 rounded-lg' : ''}`}
+            >
+              <div className="text-gray-700">
+                <span className="font-medium">{q} queries</span>
+                <span className="text-gray-500 text-sm"> / month</span>
+              </div>
+              <div className="text-xl font-semibold">₹{prices[i]}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-8">
+        <a
+          href="#"
+          className="block text-center bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors shadow"
+        >
+          Start Your Free Trial
+        </a>
+        <p className="text-center text-sm text-gray-500 mt-3">14-day free trial. No credit card required.</p>
+      </div>
+    </div>
+      
     </div>
   </section>
 

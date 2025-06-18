@@ -71,6 +71,7 @@ export const companyDetails = createAsyncThunk("admin/companyDetails", async(id,
         return thunkAPI.rejectWithValueJ(err)
     }
 })
+
 const initialState = {
     isLoading : true,
     user_data : null,

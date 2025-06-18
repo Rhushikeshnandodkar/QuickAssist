@@ -5,7 +5,7 @@ server/uploads/
 # Ignore environment files
 client/.env
 server/.env
-
+ML-api/env
 # Ignore build files (React and Node.js)
 client/build/
 server/dist/

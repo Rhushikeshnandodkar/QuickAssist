@@ -27,6 +27,7 @@ import ProfileForm from "./components/pages/Companypages/ProfileForm";
 import GetAllUser from "./components/pages/AdminPages/GetAllUser";
 import AdminProtection from "./components/molecules/AdminProtection";
 import ClientDetails from "./components/pages/AdminPages/ClientDetails";
+import DemoForm from "./components/pages/DemoForm";
 const App = () => {
   return (
     <Router>
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/subscription-info" element={<SubscriptionInfo />} />
         <Route path="/" element={<LandingPage />}></Route>
+        <Route path="/demo-form" element={<DemoForm />}></Route>
 
         {/* <Route path="/profile-form" element={<ProfileForm />}></Route> */}
 

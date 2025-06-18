@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-
-
-
 // Define the StudentProfile schema
 const companyProfileSchema = new mongoose.Schema({
   user: {

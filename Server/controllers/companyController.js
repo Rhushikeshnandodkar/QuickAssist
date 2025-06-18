@@ -8,6 +8,7 @@ const CompanyDataModel = require("../models/CompanyData")
 
 const Link = require("../models/Link");
 const MessageFeedback = require("../models/MessageFeedback");
+const DemoModel = require("../models/DemoData");
 
 exports.createCompanyProfile = async (req, res) => {
   try {
@@ -245,3 +246,39 @@ exports.usageInfo = async(req, res) =>{
   }
 }
 
+exports.demoFormSubmission = async (req, res) => {
+  try {
+    const {
+      first_name,
+      last_name,
+      work_email,
+      company_name,
+      phone_number,
+      challenges
+    } = req.body;
+
+    const newEntry = new DemoModel({
+      first_name,
+      last_name,
+      work_email,
+      company_name,
+      phone_number,
+      challenges
+    });
+
+    await newEntry.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Demo form submitted successfully!",
+      data: newEntry
+    });
+
+  } catch (error) {
+    console.error("Error submitting demo form:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Server error. Could not submit form."
+    });
+  }
+};

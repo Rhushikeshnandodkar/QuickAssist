@@ -31,7 +31,6 @@ function SettingsPage() {
                 company_website : company.data.company_website || "",
                 company_email : company.data.company_email || "",
                 company_contact : company.data.company_contact || "",
-
             })
         }
     }, [company, isLoading, dispatch]);
@@ -113,7 +112,6 @@ function SettingsPage() {
                         )}
                 </div>
             </div>
-
     </SettingStyle>
     </>
   )
