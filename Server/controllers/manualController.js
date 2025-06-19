@@ -13,7 +13,7 @@ const Link = require("../models/Link");
 const Purchase = require("../models/Purchase");
 const CompanyData = require("../models/CompanyData");
 
-const FASTAPI_URL = "http://127.0.0.1:8000";
+const FASTAPI_URL = "https://quickassist-3.onrender.com";
 
 async function createManualEmbedding(productId, manualText, product_name) {
     try {

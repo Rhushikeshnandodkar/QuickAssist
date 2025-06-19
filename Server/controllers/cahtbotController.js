@@ -151,7 +151,7 @@ exports.askChatbot = async (req, res) => {
         tokensUsed: 0 
       });
       await user_message.save();
-      const apiUrl = "http://127.0.0.1:8000/ask/";
+      const apiUrl = "https://quickassist-3.onrender.com/ask/";
       const requestData = {
         name: product.product_name,
         question,
@@ -183,7 +183,7 @@ exports.askChatbot = async (req, res) => {
         video_link: video.video_link
       }));
 
-      const suggestApiUrl = "http://127.0.0.1:8000/suggest-videos";
+      const suggestApiUrl = "https://quickassist-3.onrender.com/suggest-videos";
       const suggestResponse = await axios.post(suggestApiUrl, {
         query: question,
         videos: formattedVideos
