@@ -3,7 +3,8 @@ const User = require("../models/User")
 const mongoose = require('mongoose');
 const CompanyDataModel = require("../models/CompanyData");
 const { PLAN_DETAILS } = require("../config/planeDetails");
-const PurchaseModel = require("../models/Purchase")
+const PurchaseModel = require("../models/Purchase");
+const DemoModel = require("../models/DemoData");
 exports.getAllUsers = async(req, res) =>{
     try{
         const users = await User.find()
@@ -123,5 +124,13 @@ exports.fetchSingleCompany = async(req, res) =>{
   }
 }
 
+exports.demoForms = async(req, res) =>{
+  try{
+    const demoFormData = await DemoModel.find()
+    return res.status(200).json({success: true, message : "data fetched successfully", data : demoFormData})
+  }catch(err){
+    res.status(500).json({message : "server error", error : err})
+  }
+}
 
 

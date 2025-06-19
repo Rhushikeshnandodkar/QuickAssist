@@ -28,6 +28,7 @@ import GetAllUser from "./components/pages/AdminPages/GetAllUser";
 import AdminProtection from "./components/molecules/AdminProtection";
 import ClientDetails from "./components/pages/AdminPages/ClientDetails";
 import DemoForm from "./components/pages/DemoForm";
+import DemoData from "./components/pages/AdminPages/DemoData";
 const App = () => {
   return (
     <Router>
@@ -88,6 +89,14 @@ const App = () => {
            element = {
               <AdminProtection allowedRoles={['admin']}>
                 <ClientDetails />
+              </AdminProtection>
+           }/>
+
+          <Route 
+           path="/admin/get-form-data"
+           element = {
+              <AdminProtection allowedRoles={['admin']}>
+                <DemoData />
               </AdminProtection>
            }/>
       </Routes>

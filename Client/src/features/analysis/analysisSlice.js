@@ -50,6 +50,9 @@ export const fetchSingleFeedback = createAsyncThunk("analysis/singlefeedback", a
         return thunkAPI.rejectWithValue(err)
       } 
 })
+
+
+
 const initialState = {
     isLoading : true,
     ana_data : null,
@@ -102,6 +105,9 @@ const analysisSlice = createSlice({
             state.isLoading = false,
             state.error = true
         })
+
+
+
     }
 })
 

@@ -72,11 +72,29 @@ export const companyDetails = createAsyncThunk("admin/companyDetails", async(id,
     }
 })
 
+export const fetchDemoForms = createAsyncThunk("analysis/demoforms", async(_, thunkAPI) =>{
+    try{
+        const res = await fetch(`${url}/api/admin/get-demo-forms`, {
+            method : "GET",
+            headers : {
+                "Content-Type" : "application/json",
+                Authorization : `Bearer ${localStorage.getItem("userToken")}`,
+                Accept : "application/json"
+            }
+        })
+        const data = await res.json()
+        return data
+    }catch(err){
+        return thunkAPI.rejectWithValue(err)
+    }
+})
+
 const initialState = {
     isLoading : true,
     user_data : null,
     company_data : null,
     error : false,
+    demoformdata : null,
     status : null
 }
 
@@ -129,6 +147,22 @@ const adminSlice = createSlice({
             state.isLoading = false,
             state.error = true
         })
+
+        builder
+        .addCase(fetchDemoForms.pending, (state) => {
+            state.isLoading = true;
+            state.error = false;
+        })
+        .addCase(fetchDemoForms.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.demoformdata = action.payload;
+        })
+        .addCase(fetchDemoForms.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = true;
+            console.error("Fetch failed", action.payload);
+        });
+
     }
 })
 
