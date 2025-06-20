@@ -5,6 +5,7 @@ import GlobalStyle from '../../molecules/gloable.style';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { QueryStatus } from '@reduxjs/toolkit/query';
+import { url } from '../../common/api';
 
 function Chatbot() {
     const { companyId, productId, uniqueId } = useParams();
@@ -32,7 +33,7 @@ function Chatbot() {
     useEffect(() => {
         const fetchPreviousMessages = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/chatbot/current-bot', {
+                const response = await fetch(`${url}/api/chatbot/current-bot`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ uniqueId })
@@ -84,7 +85,7 @@ function Chatbot() {
     }, [botData]);
 
     const fetchCompanyInfo = async() =>{
-        const res = await fetch(`http://localhost:5000/api/company/company-info`, {
+        const res = await fetch(`${url}/api/company/company-info`, {
             method : "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ companyId })
@@ -118,7 +119,7 @@ function Chatbot() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/chatbot/ask-bot', {
+            const response = await fetch(`${url}/api/chatbot/ask-bot`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
@@ -177,7 +178,7 @@ function Chatbot() {
             }
             console.log(req_data)
             try{
-                const response = await fetch("http://localhost:5000/api/chatbot/message-feedback", {
+                const response = await fetch(`${url}/api/chatbot/message-feedback`, {
                     method : 'POST',
                     headers : { "Content-Type" : "application/json"},
                     body : JSON.stringify(req_data)
